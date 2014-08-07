@@ -1,0 +1,22 @@
+{
+  "NoteList" : [
+    {
+      "Title": "BOOKS",
+      "ItemCount": "3 items",
+      "Date": "01/02/2014",
+      "Price": "", 
+    },
+    {
+      "Title": "MUSIC CD COVERS",
+      "ItemCount": "1 item",
+      "Date": "03/25/2014",
+      "Price": "", 
+    },
+    {
+      "Title": "INVOICE",
+      "ItemCount": "3 items",
+      "Date": "01/24/2014",
+      "Price": "P3,250.00", 
+    }
+  ]
+}

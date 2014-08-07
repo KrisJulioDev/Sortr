@@ -7,6 +7,8 @@
 //
 
 #import "SortrAppDelegate.h"
+#import "MainVC.h"
+#import "Constants.h"
 
 @implementation SortrAppDelegate
 
@@ -16,10 +18,17 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    MainVC *mainVC = [[MainVC alloc] init];
+    
+    UINavigationController *startNVC = [[UINavigationController alloc] initWithRootViewController:mainVC];
+    
+    [[UINavigationBar appearance] setBarTintColor:SORTR_BLUE]; 
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    
+    self.window.rootViewController = startNVC;
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
