@@ -14,5 +14,5 @@
 +(NSString *)documentsPath:(NSString *)fileName;
 
 +(void)showActivityIndicator:(UIViewController*)sender;
-
++(void)hideActivityIndicator:(UIViewController*)sender;
 @end

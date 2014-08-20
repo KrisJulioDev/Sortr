@@ -52,17 +52,17 @@
     frame.size = (CGSize){40,40};
     button.frame = frame;
     
-    [button setImage:[UIImage imageNamed:@"icon-menu.png"] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"LeftMenu"] forState:UIControlStateNormal];
 }
 
 - (void)configureRightMenuButton:(UIButton *)button
 {
     CGRect frame = button.frame;
     frame.origin = (CGPoint){0,0};
-    frame.size = (CGSize){40,40};
+    frame.size = (CGSize){45,40};
     button.frame = frame;
     
-    [button setImage:[UIImage imageNamed:@"icon-menu.png"] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"RightMenu"] forState:UIControlStateNormal];
 }
 
 - (BOOL)deepnessForLeftMenu

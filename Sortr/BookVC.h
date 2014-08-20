@@ -14,5 +14,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *bookTableView;
 
+- (void) processingFinished;
 
 @end

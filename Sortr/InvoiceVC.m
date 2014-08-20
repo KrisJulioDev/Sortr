@@ -8,8 +8,10 @@
 
 #import "InvoiceVC.h"
 #import "NoteTVC.h"
-
+#import "InvoiceImagesVC.h"
 #import "ClientListVC.h"
+#import "DownloadTabVC.h"
+#import "ExportSettingsVC.h"
 
 @interface InvoiceVC () <UIImagePickerControllerDelegate>
 {
@@ -37,6 +39,7 @@
     invoiceItemLists = [[NSMutableArray alloc] init];
     [invoiceItemLists addObject:@""];
     [invoiceItemLists addObject:@""];
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -115,19 +118,40 @@
 #pragma mark TAB BUTTON CALLBACKS
 - (IBAction) openViewByThisTab : ( UIButton* ) tab
 {
-    UIViewController *presentingVC;
+    UIViewController *presentingVC = nil;
     switch ([tab tag]) {
         case 1:
             presentingVC = [[ClientListVC alloc] initWithNibName:@"ClientListVC" bundle:nil];
             presentingVC.title = @"CLIENT LIST";
             
-            self.navigationItem.title = @"Back";
-            [self.navigationController pushViewController:presentingVC animated:YES];
-
+            break;
+            
+        case 2:
+            presentingVC = [[InvoiceImagesVC alloc] initWithNibName:@"InvoiceImagesVC" bundle:nil];
+            presentingVC.title = @"INVOICE IMAGES";
+            
+            break;
+            
+        case 3:
+            presentingVC = [[DownloadTabVC alloc] initWithNibName:@"DownloadTabVC" bundle:nil];
+            presentingVC.title = @"EMAIL DOWNLOAD";
+            
+            break;
+            
+        case 4:
+            presentingVC = [[ExportSettingsVC alloc] initWithNibName:@"ExportSettingsVC" bundle:nil];
+            presentingVC.title = @"EXPORT SETTINGS";
+            
             break;
             
         default:
             break;
+        
+    }
+    
+    if (presentingVC) {
+        self.navigationItem.title = @"Back";
+        [self.navigationController pushViewController:presentingVC animated:YES];
     }
 }
 

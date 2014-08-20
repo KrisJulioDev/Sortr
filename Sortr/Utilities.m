@@ -38,10 +38,11 @@
     UIView *_view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     UIActivityIndicatorView *_indicator = [[UIActivityIndicatorView alloc] initWithFrame:_view.frame];
     
-    [_view setBackgroundColor:[UIColor blackColor]];
+    [_view setBackgroundColor:[UIColor whiteColor]];
     [_view.layer setOpacity:0.75f];
     
     [_indicator setTransform:CGAffineTransformMakeScale(1.5f, 1.5f)];
+    [_indicator setColor:SORTR_ORANGE];
     
     [_indicator startAnimating];
     [_view addSubview:_indicator];
@@ -50,6 +51,16 @@
     
     UIViewController *senderView = (UIViewController*)sender;
     [senderView.view addSubview:_view];
+}
+
++(void)hideActivityIndicator:(UIViewController*)sender
+{
+    for (UIView *v in [sender.view subviews]) {
+        if ( [v tag] == ACTIVITY_INDICATOR_VIEW_TAG )
+        {
+            [v removeFromSuperview];
+        }
+    }
 }
 
 @end

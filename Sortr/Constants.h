@@ -29,6 +29,20 @@
 
 /* TAGS */
 #define ACTIVITY_INDICATOR_VIEW_TAG     1001
+#define BLACK_VIEW_TAG                  1002
+
+/* CLIENT ID */
+static NSString* MyApplicationID = @"CoappScanner";
+// Password should be sent to your e-mail after application was created
+static NSString* MyPassword = @"nvnUJTIK2sLYinggQFIMHcHQ";
+
+typedef enum {
+    
+    Done = 0,
+    Scan,
+    Inquiry,
+    
+}ThumbStatus;
 
 @protocol Constants <NSObject>
 

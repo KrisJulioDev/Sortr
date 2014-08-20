@@ -9,7 +9,11 @@
 #import "ClientListVC.h"
 
 @interface ClientListVC () <UITableViewDataSource, UITableViewDelegate>
-
+{
+    
+    NSArray *tableSections;
+    
+}
 @end
 
 @implementation ClientListVC
@@ -26,13 +30,37 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    
+    tableSections = [NSArray arrayWithObjects:@"#", @"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z", nil];
+    
 }
 
 #pragma mark UITABLEVIEW DELEGATES
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 0;
+}
+
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 27;
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    return tableSections;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString*)title atIndex:(NSInteger)index
+{
+    return index;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [tableSections objectAtIndex:section];
 }
 
 - (void)didReceiveMemoryWarning

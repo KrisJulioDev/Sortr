@@ -7,9 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Constants.h"
 
 @interface ThumbCell : UICollectionViewCell
+{
+}
 
-- (void) setImage : ( UIImageView*) img;
+@property (nonatomic) ThumbStatus    thumbStatus;
+@property (nonatomic, retain) UIImage       *thumbImage;
+
+- (void) assignThumbImage   : ( UIImage*) img; 
+- (void) setStatus:(ThumbStatus ) status;
 
 @end

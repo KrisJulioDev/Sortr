@@ -12,7 +12,8 @@
 #import "BookCell.h"
 #import "BookDetailVC.h"
 #import "Utilities.h"
-#import "Tesseract.h"
+#import "OCRManager.h"
+#import "SortrDataManager.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
@@ -21,9 +22,15 @@
                         UIImagePickerControllerDelegate,
                         UINavigationControllerDelegate,
                         UITableViewDataSource,
-                        UITableViewDelegate>
+                        UITableViewDelegate >
 {
     NSMutableArray *thumbNailPhotos;
+    NSMutableArray *thumbNailCells;
+    
+    ThumbCell *cell;
+    ThumbCell *savedCell;
+    
+    SortrDataManager *sortrDataMgr;
 }
 @end
 
@@ -46,19 +53,14 @@
     
     thumbNailPhotos = [[NSMutableArray alloc] init];
     
-    //Show UIactivity
-    [Utilities showActivityIndicator:self];
-    
-    dispatch_async(dispatch_get_main_queue(), ^
-    {
-        [self displayBookItems];
-    });
+    //Initialize bookItems in SortrDataMngr
+    sortrDataMgr = [SortrDataManager sharedInstance];
 }
 
 - (void) modifyNavBar
 {
-    //Register class thumbcell and cell
-    [self.photoContainer registerClass:[ThumbCell class] forCellWithReuseIdentifier:@"bookItem"];
+     //Register class thumbcell and cell
+     [self.photoContainer registerClass:[ThumbCell class] forCellWithReuseIdentifier:@"bookItem"];
     
     //add Camera on right menu
     UIBarButtonItem *camera = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"camera_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(actionLaunchAppCamera:)];
@@ -68,63 +70,38 @@
     self.navigationItem.rightBarButtonItem = camera;
 }
 
-- (void) displayBookItems
-{
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    
-    // Enumerate just the photos and videos group by using ALAssetsGroupSavedPhotos.
-    [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        
-        // Within the group enumeration block, filter to enumerate just photos.
-        [group setAssetsFilter:[ALAssetsFilter allPhotos]];
-        
-        // Chooses the photo at the last index
-        [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *alAsset, NSUInteger index, BOOL *innerStop)
-        {
-            if (alAsset) {
-                ALAssetRepresentation *representation = [alAsset defaultRepresentation];
-                UIImage *latestPhoto = [UIImage imageWithCGImage:[representation fullScreenImage]];
-                
-                // Stop the enumerations
-                *stop = YES;
-                
-//                UIImage *latestPhotoThumbnail =  [UIImage imageWithCGImage:[alAsset thumbnail]];
-                [thumbNailPhotos addObject:latestPhoto];
-            }
-        }];
-        
-        if (group == nil) {
-            [self.photoContainer reloadData];
-            [self.bookTableView reloadData];
-            
-            for (UIView *v in [self.view subviews]) {
-                if ( [v tag] == ACTIVITY_INDICATOR_VIEW_TAG )
-                {
-                    [v removeFromSuperview];
-                }
-            }
-        }
-        
-    } failureBlock: ^(NSError *error) {
-        // Typically you should handle an error more gracefully than this.
-        NSLog(@"No groups");
-    }];
-}
 
 #pragma mark UICOLLECTION DELEGATE
 
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return thumbNailPhotos.count;
+    return sortrDataMgr.bookItems.count;
 }
 
 - (UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    ThumbCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"bookItem" forIndexPath:indexPath];
-   
-    [cell setImage:[thumbNailPhotos objectAtIndex:indexPath.row]];
+    cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"bookItem" forIndexPath:indexPath];
+    savedCell = [[sortrDataMgr bookItems] objectAtIndex:indexPath.row];
+    
+    [cell assignThumbImage: savedCell.thumbImage];
+    [cell setStatus:savedCell.thumbStatus];
+    
+    if ( savedCell.thumbStatus == Scan)
+    {
+        [[OCRManager sharedInstance] processImage:cell withDelegate:self];
+    }
+
+    [thumbNailCells addObject:cell];
     
     return cell;
+}
+
+#pragma mark OCRCALLBACK DELEGATE METHODS
+- (void) processingFinished
+{
+    [cell setStatus:Done];
+    savedCell.thumbStatus = Done;
+    
 }
 
 #pragma mark CAMERA DELEGATE
@@ -162,18 +139,17 @@
         }
     }];
     
-    //Scan image
-    Tesseract *tesseractScanner = [[Tesseract alloc] initWithDataPath:@"tessdata" language:@"eng"];
-    [tesseractScanner setImage:imageCaptured];
-    [tesseractScanner recognize];
+    ThumbCell *bookCell = [[ThumbCell alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    bookCell.thumbImage = imageCaptured;
+    bookCell.thumbStatus = Scan;
     
-    NSLog(@"TEXT IS : %@", [tesseractScanner recognizedText]);
+    [[sortrDataMgr bookItems] addObject:bookCell];
     
-    //Reload Photo Container after capture image
-    [thumbNailPhotos removeAllObjects];
-    dispatch_async(dispatch_get_main_queue(), ^
-    {
-        [self displayBookItems];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        
+        [self.photoContainer reloadData];
+        [self.bookTableView reloadData];
+        
     });
     
     // Remove lines of cell without data
@@ -185,16 +161,16 @@
 #pragma mark UITABLEVIEW DELEGATES
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BookCell *cell = [tableView dequeueReusableCellWithIdentifier:@"bookCell"];
+    BookCell *cell_ = [tableView dequeueReusableCellWithIdentifier:@"bookCell"];
     
-    if (cell == nil) {
+    if (cell_ == nil) {
         // Load the top-level objects from the custom cell XIB.
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"BookCell" owner:self options:nil];
         // Grab a pointer to the first object (presumably the custom cell, as that's all the XIB should contain).
-        cell = [topLevelObjects objectAtIndex:0];
+        cell_ = [topLevelObjects objectAtIndex:0];
         
     }
-    return cell;
+    return cell_;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -204,7 +180,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return thumbNailPhotos.count;
+    return sortrDataMgr.bookItems.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

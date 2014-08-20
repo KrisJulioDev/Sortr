@@ -11,6 +11,10 @@
 #import "NoteItem.h"
 #import "BookVC.h"
 #import "InvoiceVC.h"
+#import "SortrDataManager.h"
+#import "ThumbCell.h"
+#import "Utilities.h"
+#import "OCRManager.h"
 
 @interface NotesVC () <UITableViewDataSource, UITableViewDelegate>
 {
@@ -46,6 +50,14 @@
     mNoteItems = [self parseList:[ self noteLists ]];
     
     [self.mTableView reloadData];
+    //Show UIactivity
+    [Utilities showActivityIndicator:self];
+    
+    //Get Photo Library Data's
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+        [[OCRManager sharedInstance] fetchPhotoLibToApp:self];
+    });
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -99,6 +111,8 @@
     
     return item;
 }
+
+
 
 #pragma mark TABLE VIEW DELEGATES
 

@@ -10,4 +10,6 @@
 
 @interface InvoiceImagesVC : UIViewController
 
+
+@property (weak, nonatomic) IBOutlet UICollectionView *invoiceCollectionView;
 @end
