@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SSCheckBoxView.h"
 
 @interface Utilities : NSObject
 
@@ -15,4 +16,8 @@
 
 +(void)showActivityIndicator:(UIViewController*)sender;
 +(void)hideActivityIndicator:(UIViewController*)sender;
+
++ (UIDatePicker*) getDatePickerComponent;
++ ( SSCheckBoxView *) getCheckBoxComponent: (CGRect) rect;
+
 @end

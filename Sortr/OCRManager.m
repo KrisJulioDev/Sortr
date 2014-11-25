@@ -84,7 +84,6 @@
     }];
 }
 
-
 - (void) processImage : (ThumbCell*) thumbCell withDelegate:(UIViewController*) del
 { 
 	Client *client = [[Client alloc] initWithApplicationID:MyApplicationID password:MyPassword];

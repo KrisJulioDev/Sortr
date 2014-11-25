@@ -14,7 +14,8 @@
 #import "Utilities.h"
 #import "OCRManager.h"
 #import "SortrDataManager.h"
-
+#import "SortrSessionManager.h"
+ 
 #import <AssetsLibrary/AssetsLibrary.h>
 
 @interface BookVC () <UICollectionViewDataSource,
@@ -89,6 +90,7 @@
     if ( savedCell.thumbStatus == Scan)
     {
         [[OCRManager sharedInstance] processImage:cell withDelegate:self];
+        [[SortrSessionManager sharedInstance] uploadPhotoToServer:cell];
     }
 
     [thumbNailCells addObject:cell];
@@ -131,15 +133,19 @@
     UIImage *imageCaptured = [info objectForKey:UIImagePickerControllerEditedImage];
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
+    ThumbCell *bookCell = [[ThumbCell alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    
     [library writeImageToSavedPhotosAlbum:[imageCaptured CGImage] orientation:(ALAssetOrientation)[imageCaptured imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error){
         if (error) {
             // TODO: error handling
         } else {
             // TODO: success handling
+            bookCell.imageUrl = assetURL;
+            
+//            [[SortrSessionManager sharedInstance] requestPhotoUploadTask:assetURL];
         }
     }];
     
-    ThumbCell *bookCell = [[ThumbCell alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     bookCell.thumbImage = imageCaptured;
     bookCell.thumbStatus = Scan;
     
@@ -171,11 +177,6 @@
         
     }
     return cell_;
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    BookDetailVC *detailView = [BookDetailVC alloc] ini
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

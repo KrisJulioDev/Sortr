@@ -81,28 +81,27 @@
     UIViewController *rootVC;
     
     switch (indexPath.row) {
-        case 0: case 1:
-        {
-            rootVC = [[NotesVC alloc] initWithNibName:@"NotesVC" bundle:nil];
-            rootVC.title = @"SORTR";
-        }
-        break;
+        case 0:
+            
+            
+        case 1:
+                rootVC = [[NotesVC alloc] initWithNibName:@"NotesVC" bundle:nil];
+                rootVC.title = @"SORTR";
+            break;
         case 2:
-        {
-            rootVC = [[SecondVC alloc] initWithNibName:@"SecondVC" bundle:nil];
-        }
+                rootVC = [[SecondVC alloc] initWithNibName:@"SecondVC" bundle:nil];
             break;
         case 3:
-        {
-            rootVC = [[ThirdVC alloc] initWithNibName:@"ThirdVC" bundle:nil];
-        }
+                rootVC = [[ThirdVC alloc] initWithNibName:@"ThirdVC" bundle:nil];
+        
             break;
         
         default:
             break;
     }
-    nvc = [[UINavigationController alloc] initWithRootViewController:rootVC];
     
+    
+    nvc = [[UINavigationController alloc] initWithRootViewController:rootVC];
     [self openContentNavigationController:nvc];
 }
 

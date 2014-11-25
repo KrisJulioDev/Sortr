@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+/** SERVER URL ADDRESS FOR UPLOAD / DOWNLOAD**/
+#define UPLOAD_URL                  @"http://192.168.4.129/"
+
 /* COLORS */
 #define SORTR_BLUE                  [UIColor colorWithRed:90/255.0f green:206/255.0f blue:255/255.0f alpha:1.0f]
 #define SORTR_ORANGE                [UIColor colorWithRed:249/255.0f green:155/255.0f blue:14/255.0f alpha:1.0f]

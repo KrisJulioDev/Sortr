@@ -8,6 +8,8 @@
 
 #import "Utilities.h"
 #import "Constants.h"
+#import "SSCheckBoxView.h"
+#import "UIHelpers.h"
 
 @implementation Utilities
 
@@ -32,7 +34,7 @@
     return theDateTime;
 }
 
-
+#pragma mark CREATE SHOW/HIDE UIACTIVITYINDICATOR
 +(void)showActivityIndicator:(UIViewController*)sender
 {
     UIView *_view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -53,6 +55,7 @@
     [senderView.view addSubview:_view];
 }
 
+
 +(void)hideActivityIndicator:(UIViewController*)sender
 {
     for (UIView *v in [sender.view subviews]) {
@@ -62,5 +65,34 @@
         }
     }
 }
+
+#pragma mark CREATE UIDATEPICKER
++ (UIDatePicker*) getDatePickerComponent
+{
+    CGRect frame = [[UIScreen mainScreen] bounds];
+    
+    UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+    datePicker.frame = CGRectMake(0, frame.size.height - 200, frame.size.width, 200);
+    datePicker.backgroundColor = [UIColor colorWithWhite:1 alpha:0.9f];
+    
+    return datePicker;
+}
+
+
+#pragma mark CREATE SSCHECKBOXVIEW
++ ( SSCheckBoxView *) getCheckBoxComponent: (CGRect) pframe
+{
+    SSCheckBoxView *cbv = nil;
+    CGRect frame = pframe;
+    SSCheckBoxViewStyle style =  4 ;
+    BOOL checked = YES;
+    
+    cbv = [[SSCheckBoxView alloc] initWithFrame:frame
+                                         style:style
+                                       checked:checked];
+    
+    return cbv;
+}
+
 
 @end

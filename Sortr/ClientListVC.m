@@ -31,7 +31,6 @@
 {
     [super viewDidLoad];
     
-    
     tableSections = [NSArray arrayWithObjects:@"#", @"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z", nil];
     
 }
@@ -41,8 +40,6 @@
 {
     return 0;
 }
-
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

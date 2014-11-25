@@ -13,8 +13,9 @@
 {
 }
 
-@property (nonatomic) ThumbStatus    thumbStatus;
+@property (nonatomic) ThumbStatus           thumbStatus;
 @property (nonatomic, retain) UIImage       *thumbImage;
+@property (nonatomic, retain) NSURL         *imageUrl;
 
 - (void) assignThumbImage   : ( UIImage*) img; 
 - (void) setStatus:(ThumbStatus ) status;
