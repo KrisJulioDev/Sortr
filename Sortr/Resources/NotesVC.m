@@ -15,6 +15,7 @@
 #import "ThumbCell.h"
 #import "Utilities.h"
 #import "OCRManager.h"
+#import "SortrAppDelegate.h"
 
 @interface NotesVC () <UITableViewDataSource, UITableViewDelegate>
 {
@@ -50,8 +51,9 @@
     mNoteItems = [self parseList:[ self noteLists ]];
     
     [self.mTableView reloadData];
+     
     //Show UIactivity
-    [Utilities showActivityIndicator:self];
+    //[Utilities showActivityIndicator:self];
     
     //Get Photo Library Data's
     dispatch_async(dispatch_get_main_queue(), ^
@@ -139,25 +141,25 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIViewController *presentingVC;
-    
     switch (indexPath.row) {
         case 0:
         {
-            presentingVC = [[BookVC alloc] initWithNibName:@"BookVC" bundle:nil];
-            presentingVC.title = @"BOOKS";
+            BookVC *vc = [[BookVC alloc] initWithNibName:@"BookVC" bundle:nil];
+            vc.title = @"BOOKS";
+            vc.note_delegate = self;
             
             self.navigationItem.title = @"Back";
-            [self.navigationController pushViewController:presentingVC animated:YES];
+            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         case 2:
         {
-            presentingVC = [[InvoiceVC alloc] initWithNibName:@"InvoiceVC" bundle:nil];
-            presentingVC.title = @"INVOICE";
+            InvoiceVC *vc = [[InvoiceVC alloc] initWithNibName:@"InvoiceVC" bundle:nil];
+            vc.title = @"INVOICE";
+            vc.delegate = self;
             
             self.navigationItem.title = @"Back";
-            [self.navigationController pushViewController:presentingVC animated:YES];
+            [self.navigationController pushViewController:vc animated:YES];
         }
             break;
             
@@ -194,6 +196,17 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 94.0f;
+}
+
+- (void) showInvoice {
+    
+    InvoiceVC *vc = [[InvoiceVC alloc] initWithNibName:@"InvoiceVC" bundle:nil];
+    vc.title = @"INVOICE";
+    vc.delegate = self;
+    
+    self.navigationItem.title = @"Back";
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning

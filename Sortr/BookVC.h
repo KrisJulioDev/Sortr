@@ -7,13 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NotesVC.h"
 
 @interface BookVC : UIViewController
 
-@property (weak, nonatomic) IBOutlet UICollectionView *photoContainer;
+@property (weak, nonatomic) IBOutlet UICollectionView   *photoContainer;
+@property (weak, nonatomic) IBOutlet UITableView        *bookTableView;
+@property (strong, nonatomic)        UIViewController   *note_delegate;
 
-@property (weak, nonatomic) IBOutlet UITableView *bookTableView;
+#pragma mark Header Properties
+
 
 - (void) processingFinished;
-
+- (void) openReceiptOnInvoice;
 @end

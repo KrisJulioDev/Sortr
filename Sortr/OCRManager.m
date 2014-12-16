@@ -12,6 +12,7 @@
 #import "ThumbCell.h"
 #import "Utilities.h"
 #import "BookVC.h"
+#import "SortrReceipt.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
@@ -49,33 +50,39 @@
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
     // Enumerate just the photos and videos group by using ALAssetsGroupSavedPhotos.
-    [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+    [library enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
         
-        // Within the group enumeration block, filter to enumerate just photos.
-        [group setAssetsFilter:[ALAssetsFilter allPhotos]];
+        NSString * groupName = [group valueForProperty:ALAssetsGroupPropertyName];
+        NSLog(@"GROUP NAME %@", groupName);
         
-        // Chooses the photo at the last index
-        [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *alAsset, NSUInteger index, BOOL *innerStop)
-         {
-             if (alAsset) {
-                 ALAssetRepresentation *representation = [alAsset defaultRepresentation];
-                 UIImage *latestPhoto = [UIImage imageWithCGImage:[representation fullScreenImage]];
-                 
-                 // Stop the enumerations
-                 *stop = YES;
-                 
-                 ThumbCell *bookCell = [[ThumbCell alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-                 
-                 bookCell.thumbImage    = latestPhoto;
-                 bookCell.thumbStatus        = Done;
-                 
-                 [sortrMngr.bookItems addObject:bookCell];
-                 
-             }
-         }];
-        
-        if (group == nil) {
-            [Utilities hideActivityIndicator:sender];
+        if( [groupName isEqualToString:kJobPhotoGroup] ) {
+            
+            // Within the group enumeration block, filter to enumerate just photos.
+            [group setAssetsFilter:[ALAssetsFilter allPhotos]];
+            
+            // Chooses the photo at the last index
+            [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *alAsset, NSUInteger index, BOOL *innerStop)
+             {
+                 if (alAsset) {
+                     ALAssetRepresentation *representation = [alAsset defaultRepresentation];
+                     UIImage *latestPhoto = [UIImage imageWithCGImage:[representation fullScreenImage]];
+                     
+                     // Stop the enumerations
+                     *stop = YES;
+                     
+                     ThumbCell *bookCell = [[ThumbCell alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+                     
+                     bookCell.thumbImage    = latestPhoto;
+                     bookCell.thumbStatus        = Done;
+                     
+                     [sortrMngr.bookItems addObject:bookCell];
+                     
+                 }
+             }];
+            
+            if (group == nil) {
+                [Utilities hideActivityIndicator:sender];
+            }
         }
         
     } failureBlock: ^(NSError *error) {
@@ -90,10 +97,12 @@
 	[client setDelegate:self]; 
     
     senderDelegate = del;
-    
     processingCell = thumbCell;
-      
-	if([[NSUserDefaults standardUserDefaults] stringForKey:@"installationID"] == nil) {
+    
+	if(     [[NSUserDefaults standardUserDefaults] objectForKey:@"installationID"] == nil
+       ||   [[[NSUserDefaults standardUserDefaults] objectForKey:@"installationID"] isKindOfClass:[NSNull class]]
+       )
+    {
 		NSString* deviceID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
 		
 		NSLog(@"First run: obtaining installation ID..");
@@ -108,7 +117,7 @@
 	client.applicationID = [client.applicationID stringByAppendingString:installationID];
 	
 	ProcessingParams* params = [[ProcessingParams alloc] init];
-	
+    
 	[client processImage:thumbCell.thumbImage withParams:params];
 }
 
@@ -125,20 +134,37 @@
 
 - (void)client:(Client *)sender didFinishDownloadData:(NSData *)downloadedData
 {
-    
     NSString* result = [[NSString alloc] initWithData:downloadedData encoding:NSUTF8StringEncoding];
-    
-    //[processingCell setStatus:Done];
     
     [(BookVC*)senderDelegate processingFinished];
     
-    NSLog(@"Finish download... %@", result);
+    NSLog(@"Finish download... \n%@", result);
+    
+    NSString *totalAmount   = [SortrReceipt lookFor:kSearchTotal onThis:result];
+    NSString *vatAmount     = [SortrReceipt lookFor:kSearchVat onThis:result];
+    NSString *date          = [SortrReceipt lookFor:kSearchDate onThis:result];
+    NSString *branch        = [SortrReceipt lookFor:kSearchBranch onThis:result];
+    
+    NSLog(@"TOTAL AMOUNT IS :       %@", totalAmount);
+    NSLog(@"VAT AMOUNT IS :         %@", vatAmount  );
+    NSLog(@"DATE IS :               %@", date       );
+    NSLog(@"BRANCH IS :             %@", branch     );
+    
+    if ([totalAmount intValue] > 0) {
+        
+//        [[SortrDataManager sharedInstance] saveTotalData:@"Entertainment" withTotal:totalAmount vat:vatAmount branch:date receiptDate:branch];
+        [(BookVC*)senderDelegate openReceiptOnInvoice];
+        
+    } else {
+        NSLog(@"VALUE NOT FOUND ...");
+        [Utilities hideActivityIndicator:(BookVC*)senderDelegate];
+    }
 }
 
 - (void)client:(Client *)sender didFailedWithError:(NSError *)error
 {
 	NSLog(@"ERROR ...");
+    [Utilities hideActivityIndicator:(BookVC*)senderDelegate];
 }
-
 
 @end

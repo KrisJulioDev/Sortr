@@ -11,4 +11,6 @@
 @interface NotesVC : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *mTableView;
 
+- (void) showInvoice;
+
 @end

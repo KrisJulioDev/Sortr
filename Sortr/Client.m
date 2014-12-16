@@ -9,8 +9,7 @@
 @synthesize applicationID = _applicationID;
 @synthesize password = _password;
 
-@synthesize installationID = _installationID;
-
+@synthesize installationID = _installationID; 
 @synthesize delegate = _delegate;
 
 - (id)init
@@ -128,7 +127,7 @@
 		}
 	} else {
 		Task* task = [[Task alloc] initWithData:operation.recievedData];
-		
+
 		if ([self.delegate respondsToSelector:@selector(clientDidFinishProcessing:)]) {
 			[self.delegate clientDidFinishProcessing:self];
 		}
@@ -136,7 +135,7 @@
 		NSParameterAssert(task);
 		NSParameterAssert(task.downloadURL);
 		
-		NSURLRequest *request = [NSURLRequest requestWithURL:task.downloadURL];
+		NSURLRequest *request = [NSURLRequest requestWithURL: task.downloadURL];
 		
 		HTTPOperation *downloadOperation = [[ProcessingOperation alloc] initWithRequest:request 
 																				 target:self 

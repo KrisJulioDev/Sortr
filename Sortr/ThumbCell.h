@@ -14,6 +14,7 @@
 }
 
 @property (nonatomic) ThumbStatus           thumbStatus;
+@property (nonatomic, retain) NSString      *thumbName;
 @property (nonatomic, retain) UIImage       *thumbImage;
 @property (nonatomic, retain) NSURL         *imageUrl;
 

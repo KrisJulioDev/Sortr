@@ -1,0 +1,19 @@
+    //
+//  CategoryViewController.h
+//  Sortr
+//
+//  Created by KrisMraz on 12/10/14.
+//  Copyright (c) 2014 TheCoapperative. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface CategoryViewController : UIViewController
+
+@property (strong, nonatomic) IBOutlet UICollectionView *photoContainer;
+@property (strong, nonatomic) IBOutlet UITableView      *receiptTable;
+
+@property (nonatomic        ) NSInteger                 *categoryIndex;
+
+
+@end

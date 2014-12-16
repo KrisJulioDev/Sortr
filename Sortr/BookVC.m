@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 TheCoapperative. All rights reserved.
 //
 
+#import "APIClient.h"
 #import "Constants.h"
 #import "BookVC.h"
 #import "ThumbCell.h"
@@ -15,7 +16,9 @@
 #import "OCRManager.h"
 #import "SortrDataManager.h"
 #import "SortrSessionManager.h"
- 
+#import "ALAssetsLibrary+CustomPhotoAlbum.h"
+#import "SortrDataManager.h"
+#import <AFHTTPRequestOperationManager.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
 @interface BookVC () <UICollectionViewDataSource,
@@ -30,6 +33,7 @@
     
     ThumbCell *cell;
     ThumbCell *savedCell;
+    ThumbCell *selectedCell;
     
     SortrDataManager *sortrDataMgr;
 }
@@ -52,8 +56,8 @@
     [super viewDidLoad];
     [self modifyNavBar];
     
-    thumbNailPhotos = [[NSMutableArray alloc] init];
-    
+    thumbNailPhotos = [NSMutableArray new];
+    thumbNailCells = [NSMutableArray new];
     //Initialize bookItems in SortrDataMngr
     sortrDataMgr = [SortrDataManager sharedInstance];
 }
@@ -71,7 +75,23 @@
     self.navigationItem.rightBarButtonItem = camera;
 }
 
+- (IBAction)exportImageData:(id)sender {
+    
+   /// [[SortrDataManager sharedInstance] saveTotalData:@"123" vat:@"123" branch:@"branch" receiptDate:@"21323"];
+   // [self openReceiptOnInvoice];
+    
+    //SHOW ACTIVITY INDICATOR
+    [Utilities showActivityIndicator:self];
+    
+    /* EXPORT IMAGE TO CLOUD SERVER FOR CHECKING */
+    [[OCRManager sharedInstance] processImage:selectedCell withDelegate:self];
+}
 
+- (void) openReceiptOnInvoice {
+    [(NotesVC*)self.note_delegate showInvoice];
+    [Utilities hideActivityIndicator:self];
+}
+ 
 #pragma mark UICOLLECTION DELEGATE
 
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -89,8 +109,8 @@
     
     if ( savedCell.thumbStatus == Scan)
     {
-        [[OCRManager sharedInstance] processImage:cell withDelegate:self];
-        [[SortrSessionManager sharedInstance] uploadPhotoToServer:cell];
+        //[[OCRManager sharedInstance] processImage:cell withDelegate:self];
+        //[[SortrSessionManager sharedInstance] uploadPhotoToServer:cell];
     }
 
     [thumbNailCells addObject:cell];
@@ -98,12 +118,24 @@
     return cell;
 }
 
+- (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    for (ThumbCell *_cell in thumbNailCells) {
+        [_cell setStatus:Done];
+    }
+    
+    ThumbCell *_cell = [thumbNailCells objectAtIndex:indexPath.row];
+    [_cell setStatus:Inquiry];
+    
+    selectedCell = _cell;
+    
+}
+
 #pragma mark OCRCALLBACK DELEGATE METHODS
 - (void) processingFinished
 {
     [cell setStatus:Done];
     savedCell.thumbStatus = Done;
-    
 }
 
 #pragma mark CAMERA DELEGATE
@@ -114,8 +146,7 @@
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
         imagePicker.delegate = self;
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        imagePicker.allowsEditing = YES;
-        
+
         [self presentViewController:imagePicker animated:YES completion:nil];
     }else{
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Camera Unavailable"
@@ -130,22 +161,29 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *imageCaptured = [info objectForKey:UIImagePickerControllerEditedImage];
+    UIImage *imageCaptured = [info objectForKey:UIImagePickerControllerOriginalImage];
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
     ThumbCell *bookCell = [[ThumbCell alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     
     [library writeImageToSavedPhotosAlbum:[imageCaptured CGImage] orientation:(ALAssetOrientation)[imageCaptured imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error){
         if (error) {
-            // TODO: error handling
+            // TODO: error handling[self addAssetURL: assetURL
         } else {
             // TODO: success handling
             bookCell.imageUrl = assetURL;
             
-//            [[SortrSessionManager sharedInstance] requestPhotoUploadTask:assetURL];
+            //        [[SortrSessionManager sharedInstance] requestPhotoUploadTask:assetURL];
+            
+            [library addAssetURL:assetURL toAlbum:kJobPhotoGroup withCompletionBlock:^(NSError *error) {
+                if (error!=nil) {
+                    NSLog(@"Big error: %@", [error description]);
+                }
+            }];
         }
-    }];
+    }]; 
     
+    bookCell.thumbName = @"hello_image";
     bookCell.thumbImage = imageCaptured;
     bookCell.thumbStatus = Scan;
     
@@ -164,6 +202,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+
 #pragma mark UITABLEVIEW DELEGATES
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -174,8 +213,8 @@
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"BookCell" owner:self options:nil];
         // Grab a pointer to the first object (presumably the custom cell, as that's all the XIB should contain).
         cell_ = [topLevelObjects objectAtIndex:0];
-        
     }
+    
     return cell_;
 }
 

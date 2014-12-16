@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#define kJobPhotoGroup @"Job Photo"
+
 /** SERVER URL ADDRESS FOR UPLOAD / DOWNLOAD**/
-#define UPLOAD_URL                  @"http://192.168.4.129/"
+#define UPLOAD_URL                  @"http://192.168.1.240:8080/uploadImage"
+#define GET_STATUS_URL              @"http://192.168.1.240:8080/getStatus/"
 
 /* COLORS */
 #define SORTR_BLUE                  [UIColor colorWithRed:90/255.0f green:206/255.0f blue:255/255.0f alpha:1.0f]
@@ -35,9 +38,17 @@
 #define BLACK_VIEW_TAG                  1002
 
 /* CLIENT ID */
-static NSString* MyApplicationID = @"CoappScanner";
+static NSString* MyApplicationID = @"helloocr123";
 // Password should be sent to your e-mail after application was created
-static NSString* MyPassword = @"nvnUJTIK2sLYinggQFIMHcHQ";
+static NSString* MyPassword =   @"YhdtrudBX+//NgBvhX9P8LdL";
+
+/* SEARCH STRINGS from PLIST */ 
+#define kSearchTotal    @"Total"
+#define kSearchVat      @"Vat"
+#define kSearchDate     @"Date"
+#define kSearchBranch   @"Branch"
+
+#define APP_DELEGATE    (SortrAppDelegate*)[[UIApplication sharedApplication] delegate]
 
 typedef enum {
     

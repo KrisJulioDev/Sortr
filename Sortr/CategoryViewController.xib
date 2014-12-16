@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CategoryViewController">
+            <connections>
+                <outlet property="photoContainer" destination="CXs-ee-ORe" id="YBn-TC-PdI"/>
+                <outlet property="receiptTable" destination="2Qa-dc-s51" id="g6w-Ca-iOP"/>
+                <outlet property="scanBtn" destination="nAP-Hl-tva" id="iTg-nu-8BK"/>
+                <outlet property="totalLabel" destination="baM-Kz-QhD" id="Eee-z2-AUh"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="TOTAL : 92547 " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="baM-Kz-QhD">
+                    <rect key="frame" x="84" y="72" width="421" height="63"/>
+                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="30"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <collectionView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="CXs-ee-ORe">
+                    <rect key="frame" x="0.0" y="139" width="600" height="110"/>
+                    <color key="backgroundColor" red="0.35294117650000001" green="0.80784313730000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="15" minimumInteritemSpacing="3" id="8ik-jo-nT0">
+                        <size key="itemSize" width="100" height="100"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="10"/>
+                        <inset key="sectionInset" minX="15" minY="0.0" maxX="10" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <cells/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="2hw-55-Lxf"/>
+                        <outlet property="delegate" destination="-1" id="Mg3-U1-Fz1"/>
+                    </connections>
+                </collectionView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2Qa-dc-s51">
+                    <rect key="frame" x="0.0" y="260" width="600" height="280"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="YgL-H7-ijU"/>
+                        <outlet property="delegate" destination="-1" id="cIQ-nS-LHv"/>
+                    </connections>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nAP-Hl-tva">
+                    <rect key="frame" x="0.0" y="555" width="600" height="45"/>
+                    <color key="backgroundColor" red="0.35294117650000001" green="0.80784313730000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="K6B-jJ-bYR"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="25"/>
+                    <state key="normal" title="Scan">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="scanReceipt:" destination="-1" eventType="touchUpInside" id="nnD-zP-OgN"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="nAP-Hl-tva" secondAttribute="bottom" id="6TC-Or-sfb"/>
+                <constraint firstItem="CXs-ee-ORe" firstAttribute="top" secondItem="baM-Kz-QhD" secondAttribute="bottom" constant="4" id="KgQ-kC-fbj"/>
+                <constraint firstItem="2Qa-dc-s51" firstAttribute="top" secondItem="CXs-ee-ORe" secondAttribute="bottom" id="LvQ-oQ-V10"/>
+                <constraint firstAttribute="trailing" secondItem="CXs-ee-ORe" secondAttribute="trailing" id="NLp-YO-yxW"/>
+                <constraint firstAttribute="trailing" secondItem="nAP-Hl-tva" secondAttribute="trailing" id="TF8-Yc-0la"/>
+                <constraint firstItem="CXs-ee-ORe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Uoe-sZ-FLZ"/>
+                <constraint firstItem="nAP-Hl-tva" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mbF-2x-bJY"/>
+                <constraint firstAttribute="centerX" secondItem="baM-Kz-QhD" secondAttribute="centerX" id="qIs-rp-cya"/>
+                <constraint firstItem="nAP-Hl-tva" firstAttribute="top" secondItem="2Qa-dc-s51" secondAttribute="bottom" constant="5" id="rC6-NB-Qdc"/>
+                <constraint firstItem="baM-Kz-QhD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="62" id="t3z-tQ-9o0"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

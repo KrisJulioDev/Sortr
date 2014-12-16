@@ -14,5 +14,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *mGalleryTabBtn;
 @property (weak, nonatomic) IBOutlet UIButton *mEmailTabBtn;
 @property (weak, nonatomic) IBOutlet UIButton *mExportTabBtn;
+@property (nonatomic, retain) NSManagedObjectContext *mManagedContext;
+@property (strong, nonatomic) id delegate;
+
+#pragma mark Header Properties
+@property (strong, nonatomic) IBOutlet UILabel *headerTotal;
+@property (strong, nonatomic) IBOutlet UILabel *headerItems;
+@property (strong, nonatomic) IBOutlet UILabel *headerDate;
+
 
 @end

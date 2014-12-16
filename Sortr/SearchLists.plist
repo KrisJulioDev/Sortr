@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Total</key>
+	<array>
+		<string>Total inc</string>
+		<string>Total Php</string>
+		<string>Amount</string>
+		<string>Total</string>
+		<string>Total Sales</string>
+		<string>Total Due</string>
+	</array>
+	<key>Vat</key>
+	<array>
+		<string>VAT</string>
+		<string>Vat amount</string>
+	</array>
+	<key>Branch</key>
+	<array>
+		<string>Starbucks</string>
+		<string>Octagon</string>
+		<string>Jolibee</string>
+		<string>Mcdo</string>
+	</array>
+	<key>Date</key>
+	<array>
+		<string>Date</string>
+	</array>
+</dict>
+</plist>
