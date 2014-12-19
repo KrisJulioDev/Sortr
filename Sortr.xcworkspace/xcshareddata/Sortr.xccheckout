@@ -12,6 +12,8 @@
 	<dict>
 		<key>BF5B32F3AEA38AF9A37B17AEFF0EF26B6E6D018A</key>
 		<string>https://github.com/KrisJulioDev/Sortr.git</string>
+		<key>E609DD15689CC93D8F4D219EB393F30F9F726178</key>
+		<string>https://github.com/BradLarson/GPUImage.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Sortr.xcworkspace</string>
@@ -19,6 +21,8 @@
 	<dict>
 		<key>BF5B32F3AEA38AF9A37B17AEFF0EF26B6E6D018A</key>
 		<string>..</string>
+		<key>E609DD15689CC93D8F4D219EB393F30F9F726178</key>
+		<string>../../GPUImage</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/KrisJulioDev/Sortr.git</string>
@@ -28,6 +32,14 @@
 	<string>BF5B32F3AEA38AF9A37B17AEFF0EF26B6E6D018A</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E609DD15689CC93D8F4D219EB393F30F9F726178</string>
+			<key>IDESourceControlWCCName</key>
+			<string>GPUImage</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

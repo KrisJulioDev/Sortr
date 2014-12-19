@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *headerTotal;
 @property (strong, nonatomic) IBOutlet UILabel *headerItems;
 @property (strong, nonatomic) IBOutlet UILabel *headerDate;
+@property (strong, nonatomic) IBOutlet UIButton *centerCamera;
 
 
 @end

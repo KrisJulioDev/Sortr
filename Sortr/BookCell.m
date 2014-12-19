@@ -7,47 +7,40 @@
 //
 
 #import "BookCell.h"
+#import "ThumbCell.h"
 
 @implementation BookCell
 {
-    enum Status {
-      
-        Waiting = 0,
-        Scanning,
-        Done
-        
-    };
+   
     
-    int cellStatus;
 }
 - (void)awakeFromNib
 {
     // Initialization code
     
-    cellStatus = 0;
 }
 
-- (void) updateStatusWithPhoto : (UIImage*) img {
+- (void) updateStatus:(int)status withPhoto : (UIImage*) img {
     
     NSString *statusName = @"";
     UIImage *photoImage = img;
     UIImage *iconImage;
     
-    switch (cellStatus) {
+    switch (status) {
         case (int)Waiting:
             
-            statusName = @"WAITING TO SCAN";
-            iconImage = [UIImage imageNamed:@"inquiry_icon"];
+            statusName = @"TAP TO UPLOAD";
+            iconImage = [UIImage imageNamed:@"upload_icon"];
             
               break;
-        case (int)Scanning:
+        case (int)Scan:  case (int)Queue:
             
-            statusName = @"SCANNING...";
-            iconImage = [UIImage imageNamed:@"scanning_icon"];
+            statusName = @"PROCESSING...";
+            iconImage = [UIImage imageNamed:@"magnifying_icon"];
             
             break;
-        case (int)Done:
-            
+        case (int)Done: case (int)Audit:
+        
               [self.processingView setHidden:YES];
             
             break;
@@ -60,7 +53,6 @@
     [self.receiptImage  setImage: photoImage];
     [self.statusIcon    setImage: iconImage];
     
-    cellStatus++;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

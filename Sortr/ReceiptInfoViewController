@@ -1,0 +1,77 @@
+//
+//  ReceiptInfoViewController.m
+//  Sortr
+//
+//  Created by KrisMraz on 12/10/14.
+//  Copyright (c) 2014 TheCoapperative. All rights reserved.
+//
+
+#import "ReceiptInfoViewController.h"
+
+@interface ReceiptInfoViewController ()  <UIGestureRecognizerDelegate>
+
+@end
+
+@implementation ReceiptInfoViewController
+
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    
+    [self.receiptPreviewHolder setHidden:YES];
+    [self.receiptImage setUserInteractionEnabled:YES];
+    
+    UITapGestureRecognizer *receiptPreview = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(previewReceiptImage:)];
+    receiptPreview.numberOfTapsRequired = 1;
+    receiptPreview.delegate = self;
+    
+    [self.receiptImage addGestureRecognizer:receiptPreview];
+    
+    [self.receiptImage setImage: [UIImage imageWithData:self.receiptData.image]];
+    [self.receiptPreview setImage: [UIImage imageWithData:self.receiptData.image]];
+    
+    self.receiptPreviewHolder.layer.borderColor = [UIColor blackColor].CGColor;
+    self.receiptPreviewHolder.layer.borderWidth = 2;
+    self.receiptPreviewHolder.layer.cornerRadius = 10;
+     
+    [self displayData];
+}
+
+- (void) displayData {
+
+    self.headerTotal.text = [NSString stringWithFormat:@"TOTAL : P%@", self.receiptData.total ];
+    self.totalAmount.text = [NSString stringWithFormat:@"Total Amount : P%@", self.receiptData.total ];
+    self.storeName.text   = [NSString stringWithFormat:@"Store Name : %@", self.receiptData.branch ];
+    self.receiptName.text = [NSString stringWithFormat:@"Store Name : %@", self.receiptData.branch ];
+    self.receiptDate.text = [NSString stringWithFormat:@"Receipt Date : %@", self.receiptData.date ];
+    self.vatValue.text    = [NSString stringWithFormat:@"VAT : P%@", self.receiptData.vat ];
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    
+}
+
+- (void) previewReceiptImage : (UITapGestureRecognizer *)tap {
+    [self.receiptPreviewHolder setHidden:NO];
+}
+
+- (IBAction)closePreview:(id)sender {
+    [self.receiptPreviewHolder setHidden:YES];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+ 
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

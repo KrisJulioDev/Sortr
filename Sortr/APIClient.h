@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AFHTTPRequestOperationManager.h>
 #import "ResponseObject.h"
-#import "ThumbCell.h"
+#import "BookCell.h"
 
 //JSON Keys
 #define kJSONSuccess					200
@@ -34,7 +34,7 @@
 @property (nonatomic, retain) id delegate;
 
 + (instancetype)sharedInstance;
-- ( void ) exportImageData : ( ThumbCell* ) photoData andBlock:(void (^)(ResponseObject *responseObject))block;
+- ( void ) exportImageData : ( BookCell* ) photoData withParamter:(NSDictionary*)parameter andBlock:(void (^)(ResponseObject *responseObject))block;
 - (void)processOperation:(AFHTTPRequestOperation *)operation withData:(id)responseObject block:(void (^)(ResponseObject *))block;
-
+- (void) getReceiptStatus : ( int ) r_id ;
 @end

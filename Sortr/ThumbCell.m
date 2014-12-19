@@ -26,7 +26,7 @@
 - (void) assignThumbImage : ( UIImage*) img
 {
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,100,100)];
-    //imgView.contentMode = UIViewContentModeScaleAspectFit;
+; 
     imgView.clipsToBounds = YES;
     imgView.image = img ; 
     self.thumbImage = img;
@@ -44,27 +44,30 @@
 {
     NSString *imageName;
     
+    for (UIView *blackV in [self.contentView subviews]) {
+        if (blackV.tag == BLACK_VIEW_TAG) {
+            [blackV removeFromSuperview];
+        }
+    }
+    
     switch ((int)status) {
-        case Scan:
             
-                imageName = @"scanning_icon";
+        case Scan: case Waiting: case Queue:
+            
+                imageName = @"cross_icon";
             
             break;
             
         case Inquiry:
             
-                imageName = @"inquiry_icon" ;
+                imageName = @"upload_icon" ;
             
             break;
             
-        case Done:
+        case Done: case Audit:
             
-            for (UIView *blackV in [self.contentView subviews]) {
-                if (blackV.tag == BLACK_VIEW_TAG) {
-                    [blackV removeFromSuperview];
-                }
-            }
-                return;
+            self.thumbStatus = status;
+            imageName = @"approved_icon" ;
             
             break;
             
@@ -72,18 +75,20 @@
             break;
     }
     
+    self.thumbStatus = status;
+    
     UIView *blackV = [UIView new];
     [blackV setFrame:CGRectMake(0, 0, 100, 100)];
-    [blackV setBackgroundColor:[UIColor blackColor]];
-    [blackV.layer setOpacity:0.5f];
+    [blackV setBackgroundColor:[UIColor whiteColor]];
+    [blackV.layer setOpacity:0.7f];
     [blackV setTag:BLACK_VIEW_TAG];
     
     UIImageView *imageV = [UIImageView new];
-    [imageV setFrame:CGRectMake(25, 20, 50, 50)];
+    [imageV setFrame:CGRectMake(30, 25, 40, 40)];
     [imageV setImage:[UIImage imageNamed:imageName ]];
     
-    [blackV addSubview:imageV];
-    [self.contentView addSubview:blackV];
+    //[self.contentView addSubview:blackV];
+    [self.contentView addSubview:imageV];
 }
 
 

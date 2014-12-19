@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InvoiceVC">
             <connections>
+                <outlet property="centerCamera" destination="7SJ-7h-m0H" id="BDM-CS-tdr"/>
                 <outlet property="headerDate" destination="YHh-oE-1Df" id="EjW-72-xMn"/>
                 <outlet property="headerItems" destination="PNb-Ph-rmI" id="5kA-t7-h5z"/>
                 <outlet property="headerTotal" destination="OPO-hE-pif" id="mlL-Qp-VdY"/>
@@ -23,29 +24,11 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Yt-Nh-3XM" userLabel="TopMenus">
+                <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Yt-Nh-3XM" userLabel="TopMenus">
                     <rect key="frame" x="0.0" y="63" width="320" height="50"/>
                     <subviews>
-                        <button clipsSubviews="YES" tag="1" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UbE-wu-h29" userLabel="Human">
-                            <rect key="frame" x="25" y="9" width="40" height="32"/>
-                            <state key="normal" image="inv_client_icon">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="openViewByThisTab:" destination="-1" eventType="touchUpInside" id="Dv7-cr-grK"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" tag="2" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbY-ai-g26" userLabel="Gallery">
-                            <rect key="frame" x="104" y="8" width="36" height="32"/>
-                            <state key="normal" image="inv_gallery_icon">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="openViewByThisTab:" destination="-1" eventType="touchUpInside" id="7kp-VB-Njz"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tOh-1r-bG1" userLabel="Export">
-                            <rect key="frame" x="265" y="7" width="33" height="33"/>
+                        <button hidden="YES" opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tOh-1r-bG1" userLabel="Export">
+                            <rect key="frame" x="500" y="7" width="33" height="33"/>
                             <state key="normal" image="inv_export_icon">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -53,8 +36,8 @@
                                 <action selector="openViewByThisTab:" destination="-1" eventType="touchUpInside" id="ZfL-wa-HNw"/>
                             </connections>
                         </button>
-                        <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X8n-6A-cCK" userLabel="Email">
-                            <rect key="frame" x="187" y="13" width="40" height="23"/>
+                        <button hidden="YES" opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X8n-6A-cCK" userLabel="Email">
+                            <rect key="frame" x="500" y="13" width="40" height="23"/>
                             <state key="normal" image="mail_icon">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -65,16 +48,16 @@
                     </subviews>
                     <color key="backgroundColor" red="0.35294117650000001" green="0.80784313730000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CNW-ei-Hxx">
-                    <rect key="frame" x="0.0" y="112" width="320" height="70"/>
+                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CNW-ei-Hxx" userLabel="TopView">
+                    <rect key="frame" x="0.0" y="50" width="320" height="70"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="TOTAL: P0.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPO-hE-pif">
                             <rect key="frame" x="0.0" y="2" width="320" height="55"/>
-                            <fontDescription key="fontDescription" name="DevanagariSangamMN-Bold" family="Devanagari Sangam MN" pointSize="25"/>
+                            <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="25"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0 item/s" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PNb-Ph-rmI">
+                        <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0 item/s" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PNb-Ph-rmI">
                             <rect key="frame" x="47" y="36" width="69" height="37"/>
                             <fontDescription key="fontDescription" name="DevanagariSangamMN-Bold" family="Devanagari Sangam MN" pointSize="12"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -89,19 +72,19 @@
                     </subviews>
                     <color key="backgroundColor" red="0.97254901959999995" green="0.57254901960000004" blue="0.0" alpha="0.57999999999999996" colorSpace="calibratedRGB"/>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="8gj-h6-L6A">
-                    <rect key="frame" x="0.0" y="182" width="320" height="334"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="8gj-h6-L6A">
+                    <rect key="frame" x="0.0" y="120" width="320" height="455"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="L62-o7-gbK"/>
                         <outlet property="delegate" destination="-1" id="sLF-TA-sEL"/>
                     </connections>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G76-gy-tMW">
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G76-gy-tMW">
                     <rect key="frame" x="0.0" y="524" width="320" height="45"/>
-                    <color key="backgroundColor" red="0.35294117650000001" green="0.80784313730000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.015686274509803921" green="0.2627450980392157" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="15"/>
-                    <state key="normal" title="+ Add category">
+                    <state key="normal">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -109,22 +92,48 @@
                         <action selector="addCategory:" destination="-1" eventType="touchUpInside" id="m3M-Ch-U7v"/>
                     </connections>
                 </button>
+                <button clipsSubviews="YES" tag="1" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UbE-wu-h29" userLabel="Human">
+                    <rect key="frame" x="43" y="528" width="40" height="32"/>
+                    <state key="normal" image="inv_client_icon">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="openViewByThisTab:" destination="-1" eventType="touchUpInside" id="Dv7-cr-grK"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="2" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbY-ai-g26" userLabel="Gallery">
+                    <rect key="frame" x="231" y="528" width="35" height="32"/>
+                    <state key="normal" image="inv_gallery_icon">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="openViewByThisTab:" destination="-1" eventType="touchUpInside" id="7kp-VB-Njz"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7SJ-7h-m0H">
+                    <rect key="frame" x="120" y="490" width="80" height="80"/>
+                    <state key="normal" image="camera_icon_blue">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="actionLaunchAppCamera:" destination="-1" eventType="touchUpInside" id="1ZK-Bu-AmD"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <accessibility key="accessibilityConfiguration" label="INVOICE"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="7Yt-Nh-3XM" secondAttribute="trailing" id="27G-gi-qHB"/>
-                <constraint firstAttribute="trailing" secondItem="CNW-ei-Hxx" secondAttribute="trailing" id="BKs-w7-nGu"/>
                 <constraint firstItem="OPO-hE-pif" firstAttribute="top" secondItem="7Yt-Nh-3XM" secondAttribute="bottom" constant="1" id="Bcc-fL-urK"/>
-                <constraint firstItem="CNW-ei-Hxx" firstAttribute="top" secondItem="7Yt-Nh-3XM" secondAttribute="bottom" constant="-1" id="P9M-oY-Fih"/>
+                <constraint firstItem="8gj-h6-L6A" firstAttribute="top" secondItem="CNW-ei-Hxx" secondAttribute="bottom" id="HjL-TK-r23"/>
                 <constraint firstAttribute="bottom" secondItem="G76-gy-tMW" secondAttribute="bottom" constant="-1" id="Sb2-zz-grs"/>
-                <constraint firstItem="CNW-ei-Hxx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="W3b-OA-B5P"/>
                 <constraint firstItem="7Yt-Nh-3XM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="63" id="oKV-7s-2x9"/>
                 <constraint firstItem="7Yt-Nh-3XM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="soC-rJ-XiX"/>
             </constraints>
         </view>
     </objects>
     <resources>
+        <image name="camera_icon_blue" width="128" height="128"/>
         <image name="inv_client_icon" width="60" height="60"/>
         <image name="inv_export_icon" width="61" height="61"/>
         <image name="inv_gallery_icon" width="60" height="60"/>

@@ -7,12 +7,14 @@
 //
 
 #import "ClientListVC.h"
+#import "AddClientViewController.h"
 
 @interface ClientListVC () <UITableViewDataSource, UITableViewDelegate>
 {
     
     NSArray *tableSections;
-    
+    NSMutableArray *clientLists;
+    NSMutableArray *clients;
 }
 @end
 
@@ -35,10 +37,37 @@
     
 }
 
+- (void) viewDidAppear:(BOOL)animated {
+    [self refreshData];
+}
+
+- (void) refreshData
+{
+    clientLists = [NSMutableArray new];
+    clientLists = [[SortrDataManager sharedInstance] getAllClients];
+    
+    clients = [NSMutableArray array];
+    
+    for (int x = 0; x < tableSections.count; x++) {
+        
+        NSMutableArray *newArray = [NSMutableArray new];
+        [clients addObject:newArray];
+    }
+    
+    for (ClientObject *c in clientLists) {
+        
+        int index = [self indexOfFirstCharacter:c.name];
+        [[clients objectAtIndex:index] addObject:c];
+        
+    }
+    
+    [self.clientListTableView reloadData];
+}
+
 #pragma mark UITABLEVIEW DELEGATES
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return [[clients objectAtIndex:section] count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -58,6 +87,46 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return [tableSections objectAtIndex:section];
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString *CellIdentifier = @"clientcell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] ;
+    }
+
+    NSMutableArray *clientOnArray = [clients objectAtIndex:indexPath.section];
+    ClientObject *client          = (ClientObject*)[clientOnArray objectAtIndex:indexPath.row];
+    [cell.textLabel setText:client.name];
+    
+    return cell;
+}
+
+- (IBAction)addClient:(id)sender {
+    AddClientViewController *clvc = [[AddClientViewController alloc] init];
+    [self presentViewController:clvc animated:YES completion:nil];
+}
+
+- (int) indexOfFirstCharacter : (NSString*) clientName {
+    
+    if (clientName.length == 0) {
+        return 0;
+    }
+    
+     NSString *firstLetter = [clientName substringToIndex:1];
+    int count = 0;
+    
+    for (NSString *letter in tableSections) {
+        if ([[letter lowercaseString] isEqualToString: [firstLetter lowercaseString]]) {
+            return count;
+        }
+        count++;
+    }
+    
+    return 0;
 }
 
 - (void)didReceiveMemoryWarning

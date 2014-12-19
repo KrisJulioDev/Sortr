@@ -8,12 +8,24 @@
 
 #import "SortrDataManager.h"
 #import "ReceiptData.h"
+#import <Realm/Realm.h>
+
+@implementation ReceiptObject
+//NO IMPLEMENTATION
+@end
+
+@implementation ClientObject
+//NO IMPLEMENTATION
+@end
+
+@implementation CategoryObject
+//NO IMPLEMENTATION
+@end
+
+RLM_ARRAY_TYPE(ReceiptObject)
 
 @implementation SortrDataManager
 
-@synthesize managedObjectContext       = __managedObjectContext;
-@synthesize managedObjectModel         = __managedObjectModel;
-@synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
 +(instancetype)sharedInstance
 {
@@ -29,120 +41,186 @@
     return sharedInstance;
 }
 
-//SAVE TO DB
+#pragma RECEIPTS OBJECT
 - (void) saveTotalData:(NSString*)rid
               category:(NSString*)category
                  image:(NSData*) imageData
              withTotal:(NSString*)total
                    vat:(NSString*)value
                 branch:(NSString*)name
-           receiptDate:(NSString*)date {
+           receiptDate:(NSString*)date
+            clientName:(NSString*)clientName
+         receiptStatus:(int)status{
     
-    NSManagedObjectContext *context = [self managedObjectContext];
-    ReceiptData *receiptData = [NSEntityDescription
-                                insertNewObjectForEntityForName:@"ReceiptData"
-                                inManagedObjectContext:context];
+    ReceiptObject *receiptobj =  [[ReceiptObject alloc] init];
     
-    receiptData.id          = rid;
-    receiptData.image       = imageData;
-    receiptData.category    = category;
-    receiptData.total       = total;
-    receiptData.vat         = value;
-    receiptData.branch      = name;
-    receiptData.date        = date;
+    receiptobj.receiptId     = rid;
+    receiptobj.image         = imageData;
+    receiptobj.category      = category;
+    receiptobj.total         = total;
+    receiptobj.vat           = value;
+    receiptobj.branch        = name;
+    receiptobj.date          = date;
+    receiptobj.client        = clientName;
+    receiptobj.receiptStatus = status;
     
-    NSError *error;
-    if (![context save:&error]) {
-        NSLog(@"SAVING FAILED. THERE'S AN ERROR");
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    [realm addObject:receiptobj];
+    [realm commitWriteTransaction];
+}
+
+- (void) saveNewStatus:(NSString*)receiptId withStatus: (int) status {
+    
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    
+    RLMResults *results =  [ReceiptObject objectsWhere:[NSString stringWithFormat:@"receiptId contains '%@'", receiptId]];
+    if (results) {
+        ReceiptObject *object   = (ReceiptObject*)[results objectAtIndex:0];
+        object.receiptStatus    = status;
     }
+    
+    [realm commitWriteTransaction];
+    
 }
 
-- (NSArray*) getAllReceiptData {
+- (void) updateReceipt : (NSString*) tempId
+         withOfficialID:(NSString*)officialID
+               category:(NSString*)category
+              withTotal:(NSString*)total
+                    vat:(NSString*)value
+                 branch:(NSString*)name
+            receiptDate:(NSString*)date
+             clientName:(NSString*)clientName
+          receiptStatus:(int)status  {
     
-    NSManagedObjectContext *context = [self managedObjectContext]; 
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    RLMResults *results =  [ReceiptObject objectsInRealm:realm where:[NSString stringWithFormat:@"receiptId contains '%@'", tempId]];
     
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ReceiptData"
-                                              inManagedObjectContext:context];
-    [fetchRequest setEntity:entity];
+    if ([ results count ] > 0) {
+            [realm beginWriteTransaction];
+            
+            ReceiptObject *receiptobj = (ReceiptObject*)results[0];
+            
+            receiptobj.receiptId     = officialID;
+            receiptobj.category      = category;
+            receiptobj.total         = total;
+            receiptobj.vat           = value;
+            receiptobj.branch        = name;
+            receiptobj.date          = date;
+            receiptobj.client        = clientName;
+            receiptobj.receiptStatus = status;
+            
+            [realm commitWriteTransaction];
+        
+    }
+    else {
+        results =  [ReceiptObject objectsInRealm:realm where:[NSString stringWithFormat:@"receiptId contains '%@'", officialID]];
+        
+        if ([results count] > 0) {
+            [realm beginWriteTransaction];
+            
+            ReceiptObject *receiptobj = (ReceiptObject*)results[0];
+            
+            receiptobj.receiptId     = officialID;
+            receiptobj.category      = category;
+            receiptobj.total         = total;
+            receiptobj.vat           = value;
+            receiptobj.branch        = name;
+            receiptobj.date          = date;
+            receiptobj.receiptStatus = status;
+            
+            [realm commitWriteTransaction];
+        }
+    }
     
-    NSError *error;
-    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-
-    return fetchedObjects;
 }
 
-// Returns the managed object context for the application.
-// If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
-- (NSManagedObjectContext *)managedObjectContext
+- (NSMutableArray*) getAllReceiptData {
+    
+    NSMutableArray *arrayOfReceipts = [NSMutableArray new];
+    for (ReceiptObject *receipt in [ReceiptObject allObjects]) {
+        [arrayOfReceipts addObject:receipt];
+    }
+    
+    return arrayOfReceipts;
+}
+
+#pragma mark CLIENT OBJECT
+- (void) saveClientWithName:(NSString*) name address:(NSString*)address andPhone:(NSString*)phone
 {
-    if (__managedObjectContext != nil) {
-        return __managedObjectContext;
+    if (name.length == 0) {
+        NSLog(@"FAILED TO SAVE, NAME IS NULL");
+        return;
     }
     
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-         __managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [__managedObjectContext setPersistentStoreCoordinator:coordinator];
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    RLMResults *results =  [ClientObject objectsInRealm:realm where:[NSString stringWithFormat:@"name contains '%@'", name]];
+    
+    if (results.count > 0) {
+        return;
     }
-    return __managedObjectContext;
+    
+    ClientObject *newClient = [[ClientObject alloc] init];
+    
+    newClient.name = name;
+    newClient.address = address;
+    newClient.phone = phone;
+    
+    [realm beginWriteTransaction];
+    [realm addObject:newClient];
+    [realm commitWriteTransaction];
 }
 
-// Returns the managed object model for the application.
-// If the model doesn't already exist, it is created from the application's model.
-- (NSManagedObjectModel *) manageObjectModel {
-    
-    if (__managedObjectModel != nil) {
-        return __managedObjectModel;
-    }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Sortr" withExtension:@"momd"];
-    __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    return __managedObjectModel;
-    
-}
-
-// Returns the persistent store coordinator for the application.
-// If the coordinator doesn't already exist, it is created and the application's store added to it.
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+- (NSMutableArray*) getAllClients
 {
-    if (__persistentStoreCoordinator != nil) {
-        return __persistentStoreCoordinator;
+    NSMutableArray *arrayOfClients = [NSMutableArray new];
+    
+    for (ClientObject *receipt in [ClientObject allObjects]) {
+        [arrayOfClients addObject:receipt];
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Sortr.sqlite"];
-    
-    NSError *error = nil;
-    __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self manageObjectModel]];
-    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-        /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-         
-         Typical reasons for an error here include:
-         * The persistent store is not accessible;
-         * The schema for the persistent store is incompatible with current managed object model.
-         Check the error message to determine what the actual problem was.
-         
-         
-         If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
-         
-         If you encounter schema incompatibility errors during development, you can reduce their frequency by:
-         * Simply deleting the existing store:
-         [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
-         
-         * Performing automatic lightweight migration by passing the following dictionary as the options parameter:
-         [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
-         
-         Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
-         
-         */
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    
-    return __persistentStoreCoordinator;
+    return arrayOfClients;
 }
+
+#pragma mark CATEGORY
+- (void) saveCategoryWithName:(NSString*) name
+{
+    if (name.length == 0) {
+        NSLog(@"FAILED TO SAVE, NAME IS NULL");
+        return;
+    }
+    
+    
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    RLMResults *results =  [CategoryObject objectsInRealm:realm where:[NSString stringWithFormat:@"name contains '%@'", name]];
+    
+    if (results.count > 0) {
+        return;
+    }
+    
+    CategoryObject  *newCategory = [[CategoryObject alloc] init];
+    newCategory.name = name;
+    
+    
+    [realm beginWriteTransaction];
+    [realm addObject:newCategory];
+    [realm commitWriteTransaction];
+}
+
+- (NSMutableArray*) getAllCategories
+{
+    NSMutableArray *arrayOfCategories = [NSMutableArray new];
+    
+    for (CategoryObject *cat in [CategoryObject allObjects]) {
+        [arrayOfCategories addObject:cat];
+    }
+    
+    return arrayOfCategories;
+}
+
+
 
 // Returns the URL to the application's Documents directory.
 - (NSURL *)applicationDocumentsDirectory

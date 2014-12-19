@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SortrSettingsViewController">
+            <connections>
+                <outlet property="categoryField" destination="nrS-rG-2hu" id="Zjv-ZW-PAH"/>
+                <outlet property="countryCode" destination="FbH-Ke-4Le" id="AdD-mn-o5E"/>
+                <outlet property="countryPicker" destination="b23-kE-ZQF" id="w4p-sM-KgG"/>
+                <outlet property="doneBtn" destination="c4W-Ve-dwW" id="JNe-z3-kpw"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b23-kE-ZQF" customClass="CountryPicker">
+                    <rect key="frame" x="0.0" y="345" width="600" height="216"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="bFb-fF-GUb"/>
+                        <outlet property="delegate" destination="-1" id="gbr-wD-TqK"/>
+                    </connections>
+                </pickerView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="COUNTRY CODE:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FbH-Ke-4Le">
+                    <rect key="frame" x="59" y="533" width="273" height="28"/>
+                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="24"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Select Country" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0MY-0t-hGt">
+                    <rect key="frame" x="0.0" y="302" width="600" height="43"/>
+                    <color key="backgroundColor" red="0.35294117650000001" green="0.80784313730000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="43" id="DMO-cw-HG9"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="DINCondensed-Bold" family="DIN Condensed" pointSize="24"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDO-jL-8O3">
+                    <rect key="frame" x="0.0" y="51" width="600" height="43"/>
+                    <color key="backgroundColor" red="0.35294117650000001" green="0.80784313730000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="43" id="SIi-60-USF"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="DINCondensed-Bold" family="DIN Condensed" pointSize="24"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Category name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nrS-rG-2hu">
+                    <rect key="frame" x="16" y="120" width="568" height="32"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="0.26000000000000001" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="Gfw-Xm-L9m"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zXn-WA-rjV">
+                    <rect key="frame" x="107" y="175" width="387" height="30"/>
+                    <color key="backgroundColor" red="0.97254901959999995" green="0.57254901960000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="15"/>
+                    <state key="normal" title="ADD CATEGORY">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="addCategory:" destination="-1" eventType="touchUpInside" id="adS-Hv-TBu"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c4W-Ve-dwW">
+                    <rect key="frame" x="0.0" y="558" width="600" height="42"/>
+                    <color key="backgroundColor" red="0.97254901959999995" green="0.57254901960000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="22"/>
+                    <state key="normal" title="Done">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="doneSettings:" destination="-1" eventType="touchUpInside" id="vDO-iJ-wmq"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="zDO-jL-8O3" secondAttribute="trailing" id="0go-bb-w4b"/>
+                <constraint firstItem="zDO-jL-8O3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="26Y-nk-mE5"/>
+                <constraint firstAttribute="bottom" secondItem="b23-kE-ZQF" secondAttribute="bottom" constant="63" id="2cL-bu-r7R"/>
+                <constraint firstAttribute="trailing" secondItem="b23-kE-ZQF" secondAttribute="trailing" id="3dO-Fe-xdm"/>
+                <constraint firstItem="zXn-WA-rjV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="3fJ-mB-vU8"/>
+                <constraint firstItem="FbH-Ke-4Le" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="63" id="6NE-ZN-FZn"/>
+                <constraint firstItem="b23-kE-ZQF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="8UG-bh-dBK"/>
+                <constraint firstAttribute="trailing" secondItem="zXn-WA-rjV" secondAttribute="trailing" constant="16" id="9fy-Wg-Ohd"/>
+                <constraint firstItem="nrS-rG-2hu" firstAttribute="top" secondItem="zDO-jL-8O3" secondAttribute="bottom" constant="26" id="BMa-13-iQP"/>
+                <constraint firstAttribute="bottom" secondItem="c4W-Ve-dwW" secondAttribute="bottom" id="De6-lB-F2A"/>
+                <constraint firstItem="zXn-WA-rjV" firstAttribute="top" secondItem="nrS-rG-2hu" secondAttribute="bottom" constant="23" id="KJi-O4-BNa"/>
+                <constraint firstItem="zDO-jL-8O3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="51" id="USO-9c-SZz"/>
+                <constraint firstItem="nrS-rG-2hu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="17" id="UgH-72-XFb"/>
+                <constraint firstItem="c4W-Ve-dwW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Xh9-As-zBY"/>
+                <constraint firstAttribute="trailing" secondItem="c4W-Ve-dwW" secondAttribute="trailing" id="Zfy-S0-V2g"/>
+                <constraint firstItem="nrS-rG-2hu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="hks-Z6-4WM"/>
+                <constraint firstAttribute="trailing" secondItem="0MY-0t-hGt" secondAttribute="trailing" id="leL-5D-KGe"/>
+                <constraint firstItem="b23-kE-ZQF" firstAttribute="top" secondItem="0MY-0t-hGt" secondAttribute="bottom" id="pxH-nu-7Xw"/>
+                <constraint firstAttribute="trailing" secondItem="nrS-rG-2hu" secondAttribute="trailing" constant="16" id="smm-bo-8mp"/>
+                <constraint firstItem="0MY-0t-hGt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ySZ-wc-cqa"/>
+            </constraints>
+            <point key="canvasLocation" x="441" y="282"/>
+        </view>
+    </objects>
+</document>

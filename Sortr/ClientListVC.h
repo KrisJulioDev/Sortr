@@ -11,5 +11,6 @@
 @interface ClientListVC : UIViewController
 
 @property (nonatomic, strong) IBOutlet UITableView *clientListTableView;
+- (void) refreshData;
 
 @end

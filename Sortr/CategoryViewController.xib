@@ -10,7 +10,6 @@
                 <outlet property="photoContainer" destination="CXs-ee-ORe" id="YBn-TC-PdI"/>
                 <outlet property="receiptTable" destination="2Qa-dc-s51" id="g6w-Ca-iOP"/>
                 <outlet property="scanBtn" destination="nAP-Hl-tva" id="iTg-nu-8BK"/>
-                <outlet property="totalLabel" destination="baM-Kz-QhD" id="Eee-z2-AUh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,13 +18,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="TOTAL : 92547 " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="baM-Kz-QhD">
-                    <rect key="frame" x="84" y="72" width="421" height="63"/>
-                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="30"/>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <collectionView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="CXs-ee-ORe">
+                <collectionView hidden="YES" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="CXs-ee-ORe">
                     <rect key="frame" x="0.0" y="139" width="600" height="110"/>
                     <color key="backgroundColor" red="0.35294117650000001" green="0.80784313730000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="15" minimumInteritemSpacing="3" id="8ik-jo-nT0">
@@ -40,15 +33,7 @@
                         <outlet property="delegate" destination="-1" id="Mg3-U1-Fz1"/>
                     </connections>
                 </collectionView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2Qa-dc-s51">
-                    <rect key="frame" x="0.0" y="260" width="600" height="280"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="YgL-H7-ijU"/>
-                        <outlet property="delegate" destination="-1" id="cIQ-nS-LHv"/>
-                    </connections>
-                </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nAP-Hl-tva">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nAP-Hl-tva">
                     <rect key="frame" x="0.0" y="555" width="600" height="45"/>
                     <color key="backgroundColor" red="0.35294117650000001" green="0.80784313730000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -63,20 +48,26 @@
                         <action selector="scanReceipt:" destination="-1" eventType="touchUpInside" id="nnD-zP-OgN"/>
                     </connections>
                 </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2Qa-dc-s51">
+                    <rect key="frame" x="0.0" y="70" width="600" height="530"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="YgL-H7-ijU"/>
+                        <outlet property="delegate" destination="-1" id="cIQ-nS-LHv"/>
+                    </connections>
+                </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="nAP-Hl-tva" secondAttribute="bottom" id="6TC-Or-sfb"/>
-                <constraint firstItem="CXs-ee-ORe" firstAttribute="top" secondItem="baM-Kz-QhD" secondAttribute="bottom" constant="4" id="KgQ-kC-fbj"/>
-                <constraint firstItem="2Qa-dc-s51" firstAttribute="top" secondItem="CXs-ee-ORe" secondAttribute="bottom" id="LvQ-oQ-V10"/>
                 <constraint firstAttribute="trailing" secondItem="CXs-ee-ORe" secondAttribute="trailing" id="NLp-YO-yxW"/>
                 <constraint firstAttribute="trailing" secondItem="nAP-Hl-tva" secondAttribute="trailing" id="TF8-Yc-0la"/>
+                <constraint firstItem="2Qa-dc-s51" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="TWN-o4-BhU"/>
                 <constraint firstItem="CXs-ee-ORe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Uoe-sZ-FLZ"/>
                 <constraint firstItem="nAP-Hl-tva" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mbF-2x-bJY"/>
-                <constraint firstAttribute="centerX" secondItem="baM-Kz-QhD" secondAttribute="centerX" id="qIs-rp-cya"/>
-                <constraint firstItem="nAP-Hl-tva" firstAttribute="top" secondItem="2Qa-dc-s51" secondAttribute="bottom" constant="5" id="rC6-NB-Qdc"/>
-                <constraint firstItem="baM-Kz-QhD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="62" id="t3z-tQ-9o0"/>
+                <constraint firstItem="nAP-Hl-tva" firstAttribute="top" secondItem="2Qa-dc-s51" secondAttribute="bottom" constant="-45" id="rC6-NB-Qdc"/>
             </constraints>
+            <point key="canvasLocation" x="527" y="360"/>
         </view>
     </objects>
 </document>

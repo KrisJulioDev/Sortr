@@ -5,6 +5,9 @@
 //
 
 #import <Availability.h>
+#import "Constants.h"
+#import "SavedSettings.h"
+#import "SortrDataManager.h"
 
 #ifndef __IPHONE_3_0
 #warning "This project uses features only available in iOS SDK 3.0 and later."

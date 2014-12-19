@@ -9,11 +9,14 @@
 #import "InvoiceImagesVC.h"
 #import "ThumbCell.h"
 #import "Utilities.h"
+#import "ReceiptInfoViewController.h"
+#import "SortrReceipt.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
 @interface InvoiceImagesVC () <UICollectionViewDataSource, UICollectionViewDelegate>
 {
     NSMutableArray *invoiceImages;
+    NSMutableArray  *receipts;
 }
 @end
 
@@ -38,49 +41,19 @@
     [self.invoiceCollectionView registerClass:[ThumbCell class] forCellWithReuseIdentifier:@"invoiceItem"];
     
     //SHOW INDICATOR
-    [Utilities showActivityIndicator:self];
-    
-    dispatch_async(dispatch_get_main_queue(), ^
-                   {
-                       [self displayBookItems];
-                   });
+    [self displayBookItems];
 }
 
 #pragma mark FETCH PHOTO
 - (void) displayBookItems
 {
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    receipts = [[SortrDataManager sharedInstance] getAllReceiptData];
     
-    // Enumerate just the photos and videos group by using ALAssetsGroupSavedPhotos.
-    [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        
-        // Within the group enumeration block, filter to enumerate just photos.
-        [group setAssetsFilter:[ALAssetsFilter allPhotos]];
-        
-        // Chooses the photo at the last index
-        [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *alAsset, NSUInteger index, BOOL *innerStop)
-         {
-             if (alAsset) {
-                 ALAssetRepresentation *representation = [alAsset defaultRepresentation];
-                 UIImage *latestPhoto = [UIImage imageWithCGImage:[representation fullScreenImage]];
-                 
-                 // Stop the enumerations
-                 *stop = YES;
-                 
-                 //                UIImage *latestPhotoThumbnail =  [UIImage imageWithCGImage:[alAsset thumbnail]];
-                 [invoiceImages addObject:latestPhoto];
-             }
-         }];
-        
-         if (group == nil) {
-             [self.invoiceCollectionView reloadData];
-             [Utilities hideActivityIndicator:self];
-         }
-        
-    } failureBlock: ^(NSError *error) {
-        // Typically you should handle an error more gracefully than this.
-        NSLog(@"No groups");
-    }];
+    for (ReceiptObject *receipt in receipts) {
+            UIImage *image = [UIImage imageWithData:receipt.image];
+            [invoiceImages addObject:image];
+    }
+    
 }
 
 #pragma mark UICOLLECTION DELEGATE
@@ -93,10 +66,28 @@
 - (UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ThumbCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"invoiceItem" forIndexPath:indexPath];
+    ReceiptObject *rc = [receipts objectAtIndex:indexPath.row];
     
     [cell assignThumbImage:[invoiceImages objectAtIndex:indexPath.row]];
+    [cell setStatus:rc.receiptStatus];
+    cell.layer.shadowColor = [UIColor blackColor].CGColor;
+    cell.layer.shadowOpacity = 0.5f;
+    cell.layer.shadowRadius = 2;
+    
     
     return cell;
+}
+
+- (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    ReceiptObject *rc = [receipts objectAtIndex:indexPath.row];
+    if (rc.receiptStatus >= Audit) {
+        
+        ReceiptInfoViewController *rcc = [[ReceiptInfoViewController alloc] init];
+        rcc.receiptData = [receipts objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:rcc animated:YES];
+        
+    }
 }
  
 

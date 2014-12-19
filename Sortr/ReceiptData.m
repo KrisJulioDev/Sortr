@@ -16,6 +16,6 @@
 @dynamic total;
 @dynamic vat;
 @dynamic date;
-@dynamic id;
+@dynamic receiptId;
 
 @end

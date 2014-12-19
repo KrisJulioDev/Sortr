@@ -7,12 +7,39 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Realm/Realm.h>
+#import "Constants.h"
+
+@interface ReceiptObject : RLMObject
+
+@property  NSString  *receiptId;
+@property  NSData    *image;
+@property  NSString  *category;
+@property  NSString  *branch;
+@property  NSString  *total;
+@property  NSString  *vat;
+@property  NSString  *date;
+@property  NSString  *client;
+@property  int        receiptStatus;
+
+@end
+
+
+@interface ClientObject : RLMObject
+
+@property NSString *name;
+@property NSString *address;
+@property NSString *phone;
+
+@end
+
+@interface CategoryObject : RLMObject
+@property NSString *name;
+@end
+  
 
 @interface SortrDataManager : NSObject
 
-@property (readonly, strong, nonatomic) NSManagedObjectContext       *managedObjectContext;
-@property (readonly, strong, nonatomic) NSManagedObjectModel         *managedObjectModel;
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 @property (retain           ) NSMutableArray *bookItems;
 @property (nonatomic, retain) NSMutableArray *categoryLists;
@@ -25,10 +52,27 @@
              withTotal:(NSString*)total
                    vat:(NSString*)value
                 branch:(NSString*)name
-           receiptDate:(NSString*)date;
+           receiptDate:(NSString*)date
+            clientName:(NSString*)clientName
+         receiptStatus:(int)status;
 
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator;
-- (NSManagedObjectModel *) manageObjectModel;
-- (NSManagedObjectContext *)managedObjectContext;
-- (NSArray*) getAllReceiptData;
+- (void) updateReceipt : (NSString*) tempId
+         withOfficialID:(NSString*)officialID
+               category:(NSString*)category
+              withTotal:(NSString*)total
+                    vat:(NSString*)value
+                 branch:(NSString*)name
+            receiptDate:(NSString*)date
+             clientName:(NSString*)clientName
+          receiptStatus:(int)status;
+
+- (void) saveClientWithName:(NSString*) name address:(NSString*)address andPhone:(NSString*)phone;
+
+- (void) saveNewStatus:(NSString*)receiptId withStatus: (int) status;
+- (void) saveCategoryWithName:(NSString*) name;
+
+- (NSMutableArray*) getAllReceiptData;
+- (NSMutableArray*) getAllClients;
+- (NSMutableArray*) getAllCategories;
+
 @end

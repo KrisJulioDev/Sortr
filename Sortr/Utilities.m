@@ -94,5 +94,11 @@
     return cbv;
 }
 
+#pragma mark COnnection
++ (BOOL) isConnectedToInternet
+{
+    NSString *URLString = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"http://www.google.com"]];
+    return ( URLString != NULL ) ? YES : NO;
+}
 
 @end

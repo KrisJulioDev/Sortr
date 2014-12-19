@@ -17,4 +17,7 @@
 
 + (NSString*) lookFor:(NSString*)searchOption onThis: (NSString*) stringData;
 
++ (int) receiptStatusWithString : (NSString*) str;
++ (UIImage *) doBinarize:(UIImage *)sourceImage;
+
 @end

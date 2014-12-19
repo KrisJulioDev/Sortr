@@ -23,7 +23,12 @@
     
     UINavigationController *startNVC = [[UINavigationController alloc] initWithRootViewController:mainVC];
     
-    [[UINavigationBar appearance] setBarTintColor:SORTR_BLUE]; 
+    [[UINavigationBar appearance] setBarTintColor:SORTR_BLUE];
+    
+    //SET DEFAULT FOR COUNTRY
+    if (![SavedSettings settingsCountryCode]) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"PH" forKey:kSavedCountryCode];
+    }
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     

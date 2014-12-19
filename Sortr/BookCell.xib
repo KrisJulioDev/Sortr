@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,23 +15,33 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="NAKED LUNCH" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lpg-vH-rkP">
-                        <rect key="frame" x="20" y="10" width="280" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="NAKED LUNCH" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="13" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lpg-vH-rkP">
+                        <rect key="frame" x="70" y="10" width="240" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="William S. Burroughs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J6a-Gh-eyU">
-                        <rect key="frame" x="20" y="39" width="197" height="21"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="William S. Burroughs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="J6a-Gh-eyU">
+                        <rect key="frame" x="70" y="39" width="240" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aaD-Wn-Xny">
-                        <rect key="frame" x="0.0" y="0.0" width="310" height="70"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="E8x-ma-YIq">
+                        <rect key="frame" x="5" y="5" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="bnf-wT-61I"/>
+                        </constraints>
+                    </imageView>
+                    <view alpha="0.69999999999999996" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aaD-Wn-Xny">
+                        <rect key="frame" x="600" y="0.0" width="310" height="70"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ahe-9s-GEd">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ahe-9s-GEd">
                                 <rect key="frame" x="5" y="5" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="6DX-q9-djR"/>
+                                    <constraint firstAttribute="height" constant="60" id="zAX-dd-xaG"/>
+                                </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="WAITING TO SCAN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ckR-95-dgb">
                                 <rect key="frame" x="73" y="15" width="180" height="40"/>
@@ -43,13 +54,27 @@
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="ahe-9s-GEd" firstAttribute="leading" secondItem="aaD-Wn-Xny" secondAttribute="leading" constant="5" id="J4d-hA-1ht"/>
+                            <constraint firstAttribute="bottom" secondItem="ahe-9s-GEd" secondAttribute="bottom" constant="5" id="ewz-M0-8He"/>
+                            <constraint firstItem="ahe-9s-GEd" firstAttribute="top" secondItem="aaD-Wn-Xny" secondAttribute="top" constant="5" id="pnQ-ni-Eew"/>
+                        </constraints>
                     </view>
                 </subviews>
                 <color key="backgroundColor" red="0.97254901959999995" green="0.57254901960000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="E8x-ma-YIq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-3" id="7iW-zN-wD0"/>
+                    <constraint firstItem="aaD-Wn-Xny" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="Y3Z-6H-ckt"/>
+                    <constraint firstItem="lpg-vH-rkP" firstAttribute="leading" secondItem="E8x-ma-YIq" secondAttribute="trailing" constant="5" id="bMe-at-Fz9"/>
+                    <constraint firstItem="E8x-ma-YIq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-3" id="jlg-dW-Kho"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="lpg-vH-rkP" secondAttribute="trailing" constant="2" id="nS2-Ed-Kvs"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="E8x-ma-YIq" secondAttribute="bottom" constant="-4" id="vAK-3D-JLH"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="processingView" destination="aaD-Wn-Xny" id="XHb-5V-tfx"/>
                 <outlet property="receiptImage" destination="ahe-9s-GEd" id="06Q-jo-dap"/>
+                <outlet property="receiptImageDone" destination="E8x-ma-YIq" id="Tkv-cd-UJB"/>
                 <outlet property="receiptName" destination="lpg-vH-rkP" id="dbh-kW-I7G"/>
                 <outlet property="receiptPrice" destination="J6a-Gh-eyU" id="QOc-vY-NJu"/>
                 <outlet property="receiptStatus" destination="ckR-95-dgb" id="Nzw-fD-YPJ"/>

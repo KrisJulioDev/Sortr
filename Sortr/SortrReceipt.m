@@ -7,7 +7,8 @@
 //
 
 #import "SortrReceipt.h"
-#import "Constants.h"
+#import "Constants.h" 
+#import "GPUImage.h"
 
 @implementation SortrReceipt
 
@@ -107,4 +108,56 @@
     
     return isCharacter;
 }
+
++ (int) receiptStatusWithString : (NSString*) str {
+    
+    int status = 0;
+    
+    if ([str isEqualToString:@"NEW"]) {
+        status = 1;
+    } else if ( [str isEqualToString:@"QUEUED_FOR_OCR"] ) {
+        status = 2;
+    } else if ( [str isEqualToString:@"QUEUED_FOR_AUDIT"] ) {
+        status = 3;
+    } else if ( [str isEqualToString:@"COMPLETED"] ) {
+        status = 4;
+    }
+    
+    return status;
+    
+}
+
++ (UIImage *) doBinarize:(UIImage *)sourceImage
+{
+    //first off, try to grayscale the image using iOS core Image routine
+    UIImage * grayScaledImg = [self grayImage:sourceImage];
+    GPUImagePicture *imageSource = [[GPUImagePicture alloc] initWithImage:grayScaledImg];
+    GPUImageAdaptiveThresholdFilter *stillImageFilter = [[GPUImageAdaptiveThresholdFilter alloc] init];
+    stillImageFilter.blurRadiusInPixels = 15.0;
+    [stillImageFilter useNextFrameForImageCapture];
+    
+    [imageSource addTarget:stillImageFilter];
+    [imageSource processImage];
+    
+    UIImage *retImage = [stillImageFilter imageFromCurrentFramebuffer] ;
+    return retImage;
+}
+
++ (UIImage *) grayImage :(UIImage *)inputImage
+{
+    // Create a graphic context.
+    UIGraphicsBeginImageContextWithOptions(inputImage.size, NO, 1.0);
+    CGRect imageRect = CGRectMake(0, 0, inputImage.size.width, inputImage.size.height);
+    
+    // Draw the image with the luminosity blend mode.
+    // On top of a white background, this will give a black and white image.
+    [inputImage drawInRect:imageRect blendMode:kCGBlendModeLuminosity alpha:1.0];
+    
+    // Get the resulting image.
+    UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return outputImage;
+}
+
 @end

@@ -20,6 +20,7 @@
 #import "SortrDataManager.h"
 #import <AFHTTPRequestOperationManager.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "SortrSettingsViewController.h"
 
 @interface BookVC () <UICollectionViewDataSource,
                         UICollectionViewDelegate,
@@ -68,7 +69,7 @@
      [self.photoContainer registerClass:[ThumbCell class] forCellWithReuseIdentifier:@"bookItem"];
     
     //add Camera on right menu
-    UIBarButtonItem *camera = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"camera_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(actionLaunchAppCamera:)];
+    UIBarButtonItem *camera = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"camera_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showAppSettingsPage:)];
     
     [camera setTintColor:[UIColor whiteColor]];
     
@@ -137,6 +138,7 @@
     [cell setStatus:Done];
     savedCell.thumbStatus = Done;
 }
+
 
 #pragma mark CAMERA DELEGATE
 -(void)actionLaunchAppCamera : (id)sender

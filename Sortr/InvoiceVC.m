@@ -16,16 +16,26 @@
 #import "ReceiptData.h"
 #import "ReceiptInfoViewController.h"
 #import "CategoryViewController.h"
+#import "ActionSheetCustomPickerDelegate.h"
+#import "ActionSheetLocalePicker.h"
+#import "ActionSheetStringPicker.h"
+#import "APIClient.h"
+#import "BookCell.h"
+#import "SortrSettingsViewController.h"
+#import "ALAssetsLibrary+CustomPhotoAlbum.h"
+#import "PostPhotoViewController.h"
 
-@interface InvoiceVC () <UIImagePickerControllerDelegate>
+@interface InvoiceVC () <UIImagePickerControllerDelegate, UIImagePickerControllerDelegate>
 {
     NSMutableArray *invoiceItemLists;
     NSArray *m_categories;
     NSMutableArray *m_tableItems;
     
+    NSMutableArray *clientLists;
+    NSMutableArray *clientName;
+    
     SortrDataManager *sortrDataMgr;
     
-    NSArray *receipts;
     float headerTotalAmt;
 }
 @end
@@ -52,32 +62,40 @@
     
     m_categories     = [NSArray new];
     sortrDataMgr     = [SortrDataManager sharedInstance];
-    self.mManagedContext        = [[SortrDataManager sharedInstance] managedObjectContext];
-    
-    
     
     if ( !sortrDataMgr.categoryLists ) {
         sortrDataMgr.categoryLists = [NSMutableArray new];
-        
     }
     
-    NSFetchRequest *request     = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ReceiptData" inManagedObjectContext:self.mManagedContext];
-    [request setEntity:entity];
+    float totalValue = 0;
+    for (ReceiptObject *r in [sortrDataMgr getAllReceiptData]) {
+        totalValue += [r.total floatValue];
+    }
+    [SavedSettings setInvoiceTotal:totalValue];
     
-    NSError *error;
-    receipts = [self.mManagedContext executeFetchRequest:request error:&error];
+    [self  extractData];
+    
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    
+    clientLists = [[SortrDataManager sharedInstance] getAllClients];
+    clientName  = [NSMutableArray new];
+    
+    for (ClientObject *c in clientLists) {
+        [clientName addObject:c.name];
+    }
     
     [self  extractData];
 }
 
 - (void) extractData {
     
-    m_categories = [sortrDataMgr getAllReceiptData];
+    m_categories = [sortrDataMgr getAllCategories];
     
-    for (ReceiptData *data in m_categories) {
-        if (![m_tableItems containsObject:data.category]) {
-            [m_tableItems addObject:data.category];
+    for (CategoryObject *data in m_categories) {
+        if (![m_tableItems containsObject:data.name]) {
+            [m_tableItems addObject:data.name];
         }
     }
     
@@ -86,33 +104,42 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
-    self.navigationItem.title = @"INVOICE";
+    self.navigationItem.title = @"RECEIPTS";
+    [self updateHeaderValues];
 }
 
 - (void) modifyNavBar
 {
+    
     //add Camera on right menu
-    UIBarButtonItem *camera = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"camera_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(actionLaunchAppCamera:)];
+    UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"RightMenu"] style:UIBarButtonItemStylePlain target:self action:@selector(showAppSettingsPage:)];
     
     //tint camera icon color
-    [camera setTintColor:[UIColor whiteColor]];
+    [settings setTintColor:[UIColor whiteColor]];
     
     //add rightbutton UI
-    self.navigationItem.rightBarButtonItem = camera;
+    self.navigationItem.rightBarButtonItem = settings;
     
     // Remove lines of cell without data
     self.invoiceTableView.tableFooterView = [UIView new];
 }
 
+#pragma mark SHOW SETTINGS
+- (void) showAppSettingsPage : (id) sender
+{
+    SortrSettingsViewController *settingsPage = [[SortrSettingsViewController alloc] init];
+    [self presentViewController:settingsPage animated:YES completion:nil];
+}
+
+
 #pragma mark CAMERA DELEGATE
--(void)actionLaunchAppCamera : (id)sender
+-(IBAction)actionLaunchAppCamera : (id)sender
 {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
         imagePicker.delegate = self;
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        imagePicker.allowsEditing = YES;
         
         [self presentViewController:imagePicker animated:YES completion:nil];
     }else{
@@ -124,9 +151,19 @@
         [alert show];
         alert = nil;
     }
-    
 }
 
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *imageCaptured = [info objectForKey:UIImagePickerControllerOriginalImage];
+ 
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    PostPhotoViewController *ppv = [[PostPhotoViewController alloc] init];
+    ppv.imageTaken = imageCaptured;
+    
+    [self.navigationController presentViewController:ppv animated:YES completion:nil];
+}
 
 #pragma mark UITABLEVIEW DELEGATES
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -142,8 +179,9 @@
     
     NSString *title= [m_tableItems objectAtIndex:indexPath.row];
     cell.Title.text = title;
- 
+    
     return cell;
+
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -160,7 +198,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 95; ///HEIGHT OF NOTETVC
+    return 70; ///HEIGHT OF BOOKCELL
 }
 
 #pragma mark TAB BUTTON CALLBACKS
@@ -176,7 +214,7 @@
             
         case 2:
             presentingVC = [[InvoiceImagesVC alloc] initWithNibName:@"InvoiceImagesVC" bundle:nil];
-            presentingVC.title = @"INVOICE IMAGES";
+            presentingVC.title = @"Receipts Images";
             
             break;
             
@@ -204,49 +242,65 @@
 }
 
 - (void) updateHeaderValues {
-    self.headerTotal.text =  [NSString stringWithFormat:@"TOTAL : %f", headerTotalAmt];
-    self.headerItems.text =  [NSString stringWithFormat:@"%i items", receipts.count];
+    
+        self.headerTotal.text =  [NSString stringWithFormat:@"TOTAL : %.2f", [SavedSettings getInvoiceTotal]];
+//    self.headerItems.text =  [NSString stringWithFormat:@"%i items", receipts.count];
  }
 
+- (void)categoryAdded:(NSNumber *)selectedIndex element:(id)element
+{
+    [m_tableItems addObject:[clientName objectAtIndex:[selectedIndex intValue]]];
+    [self.invoiceTableView reloadData];
+}
+
 - (IBAction)addCategory:(id)sender {
+    [ActionSheetStringPicker showPickerWithTitle:@"Select Client" rows:clientName initialSelection:0 target:self successAction:@selector(categoryAdded:element:) cancelAction:nil origin:sender];
     
-    UIAlertController *alertController = [UIAlertController
-                                          alertControllerWithTitle:@"Add Category"
-                                          message:@"Type category"
-                                          preferredStyle:UIAlertControllerStyleAlert];
-    
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
-     {
-         textField.placeholder = NSLocalizedString(@"Category", @"categoryPlaceHolder");
-         [textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
-     }];
-    
-    
-    UIAlertAction *cancelAction = [UIAlertAction
-                                   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
-                                   style:UIAlertActionStyleCancel
+    /*
+    if ( NSClassFromString(@"UIAlertController") )  {
+        UIAlertController *alertController = [UIAlertController
+                                              alertControllerWithTitle:@"Add Category"
+                                              message:@"Type category"
+                                              preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
+         {
+             textField.placeholder = NSLocalizedString(@"Category", @"categoryPlaceHolder");
+             [textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+         }];
+        
+        
+        UIAlertAction *cancelAction = [UIAlertAction
+                                       actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+                                       style:UIAlertActionStyleCancel
+                                       handler:^(UIAlertAction *action)
+                                       {
+                                           NSLog(@"Cancel action");
+                                       }];
+        
+        UIAlertAction *okAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                                   style:UIAlertActionStyleDefault
                                    handler:^(UIAlertAction *action)
                                    {
-                                       NSLog(@"Cancel action");
+                                       UITextField *categoryField = alertController.textFields.firstObject;
+                                       
+                                       if (![m_tableItems containsObject:categoryField.text]) {
+                                           [m_tableItems addObject:categoryField.text];
+                                           [self.invoiceTableView reloadData];
+                                       }
                                    }];
-    
-    UIAlertAction *okAction = [UIAlertAction
-                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
-                               style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction *action)
-                               {
-                                   UITextField *categoryField = alertController.textFields.firstObject;
-                                   
-                                   if (![m_tableItems containsObject:categoryField.text]) {
-                                       [m_tableItems addObject:categoryField.text];
-                                       [self.invoiceTableView reloadData];
-                                   }
-                               }];
-    
-    [alertController addAction:okAction];
-    [alertController addAction:cancelAction];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
+        
+        [alertController addAction:okAction];
+        [alertController addAction:cancelAction];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    } else
+    {
+        [m_tableItems addObject:@"Entertainment"];
+        [self.invoiceTableView reloadData];
+    }
+     */
 }
 
 - (void)alertTextFieldDidChange:(NSNotification *)notification

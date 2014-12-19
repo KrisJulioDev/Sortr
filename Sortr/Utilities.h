@@ -19,5 +19,6 @@
 
 + (UIDatePicker*) getDatePickerComponent;
 + ( SSCheckBoxView *) getCheckBoxComponent: (CGRect) rect;
++ (BOOL) isConnectedToInternet;
 
 @end

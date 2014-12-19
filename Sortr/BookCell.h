@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SortrDataManager.h"
 
 @interface BookCell : UITableViewCell
 
@@ -18,7 +19,10 @@
 @property (strong, nonatomic) IBOutlet UIImageView *receiptImage;
 @property (strong, nonatomic) IBOutlet UILabel     *receiptStatus;
 @property (strong, nonatomic) IBOutlet UIImageView *statusIcon;
+@property (strong, nonatomic) ReceiptObject *receiptObject;
+@property (strong, nonatomic) IBOutlet UIImageView *receiptImageDone;
 
-- (void) updateStatusWithPhoto : (UIImage*) img;
+
+- (void) updateStatus:(int)status withPhoto : (UIImage*) img;
 
 @end

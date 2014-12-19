@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Constants.h"
+#import "SortrDataManager.h"
 
 @interface ThumbCell : UICollectionViewCell
 {
@@ -17,6 +18,8 @@
 @property (nonatomic, retain) NSString      *thumbName;
 @property (nonatomic, retain) UIImage       *thumbImage;
 @property (nonatomic, retain) NSURL         *imageUrl;
+@property (nonatomic, retain) NSIndexPath   *indexPath;
+@property (nonatomic, retain) ReceiptObject *receiptObject;
 
 - (void) assignThumbImage   : ( UIImage*) img; 
 - (void) setStatus:(ThumbStatus ) status;

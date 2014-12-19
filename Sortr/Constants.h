@@ -11,8 +11,8 @@
 #define kJobPhotoGroup @"Job Photo"
 
 /** SERVER URL ADDRESS FOR UPLOAD / DOWNLOAD**/
-#define UPLOAD_URL                  @"http://192.168.1.240:8080/uploadImage"
-#define GET_STATUS_URL              @"http://192.168.1.240:8080/getStatus/"
+#define UPLOAD_URL                  @"http://dev.asksortr.com:8080/uploadImage"
+#define GET_STATUS_URL              @"http://dev.asksortr.com:8080/getStatus/"
 
 /* COLORS */
 #define SORTR_BLUE                  [UIColor colorWithRed:90/255.0f green:206/255.0f blue:255/255.0f alpha:1.0f]
@@ -48,12 +48,19 @@ static NSString* MyPassword =   @"YhdtrudBX+//NgBvhX9P8LdL";
 #define kSearchDate     @"Date"
 #define kSearchBranch   @"Branch"
 
+#define kSavedCountryName @"c_name"
+#define kSavedCountryCode @"c_code"
+#define kSavedInvoiceTotal @"invoice_total"
+
 #define APP_DELEGATE    (SortrAppDelegate*)[[UIApplication sharedApplication] delegate]
 
 typedef enum {
     
-    Done = 0,
+    Waiting = 0,
     Scan,
+    Queue,
+    Audit,
+    Done,
     Inquiry,
     
 }ThumbStatus;

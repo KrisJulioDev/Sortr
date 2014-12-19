@@ -7,16 +7,16 @@
 //
 
 #import <CoreData/CoreData.h>
+#import <Realm/Realm.h>
 
-@interface ReceiptData : NSManagedObject
+@interface ReceiptData : RLMObject
 
-
-@property (nonatomic, retain)   NSString  *id;
-@property (nonatomic, retain)   NSData    *image;
-@property (nonatomic, retain)   NSString  *category;
-@property (nonatomic, retain)   NSString  *branch;
-@property (nonatomic)           NSString  *total;
-@property (nonatomic)           NSString  *vat;
-@property (nonatomic, retain)   NSString   *date;
+@property  NSString  *receiptId;
+@property  NSData    *image;
+@property  NSString  *category;
+@property  NSString  *branch;
+@property  NSString  *total;
+@property  NSString  *vat;
+@property  NSString   *date;
 
 @end

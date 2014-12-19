@@ -11,6 +11,7 @@
 #import "SecondVC.h"
 #import "ThirdVC.h"
 #import "Constants.h"
+#import "SortrSettingsViewController.h"
 
 @interface LeftMenuTVC ()
 {
@@ -26,7 +27,7 @@
     // Do any additional setup after loading the view from its nib.
     
     // Initilizing data souce
-    self.tableData = [@[@"", @"NOTES",@"TAGS",@"SEARCHES"] mutableCopy];
+    self.tableData = [@[@"", @"NOTES",@"TAGS",@"SETTINGS"] mutableCopy];
     
     // Remove lines of cell without data
     self.tableView.tableFooterView = [UIView new];
@@ -92,8 +93,9 @@
                 rootVC = [[SecondVC alloc] initWithNibName:@"SecondVC" bundle:nil];
             break;
         case 3:
-                rootVC = [[ThirdVC alloc] initWithNibName:@"ThirdVC" bundle:nil];
-        
+                //rootVC = [[ThirdVC alloc] initWithNibName:@"ThirdVC" bundle:nil];
+                rootVC = [[SortrSettingsViewController alloc] init];
+            
             break;
         
         default:

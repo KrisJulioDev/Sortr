@@ -7,7 +7,7 @@
 //
 
 #import "APIClient.h"
-#import "ThumbCell.h"
+#import "BookCell.h"
 #import "ResponseObject.h"
 #import "CategoryViewController.h"
 #import <AFHTTPRequestOperationManager.h>
@@ -24,12 +24,13 @@
     return sharedInstance;
 }
 
-- ( void ) exportImageData : ( ThumbCell* ) photoData andBlock:(void (^)(ResponseObject *responseObject))block {
+- ( void ) exportImageData : ( BookCell* ) photoData withParamter:(NSDictionary*)parameter andBlock:(void (^)(ResponseObject *responseObject))block {
     
-    NSData *imageData = UIImageJPEGRepresentation(photoData.thumbImage, 1);
+    NSData *imageData = UIImageJPEGRepresentation(photoData.receiptImageDone.image, 1);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:UPLOAD_URL parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    
+    [manager POST:UPLOAD_URL parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:imageData
                                     name:@"files"
                                 fileName:@"image_name.jpeg"
@@ -150,19 +151,20 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
-    [manager GET:GET_STATUS_URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSString *requestUrl = [NSString stringWithFormat:@"%@%i", GET_STATUS_URL, r_id];
+    
+    [manager GET:requestUrl  parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         NSDictionary *dictResponse = (NSDictionary*)responseObject;
         
         if ([self.delegate respondsToSelector:@selector(receiptHTTPClient:didUpdateWithStatus:)]) {
-//            [self.delegate receiptHTTPClient:self didUpdateWithStatus:[dictResponse objectForKey:@"status"]];
-            
-            NSLog(@"RESPONSE : %@", dictResponse);
+            [self.delegate receiptHTTPClient:r_id didUpdateWithStatus:[dictResponse objectForKey:@"data"]];
+             
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        NSLog(@"ERROR ON GET");
+        NSLog(@"ERROR ON GET :%@ ", error);
         
     }];
     

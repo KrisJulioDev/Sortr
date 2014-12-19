@@ -155,7 +155,7 @@
         case 2:
         {
             InvoiceVC *vc = [[InvoiceVC alloc] initWithNibName:@"InvoiceVC" bundle:nil];
-            vc.title = @"INVOICE";
+            vc.title = @"RECEIPTS";
             vc.delegate = self;
             
             self.navigationItem.title = @"Back";
@@ -201,7 +201,7 @@
 - (void) showInvoice {
     
     InvoiceVC *vc = [[InvoiceVC alloc] initWithNibName:@"InvoiceVC" bundle:nil];
-    vc.title = @"INVOICE";
+    vc.title = @"RECEIPTS";
     vc.delegate = self;
     
     self.navigationItem.title = @"Back";
