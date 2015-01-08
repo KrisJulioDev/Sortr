@@ -11,20 +11,23 @@
 #import "SortrDataManager.h"
 #import "BookCell.h"
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
+#import "UIImage+fixOrientation.h"
 #import "ThumbCell.h"
 #import "ReceiptData.h"
 #import "ReceiptInfoViewController.h"
 #import "Utilities.h"
 #import "APIClient.h"
 #import "SortrReceipt.h"
+#import "PostPhotoViewController.h"
 #import <Realm/Realm.h>
 
-@interface CategoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
+@interface CategoryViewController () <UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 {
     NSMutableArray *thumbNailPhotos;
     NSMutableArray *thumbNailCells;
     NSMutableArray *receiptItems;
     NSMutableArray  *receipts;
+    RLMArray        *rlmReceipts;
     SortrDataManager *sortrDataMgr;
     
     ThumbCell *cell;
@@ -46,8 +49,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    sortrDataMgr = [SortrDataManager sharedInstance];
-    [self.photoContainer registerClass:[ThumbCell class] forCellWithReuseIdentifier:@"item"];
+    sortrDataMgr = [SortrDataManager sharedInstance]; 
     [self modifyNavBar];
     
     receiptItems    = [NSMutableArray new];
@@ -58,8 +60,8 @@
     refreshControl = [[UIRefreshControl alloc] init];
     [self.receiptTable addSubview:refreshControl];
     [refreshControl addTarget:self action:@selector(fetchReceiptData) forControlEvents:UIControlEventValueChanged];
-
-    /* LATER IMPLEMENTATION
+   
+        /* LATER IMPLEMENTATION
     uploadScheduler = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(scheduledUploadFire:) userInfo:nil repeats:YES];
     updateScheduler = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(fetchReceiptData) userInfo:nil repeats:YES];
     
@@ -112,19 +114,29 @@
                 
                 [receiptItems addObject:receipt];
                 
-                UIImage *image = [UIImage imageWithData:receipt.image];
+                    UIImage *image = [UIImage imageWithData:receipt.image];
                 [thumbNailPhotos addObject:image];
+                
             }
         }
         
         [self.totalLabel setText:[NSString stringWithFormat:@"Total : P %.2f", totalPerCell]];
         
-        [self.photoContainer reloadData];
-        [self.receiptTable reloadData];
-        
+         [self.photoContainer reloadData];
+         [self.receiptTable reloadData];
+ 
+    }
+    
+    if (receiptItems.count > 0) {
+        [self.receiptTutorial setHidden:YES];
     }
     
     isRefreshing = NO;
+}
+
+- (void) proximityChanged : (id) sender
+{
+    
 }
 
 - (void) modifyNavBar
@@ -138,7 +150,7 @@
 }
 
 #pragma mark UICOLLECTION DELEGATE
-
+/*
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return thumbNailPhotos.count;
@@ -148,8 +160,8 @@
 {
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"item" forIndexPath:indexPath];
     
-    [cell assignThumbImage: [thumbNailPhotos objectAtIndex:indexPath.row]];
     
+    [cell assignThumbImage: [thumbNailPhotos objectAtIndex:indexPath.row]];
     ReceiptObject *cellReceipt = [receiptItems objectAtIndex:indexPath.row];
     
     [cell setReceiptObject:cellReceipt];
@@ -202,15 +214,18 @@
         
     }
 }
-
+*/
 #pragma mark CAMERA DELEGATE
 -(void)actionLaunchAppCamera : (id)sender
 {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
-        imagePicker.delegate = self;
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        imagePicker.navigationBarHidden = YES;
+        imagePicker.delegate = self;
+          
+        [self.receiptTutorial setHidden:YES];
         
         [self presentViewController:imagePicker animated:YES completion:nil];
     }else{
@@ -227,6 +242,20 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    UIImage *sourceImage = [info valueForKey:UIImagePickerControllerOriginalImage];
+    
+    NSData *data = UIImageJPEGRepresentation(sourceImage, 1.0f);
+    UIImage *tmp = [UIImage imageWithData:data];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+        PostPhotoViewController *ppv = [[PostPhotoViewController alloc] init];
+        ppv.imageTaken = tmp;
+        [self.navigationController presentViewController:ppv animated:YES completion:nil];
+        
+    }];
+    
+    /*
     UIImage *imageCaptured = [info objectForKey:UIImagePickerControllerOriginalImage];
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
@@ -292,23 +321,26 @@
     self.receiptTable.tableFooterView = [UIView new];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+     */
 }
 
 #pragma mark UITABLEVIEW DELEGATES
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BookCell *cell_ = [tableView dequeueReusableCellWithIdentifier:@"bookCell"];
+    static NSString *cellID = @"bookCell";
+    BookCell *cell_ = (BookCell*)[tableView dequeueReusableCellWithIdentifier:cellID];
     
     if (cell_ == nil) {
         // Load the top-level objects from the custom cell XIB.
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"BookCell" owner:self options:nil];
+        cell_.selectionStyle = UITableViewCellSelectionStyleNone;
         // Grab a pointer to the first object (presumably the custom cell, as that's all the XIB should contain).
         cell_ = [topLevelObjects objectAtIndex:0];
-        
     }
-    cell_.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    ReceiptObject *rdata = [receiptItems objectAtIndex:indexPath.row];
+     
+    int index = (receiptItems.count - 1 ) - indexPath.row;
+    ReceiptObject *rdata = [receiptItems objectAtIndex:index];
     cell_.receiptName.text  = rdata.branch;
     cell_.receiptPrice.text = [NSString stringWithFormat:@"%@", rdata.total];
     cell_.receiptObject = rdata;
@@ -344,7 +376,7 @@
         cellTapped.selectionStyle = UITableViewCellSelectionStyleNone;
         
         if ((int)cellTapped.receiptObject.receiptStatus == Waiting) {
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Process photo" otherButtonTitles: nil];
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle: @"Process receipt"  otherButtonTitles: @"Delete receipt", nil];
             
             [actionSheet showInView:self.view];
         }
@@ -372,12 +404,15 @@
             [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
             [Utilities showActivityIndicator:self];
             
-            NSDictionary *parameter = @{@"country": [SavedSettings settingsCountryCode], @"category": self.title};
+            NSDictionary *parameter = @{@"country": [SavedSettings settingsCountryCode], @"category": self.title, @"uuid" : selectedCell.receiptObject.receiptUUID};
             [client exportImageData:selectedCell withParamter:parameter andBlock:^(ResponseObject *response){
                 
             }];
         }
-
+    }
+    else if (buttonIndex == 1) {
+        [sortrDataMgr deleteReceipt:selectedCell.receiptObject];
+        [self refreshData];
     }
     
 }
@@ -514,6 +549,7 @@
             }
         }
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

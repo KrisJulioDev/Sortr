@@ -46,14 +46,14 @@
 
 #pragma mark FETCH PHOTO
 - (void) displayBookItems
-{
+{ 
     receipts = [[SortrDataManager sharedInstance] getAllReceiptData];
     
     for (ReceiptObject *receipt in receipts) {
+        
             UIImage *image = [UIImage imageWithData:receipt.image];
             [invoiceImages addObject:image];
     }
-    
 }
 
 #pragma mark UICOLLECTION DELEGATE

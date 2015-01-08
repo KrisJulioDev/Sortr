@@ -17,8 +17,9 @@
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
 #import "AddClientViewController.h"
 #import "SortrSettingsViewController.h"
+#import "GPUImage.h"
 
-@interface PostPhotoViewController () <UIAlertViewDelegate>
+@interface PostPhotoViewController () <UIAlertViewDelegate,  UIScrollViewDelegate, UIScrollViewAccessibilityDelegate >
 {
     NSMutableArray *clientLists;
     NSMutableArray *clientName;
@@ -28,12 +29,24 @@
 
     NSString *categorySelected;
     NSString *clientSelected;
+    
+    BOOL isProcessing;
+    
+    UIPinchGestureRecognizer *zoomGesture;
+    
+    GPUImagePicture *imageSource;
+    GPUImageView *filterView;
+    GPUImageAdaptiveThresholdFilter *stillImageFilter ;
+    
+    float threshold;
+    float previousScale;
 }
 @end
 
 @implementation PostPhotoViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
@@ -41,9 +54,26 @@
     categoryLists   = [NSMutableArray new];
     categories = [NSMutableArray new];
     receipts = [NSMutableArray new];
+    threshold = 15;
     
     receipts = [[SortrDataManager sharedInstance] getAllReceiptData];
-    [_receiptImage setImage:_imageTaken];
+    
+    imageSource = [[GPUImagePicture alloc] initWithImage:_imageTaken smoothlyScaleOutput:YES];
+    stillImageFilter = [[GPUImageAdaptiveThresholdFilter alloc] init];
+    stillImageFilter.blurRadiusInPixels = threshold;
+    [stillImageFilter useNextFrameForImageCapture];
+    
+    [imageSource addTarget:stillImageFilter];
+    [imageSource processImage];
+    
+    [_receiptImage setImage:[stillImageFilter imageFromCurrentFramebuffer]];
+//     [_receiptImage setImage:_imageTaken];
+    
+    self.thresholdSlider.minimumValue = 0;
+    self.thresholdSlider.maximumValue = 40;
+    [self.thresholdSlider addTarget:self action:@selector(thresholdChanged:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.blurinessAmount.text = [NSString stringWithFormat:@"%.1f", threshold];
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -51,6 +81,8 @@
     clientLists = [[SortrDataManager sharedInstance] getAllClients];
     [clientName removeAllObjects];
     [categories removeAllObjects];
+    
+    [clientName addObject:@"None"];
     
     for (ClientObject *c in clientLists) {
         [clientName addObject:c.name];
@@ -71,7 +103,6 @@
         [self.setClientBtn setTitle:clientSelected forState:UIControlStateNormal];
        
     }
-   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -127,15 +158,22 @@
 
 - (IBAction)dismissVC:(id)sender {
     
+    if ([self.setCategoryBtn.titleLabel.text isEqualToString:@"Set Category"]) {
+        [[[UIAlertView alloc] initWithTitle:@"Saving Error" message:@"Please provide a category" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        
+        return;
+    }
+    
+    
     UIImage *imageCaptured;
-    imageCaptured = [SortrReceipt doBinarize:_receiptImage.image];
+    imageCaptured =  _receiptImage.image ;
     
     ThumbCell *itemcell = [[ThumbCell alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
     [Utilities showActivityIndicator:self];
     
-    [library writeImageToSavedPhotosAlbum:[imageCaptured CGImage] orientation:(ALAssetOrientation)[imageCaptured imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error){
+    [library writeImageToSavedPhotosAlbum:[imageCaptured CGImage] orientation:(ALAssetOrientation)UIImageOrientationRight completionBlock:^(NSURL *assetURL, NSError *error){
         if (error) {
             // TODO: error handling[self addAssetURL: assetURL
         } else {
@@ -145,11 +183,12 @@
             dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 
                 NSData *imageData = UIImageJPEGRepresentation(imageCaptured, 0.0f);
-                
+                NSString *generatedUUID = [[NSUUID UUID] UUIDString];
                 dispatch_async( dispatch_get_main_queue(), ^{
                     
                     //*code to hide the loading view here*
                     [[SortrDataManager sharedInstance] saveTotalData:[NSString stringWithFormat:@"temp_%i", receipts.count]
+                                           uuid:generatedUUID
                                        category:categorySelected
                                           image:imageData
                                       withTotal:@""
@@ -185,6 +224,74 @@
     
 }
 
+- (IBAction)binarizeImageChange:(id)sender {
+    
+    if (isProcessing) {
+        return;
+    }
+    NSLog(@"PROCESSING %i", isProcessing);
+    isProcessing = true;
+    
+    UIButton *btn = (UIButton*)sender;
+    if (btn.tag == 1) {
+        threshold--;
+    } else {
+        threshold++;
+    }
+    
+    threshold = CLAMP(threshold, 1, 40);
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        
+        [stillImageFilter setBlurRadiusInPixels:threshold];
+        [stillImageFilter useNextFrameForImageCapture];
+        [imageSource processImage];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [_receiptImage setImage:[ stillImageFilter imageFromCurrentFramebuffer ] ];
+            
+            isProcessing = false;
+            
+            NSLog(@"PROCESSING %i", isProcessing);
+        });
+        
+    });
+}
+- (IBAction)sliderChanged:(id)sender {
+    
+    UISlider *slider = (UISlider*)sender;
+    threshold = slider.value;
+    
+    self.blurinessAmount.text = [NSString stringWithFormat:@"%.1f", threshold];
+}
+
+- (void) thresholdChanged : (id) sender
+{
+    UISlider *slider = (UISlider*)sender;
+    threshold = slider.value;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        
+        [stillImageFilter setBlurRadiusInPixels:threshold];
+        [stillImageFilter useNextFrameForImageCapture];
+        [imageSource processImage];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [_receiptImage setImage:[ stillImageFilter imageFromCurrentFramebuffer ] ];
+            
+            isProcessing = false;
+            
+            NSLog(@"PROCESSING %i", isProcessing);
+        });
+        
+    });
+    
+    NSLog(@"Editing Changed:");
+}
+
+
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     if (alertView.tag == 001) {
@@ -204,6 +311,12 @@
          }
     }
 }
+ 
+
+- (IBAction)cancelEditing:(id)sender { 
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 /*
 #pragma mark - Navigation
 

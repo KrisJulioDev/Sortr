@@ -37,9 +37,14 @@
 #pragma mark CREATE SHOW/HIDE UIACTIVITYINDICATOR
 +(void)showActivityIndicator:(UIViewController*)sender
 {
-    UIView *_view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    UIView *_view = [[UIView alloc] initWithFrame:rect];
     UIActivityIndicatorView *_indicator = [[UIActivityIndicatorView alloc] initWithFrame:_view.frame];
-    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(rect.size.width/2 - 50, rect.size.height/2 + 10, 100, 40)];
+    [label setText:@"Please wait..."];
+    [label setFont:[UIFont fontWithName:@"DIN Alternate" size:18]];
+    [label setTextColor:SORTR_ORANGE];
+                     
     [_view setBackgroundColor:[UIColor whiteColor]];
     [_view.layer setOpacity:0.75f];
     
@@ -48,6 +53,7 @@
     
     [_indicator startAnimating];
     [_view addSubview:_indicator];
+    [_view addSubview:label];
 
     [_view setTag:ACTIVITY_INDICATOR_VIEW_TAG];
     
@@ -93,6 +99,7 @@
     
     return cbv;
 }
+
 
 #pragma mark COnnection
 + (BOOL) isConnectedToInternet

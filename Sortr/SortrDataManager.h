@@ -13,6 +13,7 @@
 @interface ReceiptObject : RLMObject
 
 @property  NSString  *receiptId;
+@property  NSString  *receiptUUID;
 @property  NSData    *image;
 @property  NSString  *category;
 @property  NSString  *branch;
@@ -47,6 +48,7 @@
 +(instancetype)sharedInstance;
 
 - (void) saveTotalData:(NSString*)rid
+                  uuid:(NSString*)uuid
               category:(NSString*)category
                  image:(NSData*) imageData
              withTotal:(NSString*)total
@@ -70,6 +72,8 @@
 
 - (void) saveNewStatus:(NSString*)receiptId withStatus: (int) status;
 - (void) saveCategoryWithName:(NSString*) name;
+
+- (void) deleteReceipt: ( ReceiptObject* ) receipt;
 
 - (NSMutableArray*) getAllReceiptData;
 - (NSMutableArray*) getAllClients;

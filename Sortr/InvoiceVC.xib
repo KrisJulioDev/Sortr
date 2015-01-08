@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InvoiceVC">
             <connections>
+                <outlet property="categoryTutorial" destination="OQp-Tv-xHe" id="TYK-Bk-9W3"/>
                 <outlet property="centerCamera" destination="7SJ-7h-m0H" id="BDM-CS-tdr"/>
                 <outlet property="headerDate" destination="YHh-oE-1Df" id="EjW-72-xMn"/>
                 <outlet property="headerItems" destination="PNb-Ph-rmI" id="5kA-t7-h5z"/>
@@ -71,47 +72,58 @@
                         </label>
                     </subviews>
                     <color key="backgroundColor" red="0.97254901959999995" green="0.57254901960000004" blue="0.0" alpha="0.57999999999999996" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="centerY" secondItem="OPO-hE-pif" secondAttribute="centerY" constant="-5" id="N1g-Zz-pfW"/>
+                        <constraint firstAttribute="centerX" secondItem="OPO-hE-pif" secondAttribute="centerX" id="elY-Df-29B"/>
+                    </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="8gj-h6-L6A">
-                    <rect key="frame" x="0.0" y="120" width="320" height="455"/>
+                    <rect key="frame" x="0.0" y="120" width="320" height="405"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="L62-o7-gbK"/>
                         <outlet property="delegate" destination="-1" id="sLF-TA-sEL"/>
                     </connections>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G76-gy-tMW">
-                    <rect key="frame" x="0.0" y="524" width="320" height="45"/>
-                    <color key="backgroundColor" red="0.015686274509803921" green="0.2627450980392157" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="15"/>
-                    <state key="normal">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="addCategory:" destination="-1" eventType="touchUpInside" id="m3M-Ch-U7v"/>
-                    </connections>
-                </button>
-                <button clipsSubviews="YES" tag="1" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UbE-wu-h29" userLabel="Human">
-                    <rect key="frame" x="43" y="528" width="40" height="32"/>
-                    <state key="normal" image="inv_client_icon">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="openViewByThisTab:" destination="-1" eventType="touchUpInside" id="Dv7-cr-grK"/>
-                    </connections>
-                </button>
-                <button opaque="NO" tag="2" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbY-ai-g26" userLabel="Gallery">
-                    <rect key="frame" x="231" y="528" width="35" height="32"/>
-                    <state key="normal" image="inv_gallery_icon">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="openViewByThisTab:" destination="-1" eventType="touchUpInside" id="7kp-VB-Njz"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7SJ-7h-m0H">
-                    <rect key="frame" x="120" y="490" width="80" height="80"/>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ts1-h2-8LP">
+                    <rect key="frame" x="0.0" y="520" width="320" height="50"/>
+                    <subviews>
+                        <button clipsSubviews="YES" tag="1" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UbE-wu-h29" userLabel="Human">
+                            <rect key="frame" x="47" y="10" width="40" height="32"/>
+                            <state key="normal" image="inv_client_icon">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="openViewByThisTab:" destination="-1" eventType="touchUpInside" id="Dv7-cr-grK"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="2" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbY-ai-g26" userLabel="Gallery">
+                            <rect key="frame" x="238" y="8" width="35" height="32"/>
+                            <state key="normal" image="inv_gallery_icon">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="openViewByThisTab:" destination="-1" eventType="touchUpInside" id="7kp-VB-Njz"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.015686274510000001" green="0.26274509800000001" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="qbY-ai-g26" firstAttribute="top" secondItem="Ts1-h2-8LP" secondAttribute="top" constant="8" id="7f9-iQ-cEJ"/>
+                        <constraint firstAttribute="bottom" secondItem="UbE-wu-h29" secondAttribute="bottom" constant="8" id="Rhk-1Z-0b7"/>
+                        <constraint firstAttribute="height" constant="50" id="Vbc-Un-4Vb"/>
+                        <constraint firstItem="UbE-wu-h29" firstAttribute="leading" secondItem="Ts1-h2-8LP" secondAttribute="leading" constant="47" id="c6Q-iO-5QT"/>
+                        <constraint firstAttribute="bottom" secondItem="qbY-ai-g26" secondAttribute="bottom" constant="10" id="cau-vu-fBH"/>
+                        <constraint firstItem="UbE-wu-h29" firstAttribute="top" secondItem="Ts1-h2-8LP" secondAttribute="top" constant="10" id="jtp-vU-Xb1"/>
+                        <constraint firstAttribute="trailing" secondItem="qbY-ai-g26" secondAttribute="trailing" constant="47" id="wsl-e6-rkO"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7SJ-7h-m0H">
+                    <rect key="frame" x="120" y="488" width="80" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="80" id="sSY-zF-Cih"/>
+                        <constraint firstAttribute="width" constant="80" id="zKz-oL-NW3"/>
+                    </constraints>
                     <state key="normal" image="camera_icon_blue">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -119,20 +131,35 @@
                         <action selector="actionLaunchAppCamera:" destination="-1" eventType="touchUpInside" id="1ZK-Bu-AmD"/>
                     </connections>
                 </button>
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="add_category_tut" translatesAutoresizingMaskIntoConstraints="NO" id="OQp-Tv-xHe" userLabel="Tutorial">
+                    <rect key="frame" x="600" y="0.0" width="320" height="570"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <accessibility key="accessibilityConfiguration" label="INVOICE"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="OQp-Tv-xHe" secondAttribute="bottom" id="1cn-gv-alZ"/>
                 <constraint firstAttribute="trailing" secondItem="7Yt-Nh-3XM" secondAttribute="trailing" id="27G-gi-qHB"/>
-                <constraint firstItem="OPO-hE-pif" firstAttribute="top" secondItem="7Yt-Nh-3XM" secondAttribute="bottom" constant="1" id="Bcc-fL-urK"/>
-                <constraint firstItem="8gj-h6-L6A" firstAttribute="top" secondItem="CNW-ei-Hxx" secondAttribute="bottom" id="HjL-TK-r23"/>
-                <constraint firstAttribute="bottom" secondItem="G76-gy-tMW" secondAttribute="bottom" constant="-1" id="Sb2-zz-grs"/>
+                <constraint firstItem="8gj-h6-L6A" firstAttribute="top" secondItem="CNW-ei-Hxx" secondAttribute="bottom" id="7Cd-gH-dV7"/>
+                <constraint firstItem="OQp-Tv-xHe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9jG-TJ-FMC"/>
+                <constraint firstItem="CNW-ei-Hxx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="FDE-iA-9y7"/>
+                <constraint firstAttribute="bottom" secondItem="7SJ-7h-m0H" secondAttribute="bottom" id="Khf-a1-gIy"/>
+                <constraint firstAttribute="trailing" secondItem="CNW-ei-Hxx" secondAttribute="trailing" id="Odp-n6-B3X"/>
+                <constraint firstAttribute="bottom" secondItem="Ts1-h2-8LP" secondAttribute="bottom" id="Ta4-5a-KeF"/>
+                <constraint firstItem="Ts1-h2-8LP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="XSz-r8-jof"/>
+                <constraint firstItem="7SJ-7h-m0H" firstAttribute="leading" secondItem="UbE-wu-h29" secondAttribute="trailing" constant="33" id="dVk-ST-rUW"/>
+                <constraint firstAttribute="trailing" secondItem="Ts1-h2-8LP" secondAttribute="trailing" id="e99-YU-e5K"/>
+                <constraint firstAttribute="centerX" secondItem="7SJ-7h-m0H" secondAttribute="centerX" id="k0g-rB-xh1"/>
+                <constraint firstAttribute="trailing" secondItem="OQp-Tv-xHe" secondAttribute="trailing" id="l9d-OU-cAL"/>
+                <constraint firstItem="OQp-Tv-xHe" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="nel-hE-oCC"/>
                 <constraint firstItem="7Yt-Nh-3XM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="63" id="oKV-7s-2x9"/>
                 <constraint firstItem="7Yt-Nh-3XM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="soC-rJ-XiX"/>
+                <constraint firstItem="qbY-ai-g26" firstAttribute="leading" secondItem="7SJ-7h-m0H" secondAttribute="trailing" constant="38" id="uwo-F4-vxR"/>
             </constraints>
         </view>
     </objects>
     <resources>
+        <image name="add_category_tut" width="640" height="1136"/>
         <image name="camera_icon_blue" width="128" height="128"/>
         <image name="inv_client_icon" width="60" height="60"/>
         <image name="inv_export_icon" width="61" height="61"/>

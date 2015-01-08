@@ -20,11 +20,17 @@ PODS:
   - AFNetworking/UIKit (2.4.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - GPUImage (0.1.6)
+  - pop (1.0.7)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
+  - GPUImage (~> 0.1.0)
+  - pop (~> 1.0)
 
 SPEC CHECKSUMS:
   AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
+  GPUImage: cecb0830bb9428f50192042e3c7b53810f51388e
+  pop: 2f14a1ea61339767af9e66741b418c831b3844df
 
 COCOAPODS: 0.33.1

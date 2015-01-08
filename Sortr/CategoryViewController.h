@@ -8,15 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "ResponseObject.h"
+#import "CameraOverlayViewController.h"
 
 @interface CategoryViewController : UIViewController
-
+{
+    CameraOverlayViewController *cov;
+}
 @property (strong, nonatomic) IBOutlet UICollectionView *photoContainer;
 @property (strong, nonatomic) IBOutlet UITableView      *receiptTable;
 
 @property (nonatomic        ) NSInteger             *categoryIndex;
 @property (nonatomic        ) NSString              *title;
 @property (nonatomic, retain) NSMutableArray        *categoryItems;
+@property (strong, nonatomic) IBOutlet UIImageView *receiptTutorial;
 
 //LABELS
 @property (strong, nonatomic) IBOutlet UILabel *totalLabel;

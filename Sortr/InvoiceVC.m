@@ -24,8 +24,9 @@
 #import "SortrSettingsViewController.h"
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
 #import "PostPhotoViewController.h"
+#import "Utilities.h"
 
-@interface InvoiceVC () <UIImagePickerControllerDelegate, UIImagePickerControllerDelegate>
+@interface InvoiceVC () <UIImagePickerControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
 {
     NSMutableArray *invoiceItemLists;
     NSArray *m_categories;
@@ -35,6 +36,7 @@
     NSMutableArray *clientName;
     
     SortrDataManager *sortrDataMgr;
+    id barButtonAppearanceInSearchBar ;
     
     float headerTotalAmt;
 }
@@ -71,10 +73,36 @@
     for (ReceiptObject *r in [sortrDataMgr getAllReceiptData]) {
         totalValue += [r.total floatValue];
     }
+    
     [SavedSettings setInvoiceTotal:totalValue];
+    [self  refreshData];
     
-    [self  extractData];
+    // Tint white navigation buttons
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 20, 320, 44)];
+    [self.searchBar setBackgroundColor:SORTR_BLUE];
+    
+    self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+    self.searchBar.placeholder = @"Category";
+    [self.searchBar setDelegate:self];
+    
+    [self.searchBar setImage:[UIImage imageNamed:@"category_icon"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
+    
+    barButtonAppearanceInSearchBar = [UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil];
+    [barButtonAppearanceInSearchBar setTitle:@"Add"];
+    
+    self.searchBar.returnKeyType = UIReturnKeyDone;
+    
+    self.searchController.searchResultsDataSource = self;
+    self.searchController.searchResultsDelegate = self;
+    self.searchController.delegate = self;
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    self.navigationItem.title = @"RECEIPTS";
+    [self updateHeaderValues];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -86,10 +114,14 @@
         [clientName addObject:c.name];
     }
     
-    [self  extractData];
+    [self  refreshData];
+    
+    if (m_tableItems.count > 0) {
+        [_categoryTutorial setHidden:YES];
+    }
 }
 
-- (void) extractData {
+- (void) refreshData {
     
     m_categories = [sortrDataMgr getAllCategories];
     
@@ -102,20 +134,48 @@
     [self.invoiceTableView reloadData];
 }
 
-- (void) viewWillAppear:(BOOL)animated
+#pragma mark - Search controller
+
+- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
 {
-    self.navigationItem.title = @"RECEIPTS";
-    [self updateHeaderValues];
+    
+    
+}
+
+- (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
+{
+    NSString *categoryAdded = controller.searchBar.text;
+    
+    if (categoryAdded.length > 0) {
+        [sortrDataMgr saveCategoryWithName:categoryAdded];
+        [self refreshData];
+    }
+    
+}
+
+- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller
+{
+    [self.searchBar removeFromSuperview];
+}
+
+
+- (void)toggleSearch :(id) sender
+{
+    [self.view addSubview:self.searchBar];
+    [self.searchController setActive:YES animated:YES];
+    [self.searchBar becomeFirstResponder];
+    
+    [_categoryTutorial setHidden:YES];
 }
 
 - (void) modifyNavBar
 {
-    
     //add Camera on right menu
-    UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"RightMenu"] style:UIBarButtonItemStylePlain target:self action:@selector(showAppSettingsPage:)];
+    UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(toggleSearch:)];
     
     //tint camera icon color
     [settings setTintColor:[UIColor whiteColor]];
+    settings.style = UIBarButtonSystemItemAdd;
     
     //add rightbutton UI
     self.navigationItem.rightBarButtonItem = settings;
@@ -155,14 +215,23 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *imageCaptured = [info objectForKey:UIImagePickerControllerOriginalImage];
- 
-    [self dismissViewControllerAnimated:YES completion:nil];
+    UIImage *sourceImage = [info valueForKey:UIImagePickerControllerOriginalImage];
     
-    PostPhotoViewController *ppv = [[PostPhotoViewController alloc] init];
-    ppv.imageTaken = imageCaptured;
+    NSData *data =   UIImagePNGRepresentation(sourceImage) ;
+    UIImage *tmp = [UIImage imageWithData:data];
     
-    [self.navigationController presentViewController:ppv animated:YES completion:nil];
+    UIImage *afterFixingOrientation = [UIImage imageWithCGImage:tmp.CGImage
+                                                          scale:sourceImage.scale
+                                                    orientation:sourceImage.imageOrientation];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+        PostPhotoViewController *ppv = [[PostPhotoViewController alloc] init];
+        ppv.imageTaken = afterFixingOrientation;
+        [self.navigationController presentViewController:ppv animated:YES completion:nil];
+        
+    }];
+    
 }
 
 #pragma mark UITABLEVIEW DELEGATES

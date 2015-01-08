@@ -23,7 +23,12 @@
     
     UINavigationController *startNVC = [[UINavigationController alloc] initWithRootViewController:mainVC];
     
+    //SET TITLE COLOR
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [[UINavigationBar appearance] setBarTintColor:SORTR_BLUE];
+    
+    // Tint white navigation buttons
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     //SET DEFAULT FOR COUNTRY
     if (![SavedSettings settingsCountryCode]) {

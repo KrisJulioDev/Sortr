@@ -14,6 +14,9 @@
 @property (strong, nonatomic) IBOutlet UIImageView *receiptImage;
 @property (strong, nonatomic) IBOutlet UIButton *doneBtn;
 @property (strong, nonatomic) IBOutlet UIButton *setCategoryBtn;
-@property (strong, nonatomic) IBOutlet UIButton *setClientBtn;
+@property (strong, nonatomic) IBOutlet UIButton *setClientBtn; 
+@property (strong, nonatomic) IBOutlet UISlider *thresholdSlider;
+@property (strong, nonatomic) IBOutlet UILabel *blurinessAmount;
+@property (strong, nonatomic) IBOutlet UIScrollView *imageScrollView;
 
 @end

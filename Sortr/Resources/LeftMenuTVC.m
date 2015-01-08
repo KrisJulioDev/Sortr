@@ -10,6 +10,7 @@
 #import "NotesVC.h"
 #import "SecondVC.h"
 #import "ThirdVC.h"
+#import "InvoiceVC.h"
 #import "Constants.h"
 #import "SortrSettingsViewController.h"
 
@@ -27,7 +28,7 @@
     // Do any additional setup after loading the view from its nib.
     
     // Initilizing data souce
-    self.tableData = [@[@"", @"NOTES",@"TAGS",@"SETTINGS"] mutableCopy];
+    self.tableData = [@[@"", @"RECEIPTS",@"TAGS",@"SETTINGS"] mutableCopy];
     
     // Remove lines of cell without data
     self.tableView.tableFooterView = [UIView new];
@@ -86,8 +87,8 @@
             
             
         case 1:
-                rootVC = [[NotesVC alloc] initWithNibName:@"NotesVC" bundle:nil];
-                rootVC.title = @"SORTR";
+                rootVC = [[InvoiceVC alloc] initWithNibName:@"InvoiceVC" bundle:nil];
+                rootVC.title = @"Receipts";
             break;
         case 2:
                 rootVC = [[SecondVC alloc] initWithNibName:@"SecondVC" bundle:nil];

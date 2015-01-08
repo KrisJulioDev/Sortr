@@ -43,6 +43,7 @@ RLM_ARRAY_TYPE(ReceiptObject)
 
 #pragma RECEIPTS OBJECT
 - (void) saveTotalData:(NSString*)rid
+                  uuid:(NSString*)uuid
               category:(NSString*)category
                  image:(NSData*) imageData
              withTotal:(NSString*)total
@@ -55,6 +56,7 @@ RLM_ARRAY_TYPE(ReceiptObject)
     ReceiptObject *receiptobj =  [[ReceiptObject alloc] init];
     
     receiptobj.receiptId     = rid;
+    receiptobj.receiptUUID   = uuid;
     receiptobj.image         = imageData;
     receiptobj.category      = category;
     receiptobj.total         = total;
@@ -138,8 +140,8 @@ RLM_ARRAY_TYPE(ReceiptObject)
 }
 
 - (NSMutableArray*) getAllReceiptData {
-    
-    NSMutableArray *arrayOfReceipts = [NSMutableArray new];
+     
+    NSMutableArray *arrayOfReceipts =  [NSMutableArray new];
     for (ReceiptObject *receipt in [ReceiptObject allObjects]) {
         [arrayOfReceipts addObject:receipt];
     }
@@ -220,6 +222,20 @@ RLM_ARRAY_TYPE(ReceiptObject)
     return arrayOfCategories;
 }
 
+#pragma mark DELETE REALM OBJECT
+- (void) deleteReceipt: ( ReceiptObject* ) receipt
+{
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    RLMResults *results =  [ReceiptObject objectsInRealm:realm where:[NSString stringWithFormat:@"receiptUUID contains '%@'", receipt.receiptUUID]];
+    
+    if (results.count == 0) {
+        return;
+    }
+    
+    [realm beginWriteTransaction];
+    [realm deleteObject:[results objectAtIndex:0]];
+    [realm commitWriteTransaction];
+}
 
 
 // Returns the URL to the application's Documents directory.

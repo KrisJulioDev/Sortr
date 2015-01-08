@@ -12,6 +12,8 @@
 #import "ActionSheetLocalePicker.h"
 #import "ActionSheetStringPicker.h"
 #import "AddClientViewController.h"
+#import <pop/POP.h>
+
 
 @interface ReceiptInfoViewController ()  <UIGestureRecognizerDelegate>
 {
@@ -74,6 +76,11 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     
+    [clients removeAllObjects];
+    for (ClientObject *c in [[SortrDataManager sharedInstance] getAllClients]) {
+        [clients addObject:c.name];
+    }
+
 }
 
 - (IBAction)setClient:(id)sender {

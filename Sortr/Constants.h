@@ -11,13 +11,14 @@
 #define kJobPhotoGroup @"Job Photo"
 
 /** SERVER URL ADDRESS FOR UPLOAD / DOWNLOAD**/
-#define UPLOAD_URL                  @"http://dev.asksortr.com:8080/uploadImage"
-#define GET_STATUS_URL              @"http://dev.asksortr.com:8080/getStatus/"
+#define UPLOAD_URL                  @"http://192.168.1.238:8080/uploadImage"    //@"http://dev.asksortr.com:8080/uploadImage"
+#define GET_STATUS_URL              @"http://192.168.1.238:8080/getStatus"    //@"http://dev.asksortr.com:8080/getStatus/"
 
 /* COLORS */
 #define SORTR_BLUE                  [UIColor colorWithRed:90/255.0f green:206/255.0f blue:255/255.0f alpha:1.0f]
 #define SORTR_ORANGE                [UIColor colorWithRed:249/255.0f green:155/255.0f blue:14/255.0f alpha:1.0f]
 #define SORTR_GRAY                  [UIColor colorWithRed:99/255.0f green:99/255.0f blue:99/255.0f alpha:1.0f]
+#define SORTR_PURPLE                [UIColor colorWithRed:4/255.0f green:67/255.0f blue:102/255.0f alpha:1.0f]
 
 /* FONTS */
 #define REGULAR_FONT_WITH_SIZE(ss)   [UIFont fontWithName:@"Helvetica Neue" size:ss]
@@ -54,6 +55,9 @@ static NSString* MyPassword =   @"YhdtrudBX+//NgBvhX9P8LdL";
 
 #define APP_DELEGATE    (SortrAppDelegate*)[[UIApplication sharedApplication] delegate]
 
+#define MINIMUM_SCALE 0.2f
+#define MAXIMUM_SCALE 2.0f
+
 typedef enum {
     
     Waiting = 0,
@@ -64,6 +68,16 @@ typedef enum {
     Inquiry,
     
 }ThumbStatus;
+
+#define MIN(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __a : __b; })
+#define MAX(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __b : __a; })
+
+#define CLAMP(x, low, high) ({\
+__typeof__(x) __x = (x); \
+__typeof__(low) __low = (low);\
+__typeof__(high) __high = (high);\
+__x > __high ? __high : (__x < __low ? __low : __x);\
+})
 
 @protocol Constants <NSObject>
 
