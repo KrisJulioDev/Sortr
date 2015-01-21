@@ -11,8 +11,8 @@
 #define kJobPhotoGroup @"Job Photo"
 
 /** SERVER URL ADDRESS FOR UPLOAD / DOWNLOAD**/
-#define UPLOAD_URL                  @"http://192.168.1.238:8080/uploadImage"    //@"http://dev.asksortr.com:8080/uploadImage"
-#define GET_STATUS_URL              @"http://192.168.1.238:8080/getStatus"    //@"http://dev.asksortr.com:8080/getStatus/"
+#define UPLOAD_URL                  @"http://192.168.1.245:8080/uploadImage"    //@"http://dev.asksortr.com:8080/uploadImage"
+#define GET_STATUS_URL              @"http://192.168.1.245:8080/getStatus/"    //@"http://dev.asksortr.com:8080/getStatus/"
 
 /* COLORS */
 #define SORTR_BLUE                  [UIColor colorWithRed:90/255.0f green:206/255.0f blue:255/255.0f alpha:1.0f]
@@ -57,6 +57,15 @@ static NSString* MyPassword =   @"YhdtrudBX+//NgBvhX9P8LdL";
 
 #define MINIMUM_SCALE 0.2f
 #define MAXIMUM_SCALE 2.0f
+
+// Transform values for full screen support:
+#define CAMERA_TRANSFORM_X 1.7
+//#define CAMERA_TRANSFORM_Y 1.12412 // this was for iOS 3.x
+#define CAMERA_TRANSFORM_Y 1.7 // this works for iOS 8.x
+
+// iPhone screen dimensions:
+#define SCREEN_WIDTH  640
+#define SCREEN_HEIGTH 480
 
 typedef enum {
     

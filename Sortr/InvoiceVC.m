@@ -8,6 +8,7 @@
 
 #import "InvoiceVC.h"
 #import "NoteTVC.h"
+#import "MCSwipeTableViewCell.h"
 #import "InvoiceImagesVC.h"
 #import "ClientListVC.h"
 #import "DownloadTabVC.h"
@@ -25,8 +26,9 @@
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
 #import "PostPhotoViewController.h"
 #import "Utilities.h"
+#import "OverlayView.h"
 
-@interface InvoiceVC () <UIImagePickerControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
+@interface InvoiceVC () <UIImagePickerControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate, MCSwipeTableViewCellDelegate>
 {
     NSMutableArray *invoiceItemLists;
     NSArray *m_categories;
@@ -121,6 +123,9 @@
     }
 }
 
+/**
+ *  Refresh UITableViewCell data
+ */
 - (void) refreshData {
     
     m_categories = [sortrDataMgr getAllCategories];
@@ -135,7 +140,6 @@
 }
 
 #pragma mark - Search controller
-
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
 {
     
@@ -158,7 +162,11 @@
     [self.searchBar removeFromSuperview];
 }
 
-
+/**
+ *  Search function recreated as add category
+ *
+ *  @param sender button
+ */
 - (void)toggleSearch :(id) sender
 {
     [self.view addSubview:self.searchBar];
@@ -168,6 +176,9 @@
     [_categoryTutorial setHidden:YES];
 }
 
+/**
+ *  Just modify navigation bar
+ */
 - (void) modifyNavBar
 {
     //add Camera on right menu
@@ -197,10 +208,23 @@
 {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
-        UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
-        imagePicker.delegate = self;
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        OverlayView *overlay = [[OverlayView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGTH)];
         
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        imagePicker.delegate = self;
+        
+        // Hide the controls:
+        imagePicker.showsCameraControls = NO;
+        imagePicker.navigationBarHidden = YES;
+        
+        imagePicker.wantsFullScreenLayout = YES;
+        imagePicker.cameraViewTransform = CGAffineTransformScale(imagePicker.cameraViewTransform, CAMERA_TRANSFORM_X, CAMERA_TRANSFORM_Y);
+        
+        // Insert the overlay:
+        imagePicker.cameraOverlayView = overlay;
+        overlay.delegate = imagePicker;
+         
         [self presentViewController:imagePicker animated:YES completion:nil];
     }else{
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Camera Unavailable"
@@ -213,6 +237,12 @@
     }
 }
 
+/**
+ *  Callback after taking photo from phone's camera
+ *
+ *  @param picker imagePicker
+ *  @param info   information of image picked
+ */
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *sourceImage = [info valueForKey:UIImagePickerControllerOriginalImage];
@@ -233,18 +263,22 @@
     }];
     
 }
-
+//----------------------------------------------------
 #pragma mark UITABLEVIEW DELEGATES
+//----------------------------------------------------
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NoteTVC *cell = [tableView dequeueReusableCellWithIdentifier:@"invoiceCell"];
+    MCSwipeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"invoiceCell"];
     
     if (cell == nil) {
         // Load the top-level objects from the custom cell XIB.
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"NoteTVC" owner:self options:nil];
         // Grab a pointer to the first object (presumably the custom cell, as that's all the XIB should contain).
         cell = [topLevelObjects objectAtIndex:0];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
     }
+    
+    [self configureCell:cell forRowAtIndexPath:indexPath];
     
     NSString *title= [m_tableItems objectAtIndex:indexPath.row];
     cell.Title.text = title;
@@ -265,12 +299,18 @@
     return m_tableItems.count;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 70; ///HEIGHT OF BOOKCELL
 }
 
+//----------------------------------------------------
 #pragma mark TAB BUTTON CALLBACKS
+//----------------------------------------------------
 - (IBAction) openViewByThisTab : ( UIButton* ) tab
 {
     UIViewController *presentingVC = nil;
@@ -310,66 +350,93 @@
     }
 }
 
+/**
+ *  Header total value updater
+ */
 - (void) updateHeaderValues {
     
         self.headerTotal.text =  [NSString stringWithFormat:@"TOTAL : %.2f", [SavedSettings getInvoiceTotal]];
-//    self.headerItems.text =  [NSString stringWithFormat:@"%i items", receipts.count];
  }
 
+/**
+ *  Category added by the users
+ *
+ *  @param selectedIndex Index of category selected
+ *  @param element       not used
+ */
 - (void)categoryAdded:(NSNumber *)selectedIndex element:(id)element
 {
     [m_tableItems addObject:[clientName objectAtIndex:[selectedIndex intValue]]];
     [self.invoiceTableView reloadData];
 }
 
+
 - (IBAction)addCategory:(id)sender {
     [ActionSheetStringPicker showPickerWithTitle:@"Select Client" rows:clientName initialSelection:0 target:self successAction:@selector(categoryAdded:element:) cancelAction:nil origin:sender];
     
-    /*
-    if ( NSClassFromString(@"UIAlertController") )  {
-        UIAlertController *alertController = [UIAlertController
-                                              alertControllerWithTitle:@"Add Category"
-                                              message:@"Type category"
-                                              preferredStyle:UIAlertControllerStyleAlert];
+}
+
+/**
+ *  Get ImageView from parameter image name
+ *
+ *  @param imageName name of image
+ *
+ *  @return UIView
+ */
+- (UIView *)viewWithImageName:(NSString *)imageName {
+    UIImage *image = [UIImage imageNamed:imageName];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.contentMode = UIViewContentModeCenter;
+    return imageView;
+}
+
+/**
+ *  Configure Category Cell
+ *
+ *  @param cell      cell to configure
+ *  @param indexPath indexpath of the cell
+ */
+- (void)configureCell:(MCSwipeTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIView *crossView = [self viewWithImageName:@"cross"];
+    UIColor *redColor = [UIColor colorWithRed:232.0 / 255.0 green:61.0 / 255.0 blue:14.0 / 255.0 alpha:1.0];
+    
+    // Setting the default inactive state color to the tableView background color
+    [cell setDefaultColor:redColor];
+    
+    [cell setDelegate:self];
+    
+    [cell setSwipeGestureWithView:crossView color:redColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
         
-        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
-         {
-             textField.placeholder = NSLocalizedString(@"Category", @"categoryPlaceHolder");
-             [textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
-         }];
+        _cellToDelete = cell;
         
-        
-        UIAlertAction *cancelAction = [UIAlertAction
-                                       actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
-                                       style:UIAlertActionStyleCancel
-                                       handler:^(UIAlertAction *action)
-                                       {
-                                           NSLog(@"Cancel action");
-                                       }];
-        
-        UIAlertAction *okAction = [UIAlertAction
-                                   actionWithTitle:NSLocalizedString(@"OK", @"OK action")
-                                   style:UIAlertActionStyleDefault
-                                   handler:^(UIAlertAction *action)
-                                   {
-                                       UITextField *categoryField = alertController.textFields.firstObject;
-                                       
-                                       if (![m_tableItems containsObject:categoryField.text]) {
-                                           [m_tableItems addObject:categoryField.text];
-                                           [self.invoiceTableView reloadData];
-                                       }
-                                   }];
-        
-        [alertController addAction:okAction];
-        [alertController addAction:cancelAction];
-        
-        [self presentViewController:alertController animated:YES completion:nil];
-    } else
-    {
-        [m_tableItems addObject:@"Entertainment"];
-        [self.invoiceTableView reloadData];
-    }
-     */
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Delete?"
+                                                            message:@"Are you sure your want to delete this and all of it's contents?"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"No"
+                                                  otherButtonTitles:@"Yes", nil];
+        [alertView show];
+    }];
+    
+}
+
+- (void)deleteCell:(MCSwipeTableViewCell *)cell {
+    NSParameterAssert(cell);
+    
+    NSIndexPath *indexPath = [self.invoiceTableView indexPathForCell:cell];
+    
+    [m_tableItems removeObjectAtIndex:indexPath.row];
+    [self.invoiceTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
+    [sortrDataMgr deleteCategory:cell.Title.text];
+}
+
+/**
+ *  Simply reload tableview data
+ *
+ *  @param sender pull to refresh
+ */
+- (void)reload:(id)sender {
+     [self.invoiceTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)alertTextFieldDidChange:(NSNotification *)notification
@@ -380,6 +447,24 @@
         UITextField *category = alertController.textFields.firstObject;
         UIAlertAction *okAction = alertController.actions.lastObject;
         okAction.enabled = category.text.length > 2;
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    // No
+    if (buttonIndex == 0) {
+        [_cellToDelete swipeToOriginWithCompletion:^{
+            NSLog(@"Swiped back");
+        }];
+        _cellToDelete = nil;
+    }
+    
+    // Yes
+    else {
+        [self deleteCell:_cellToDelete];
     }
 }
 

@@ -32,7 +32,7 @@
     *     Initializing menus
     *******************************/
     self.leftMenu   = [[LeftMenuTVC alloc] initWithNibName:@"LeftMenuTVC" bundle:nil];
-    self.rightMenu  = [[RightMenuTVC alloc] initWithNibName:@"RightMenuTVC" bundle:nil];
+    //self.rightMenu  = [[RightMenuTVC alloc] initWithNibName:@"RightMenuTVC" bundle:nil];
     
    /*******************************
     *     End Initializing menus
@@ -52,7 +52,7 @@
     frame.size = (CGSize){40,40};
     button.frame = frame;
     
-    //[button setImage:[UIImage imageNamed:@"LeftMenu"] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"RightMenu"] forState:UIControlStateNormal];
 }
 
 - (void)configureRightMenuButton:(UIButton *)button

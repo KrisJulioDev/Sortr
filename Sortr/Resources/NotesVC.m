@@ -7,7 +7,7 @@
 //
 
 #import "NotesVC.h"
-#import "NoteTVC.h"
+#import "MCSwipeTableViewCell.h"
 #import "NoteItem.h"
 #import "BookVC.h"
 #import "InvoiceVC.h"
@@ -120,7 +120,7 @@
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NoteTVC *cell = [tableView dequeueReusableCellWithIdentifier:@"NoteTVC"];
+     MCSwipeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NoteTVC"];
     
     if (cell == nil) {
         // Load the top-level objects from the custom cell XIB.
@@ -206,7 +206,6 @@
     
     self.navigationItem.title = @"Back";
     [self.navigationController pushViewController:vc animated:YES];
-    
 }
 
 - (void)didReceiveMemoryWarning

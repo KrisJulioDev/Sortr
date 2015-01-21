@@ -26,6 +26,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *totalLabel;
 @property (strong, nonatomic) IBOutlet UIButton *scanBtn;
 
+- (void) actionLaunchAppCamera : (id)sender;
 - (void) receiptHTTPClient : (int) r_id didUpdateWithStatus : ( NSDictionary *) dic;
 - (void) exportReceiptCallback : (id) sender success: (ResponseObject *) responseObject;
 - (void) exportReceiptCallback : (id) sender failed: (NSError *) error;

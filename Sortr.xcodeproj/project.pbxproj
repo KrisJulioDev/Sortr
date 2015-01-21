@@ -40,6 +40,14 @@
 		843412C81A416D1900748B16 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843412C71A416D1900748B16 /* AssetsLibrary.framework */; };
 		84434D8F1A43E42300498210 /* PostPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84434D8D1A43E42300498210 /* PostPhotoViewController.m */; };
 		84434D901A43E42300498210 /* PostPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84434D8E1A43E42300498210 /* PostPhotoViewController.xib */; };
+		8452E49E1A6E32400031B241 /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 8452E49C1A6E32400031B241 /* cross.png */; };
+		8452E49F1A6E32400031B241 /* cross@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8452E49D1A6E32400031B241 /* cross@2x.png */; };
+		8452E4A21A6E32520031B241 /* MCSwipeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8452E4A11A6E32520031B241 /* MCSwipeTableViewCell.m */; };
+		8458EBB51A5F761E00A4C047 /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8458EBB21A5F761E00A4C047 /* OverlayView.m */; };
+		8458EBB61A5F761E00A4C047 /* ScanButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8458EBB41A5F761E00A4C047 /* ScanButton.m */; };
+		8458EBB91A5F788800A4C047 /* scanbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 8458EBB71A5F788800A4C047 /* scanbutton.png */; };
+		8458EBBC1A5F7AB200A4C047 /* overlaygraphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 8458EBBB1A5F7AB200A4C047 /* overlaygraphic.png */; };
+		8458EBBE1A5F7D8B00A4C047 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 8458EBBD1A5F7D8B00A4C047 /* close.png */; };
 		84665D651990DA10000196B6 /* ADAM.CG PRO.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84665D5E1990DA10000196B6 /* ADAM.CG PRO.otf */; };
 		84665D661990DA10000196B6 /* DINNextLTPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84665D5F1990DA10000196B6 /* DINNextLTPro-Bold.otf */; };
 		84665D671990DA10000196B6 /* DINNextLTPro-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84665D601990DA10000196B6 /* DINNextLTPro-Light.otf */; };
@@ -115,6 +123,9 @@
 		84A3D84C1A2F1604008BBE67 /* SearchLists.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84A3D84B1A2F1604008BBE67 /* SearchLists.plist */; };
 		84A496FB1A5D0B3F004FF4FC /* UIImage+fixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A496FA1A5D0B3F004FF4FC /* UIImage+fixOrientation.m */; };
 		84B287141A300CC300B043A0 /* ReceiptData.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B287131A300CC300B043A0 /* ReceiptData.m */; };
+		84B52B2F1A660DA900681467 /* AwesomeMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B52B2C1A660DA900681467 /* AwesomeMenu.m */; };
+		84B52B301A660DA900681467 /* AwesomeMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B52B2E1A660DA900681467 /* AwesomeMenuItem.m */; };
+		84B52B341A6647F900681467 /* ReceiptImageview.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B52B331A6647F900681467 /* ReceiptImageview.m */; };
 		84B822741990D4B000315F58 /* LatoBold.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B822731990D4B000315F58 /* LatoBold.m */; };
 		84B822771990D56D00315F58 /* DinNext.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B822761990D56D00315F58 /* DinNext.m */; };
 		84D258491A42D16900063426 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D258381A42D16900063426 /* AbstractActionSheetPicker.m */; };
@@ -213,6 +224,17 @@
 		84434D8C1A43E42300498210 /* PostPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostPhotoViewController.h; sourceTree = "<group>"; };
 		84434D8D1A43E42300498210 /* PostPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostPhotoViewController.m; sourceTree = "<group>"; };
 		84434D8E1A43E42300498210 /* PostPhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostPhotoViewController.xib; sourceTree = "<group>"; };
+		8452E49C1A6E32400031B241 /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
+		8452E49D1A6E32400031B241 /* cross@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cross@2x.png"; sourceTree = "<group>"; };
+		8452E4A01A6E32520031B241 /* MCSwipeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSwipeTableViewCell.h; sourceTree = "<group>"; };
+		8452E4A11A6E32520031B241 /* MCSwipeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSwipeTableViewCell.m; sourceTree = "<group>"; };
+		8458EBB11A5F761E00A4C047 /* OverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayView.h; sourceTree = "<group>"; };
+		8458EBB21A5F761E00A4C047 /* OverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayView.m; sourceTree = "<group>"; };
+		8458EBB31A5F761E00A4C047 /* ScanButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanButton.h; sourceTree = "<group>"; };
+		8458EBB41A5F761E00A4C047 /* ScanButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanButton.m; sourceTree = "<group>"; };
+		8458EBB71A5F788800A4C047 /* scanbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scanbutton.png; sourceTree = "<group>"; };
+		8458EBBB1A5F7AB200A4C047 /* overlaygraphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = overlaygraphic.png; sourceTree = "<group>"; };
+		8458EBBD1A5F7D8B00A4C047 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		84665D5E1990DA10000196B6 /* ADAM.CG PRO.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ADAM.CG PRO.otf"; sourceTree = "<group>"; };
 		84665D5F1990DA10000196B6 /* DINNextLTPro-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINNextLTPro-Bold.otf"; sourceTree = "<group>"; };
 		84665D601990DA10000196B6 /* DINNextLTPro-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINNextLTPro-Light.otf"; sourceTree = "<group>"; };
@@ -316,6 +338,12 @@
 		84A496FA1A5D0B3F004FF4FC /* UIImage+fixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+fixOrientation.m"; sourceTree = "<group>"; };
 		84B287121A300CC300B043A0 /* ReceiptData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptData.h; sourceTree = "<group>"; };
 		84B287131A300CC300B043A0 /* ReceiptData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptData.m; sourceTree = "<group>"; };
+		84B52B2B1A660DA900681467 /* AwesomeMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeMenu.h; sourceTree = "<group>"; };
+		84B52B2C1A660DA900681467 /* AwesomeMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwesomeMenu.m; sourceTree = "<group>"; };
+		84B52B2D1A660DA900681467 /* AwesomeMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AwesomeMenuItem.h; sourceTree = "<group>"; };
+		84B52B2E1A660DA900681467 /* AwesomeMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AwesomeMenuItem.m; sourceTree = "<group>"; };
+		84B52B321A6647F900681467 /* ReceiptImageview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptImageview.h; sourceTree = "<group>"; };
+		84B52B331A6647F900681467 /* ReceiptImageview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptImageview.m; sourceTree = "<group>"; };
 		84B822721990D4B000315F58 /* LatoBold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LatoBold.h; sourceTree = "<group>"; };
 		84B822731990D4B000315F58 /* LatoBold.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LatoBold.m; sourceTree = "<group>"; };
 		84B822751990D56D00315F58 /* DinNext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DinNext.h; sourceTree = "<group>"; };
@@ -405,6 +433,7 @@
 		841D6306198F57B90088651F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				84B52B311A660DAD00681467 /* AwesomeMenu */,
 				84D258361A42D16900063426 /* Pickers */,
 				84265E5B1994A8DF00C64C16 /* ABBYYOcr */,
 				842466AF1A2DA4550036E43D /* ALAssetsLibrary+CustomPhotoAlbum.h */,
@@ -434,6 +463,8 @@
 		841D6318198F6D780088651F /* CustomCell */ = {
 			isa = PBXGroup;
 			children = (
+				8452E4A01A6E32520031B241 /* MCSwipeTableViewCell.h */,
+				8452E4A11A6E32520031B241 /* MCSwipeTableViewCell.m */,
 				841D6319198F6DA30088651F /* NoteTVC.h */,
 				841D631A198F6DA30088651F /* NoteTVC.m */,
 				841D631B198F6DA30088651F /* NoteTVC.xib */,
@@ -449,6 +480,7 @@
 		841D6325198F84310088651F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				8458EBB01A5F761600A4C047 /* OverlayView */,
 				84E969271A42B70F007E7A9D /* Clients */,
 				841D6313198F65980088651F /* NotesVC.h */,
 				841D6314198F65980088651F /* NotesVC.m */,
@@ -475,6 +507,8 @@
 				842466AD1A2D9D4E0036E43D /* SortrReceipt.m */,
 				84B287121A300CC300B043A0 /* ReceiptData.h */,
 				84B287131A300CC300B043A0 /* ReceiptData.m */,
+				84B52B321A6647F900681467 /* ReceiptImageview.h */,
+				84B52B331A6647F900681467 /* ReceiptImageview.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -507,6 +541,17 @@
 			children = (
 			);
 			name = infoPlists;
+			sourceTree = "<group>";
+		};
+		8458EBB01A5F761600A4C047 /* OverlayView */ = {
+			isa = PBXGroup;
+			children = (
+				8458EBB11A5F761E00A4C047 /* OverlayView.h */,
+				8458EBB21A5F761E00A4C047 /* OverlayView.m */,
+				8458EBB31A5F761E00A4C047 /* ScanButton.h */,
+				8458EBB41A5F761E00A4C047 /* ScanButton.m */,
+			);
+			name = OverlayView;
 			sourceTree = "<group>";
 		};
 		84665D4F1990D9E2000196B6 /* FontFile */ = {
@@ -636,6 +681,11 @@
 		8473D235198B3D96004E912A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8452E49C1A6E32400031B241 /* cross.png */,
+				8452E49D1A6E32400031B241 /* cross@2x.png */,
+				8458EBBD1A5F7D8B00A4C047 /* close.png */,
+				8458EBBB1A5F7AB200A4C047 /* overlaygraphic.png */,
+				8458EBB71A5F788800A4C047 /* scanbutton.png */,
 				8473D260198B3EAF004E912A /* FiveVC.h */,
 				8473D261198B3EAF004E912A /* FiveVC.m */,
 				8473D262198B3EAF004E912A /* FiveVC.xib */,
@@ -753,6 +803,17 @@
 				84A35F6E19C7D0E9004101C6 /* UIHelpers.m */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		84B52B311A660DAD00681467 /* AwesomeMenu */ = {
+			isa = PBXGroup;
+			children = (
+				84B52B2B1A660DA900681467 /* AwesomeMenu.h */,
+				84B52B2C1A660DA900681467 /* AwesomeMenu.m */,
+				84B52B2D1A660DA900681467 /* AwesomeMenuItem.h */,
+				84B52B2E1A660DA900681467 /* AwesomeMenuItem.m */,
+			);
+			name = AwesomeMenu;
 			sourceTree = "<group>";
 		};
 		84B8226E1990D07900315F58 /* CustomFonts */ = {
@@ -941,13 +1002,16 @@
 				84265E7F1994BBD000C64C16 /* DownloadTabVC.xib in Resources */,
 				841D6317198F65980088651F /* NotesVC.xib in Resources */,
 				84A35F7519C7D0E9004101C6 /* cb_dark_off.png in Resources */,
+				8458EBBE1A5F7D8B00A4C047 /* close.png in Resources */,
 				848D99BA1A37E1730000E405 /* ReceiptInfoViewController.xib in Resources */,
 				84FA93F9199352C40065E83D /* BookDetailVC.xib in Resources */,
 				84A35F7619C7D0E9004101C6 /* cb_dark_off@2x.png in Resources */,
 				84A35F7219C7D0E9004101C6 /* cb_box_off@2x.png in Resources */,
+				8458EBB91A5F788800A4C047 /* scanbutton.png in Resources */,
 				84A35F7819C7D0E9004101C6 /* cb_dark_on@2x.png in Resources */,
 				84265E841994C01400C64C16 /* ExportSettingsVC.xib in Resources */,
 				8473D254198B3D97004E912A /* LeftMenuTVC.xib in Resources */,
+				8458EBBC1A5F7AB200A4C047 /* overlaygraphic.png in Resources */,
 				84A35F7D19C7D0E9004101C6 /* cb_green_off.png in Resources */,
 				8473D256198B3D97004E912A /* RightMenuTVC.xib in Resources */,
 				84A35F8219C7D0E9004101C6 /* cb_mono_off@2x.png in Resources */,
@@ -967,6 +1031,7 @@
 				84665D691990DA10000196B6 /* Lato-Bol.ttf in Resources */,
 				84A35F8019C7D0E9004101C6 /* cb_green_on@2x.png in Resources */,
 				84434D901A43E42300498210 /* PostPhotoViewController.xib in Resources */,
+				8452E49F1A6E32400031B241 /* cross@2x.png in Resources */,
 				84A35F7919C7D0E9004101C6 /* cb_glossy_off.png in Resources */,
 				8473D26F198B3EAF004E912A /* FiveVC.xib in Resources */,
 				84E9692C1A42B729007E7A9D /* AddClientViewController.xib in Resources */,
@@ -975,6 +1040,7 @@
 				84665D651990DA10000196B6 /* ADAM.CG PRO.otf in Resources */,
 				84665D661990DA10000196B6 /* DINNextLTPro-Bold.otf in Resources */,
 				84A35F8119C7D0E9004101C6 /* cb_mono_off.png in Resources */,
+				8452E49E1A6E32400031B241 /* cross.png in Resources */,
 				84A35F7A19C7D0E9004101C6 /* cb_glossy_off@2x.png in Resources */,
 				84FA947719935A980065E83D /* image_sample.jpg in Resources */,
 				84D502A91A5E5D860076A467 /* CameraOverlayViewController.xib in Resources */,
@@ -1043,6 +1109,7 @@
 			files = (
 				84A496FB1A5D0B3F004FF4FC /* UIImage+fixOrientation.m in Sources */,
 				84265E6D1994AE4F00C64C16 /* OCRManager.m in Sources */,
+				8458EBB61A5F761E00A4C047 /* ScanButton.m in Sources */,
 				842466B11A2DA4550036E43D /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
 				841D6329198F84590088651F /* BookVC.m in Sources */,
 				84FA93F8199352C40065E83D /* BookDetailVC.m in Sources */,
@@ -1052,6 +1119,7 @@
 				84D2584E1A42D16900063426 /* ActionSheetStringPicker.m in Sources */,
 				84D258501A42D16900063426 /* SWActionSheet.m in Sources */,
 				8473D25C198B3DD5004E912A /* MainVC.m in Sources */,
+				84B52B2F1A660DA900681467 /* AwesomeMenu.m in Sources */,
 				841D631C198F6DA30088651F /* NoteTVC.m in Sources */,
 				8473D24D198B3D97004E912A /* AMSlideMenuLeftMenuSegue.m in Sources */,
 				84A35F8619C7D0E9004101C6 /* SSCheckBoxView.m in Sources */,
@@ -1074,9 +1142,12 @@
 				8473D252198B3D97004E912A /* UIViewController+AMSlideMenu.m in Sources */,
 				841D6324198F7E9C0088651F /* NoteItem.m in Sources */,
 				84265E701994B0AE00C64C16 /* Task.m in Sources */,
+				8452E4A21A6E32520031B241 /* MCSwipeTableViewCell.m in Sources */,
+				8458EBB51A5F761E00A4C047 /* OverlayView.m in Sources */,
 				84B287141A300CC300B043A0 /* ReceiptData.m in Sources */,
 				8473D20F198B3D4E004E912A /* main.m in Sources */,
 				84665D711991E4C4000196B6 /* ThumbCell.m in Sources */,
+				84B52B341A6647F900681467 /* ReceiptImageview.m in Sources */,
 				84265E671994A90200C64C16 /* Client.m in Sources */,
 				84FD64661A411F6F00A8CB67 /* SortrSettingsViewController.m in Sources */,
 				84A35F8519C7D0E9004101C6 /* UIHelpers.m in Sources */,
@@ -1104,6 +1175,7 @@
 				842466B81A2DBC920036E43D /* ResponseObject.m in Sources */,
 				84D2584D1A42D16900063426 /* ActionSheetLocalePicker.m in Sources */,
 				8473D272198B3EAF004E912A /* SecondVC.m in Sources */,
+				84B52B301A660DA900681467 /* AwesomeMenuItem.m in Sources */,
 				846D3FE21A3842E000E3C839 /* CategoryViewController.m in Sources */,
 				84241B4F19BEB52800A98489 /* SortrSessionManager.m in Sources */,
 				84FA948219937CCE0065E83D /* ClientListVC.m in Sources */,
@@ -1246,7 +1318,7 @@
 				);
 				INFOPLIST_FILE = "Sortr/Sortr-Info.plist";
 				INSTALL_OWNER = "$(USER)";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Sortr/tesseract-ios-lib/lib",
@@ -1287,7 +1359,7 @@
 				);
 				INFOPLIST_FILE = "Sortr/Sortr-Info.plist";
 				INSTALL_OWNER = "$(USER)";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Sortr/tesseract-ios-lib/lib",

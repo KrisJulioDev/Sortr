@@ -241,8 +241,7 @@
     ((UILabel *)[view viewWithTag:1]).text = [[self class] countryNames][(NSUInteger)row];
     NSString *imagePath = [NSString stringWithFormat:@"CountryPicker.bundle/%@", [[self class] countryCodes][(NSUInteger) row]];
     ((UIImageView *)[view viewWithTag:2]).image = [UIImage imageNamed:imagePath];
-
-
+ 
     return view;
 }
 

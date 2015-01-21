@@ -28,7 +28,7 @@
     // Do any additional setup after loading the view from its nib.
     
     // Initilizing data souce
-    self.tableData = [@[@"", @"RECEIPTS",@"TAGS",@"SETTINGS"] mutableCopy];
+    self.tableData = [@[@"", @"SETTINGS"] mutableCopy];
     
     // Remove lines of cell without data
     self.tableView.tableFooterView = [UIView new];
@@ -57,7 +57,7 @@
         [cell setBackgroundColor:SORTR_BLUE];
         
         UILabel *menuTitle = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 150, 50)];
-        [menuTitle setText:@"MENU"];
+        [menuTitle setText:@"MAIN"];
         [menuTitle setTextColor:[UIColor whiteColor]];
         [menuTitle setFont:BOLD_FONT_WITH_SIZE(20)];
         
@@ -85,17 +85,17 @@
     switch (indexPath.row) {
         case 0:
             
-            
-        case 1:
                 rootVC = [[InvoiceVC alloc] initWithNibName:@"InvoiceVC" bundle:nil];
                 rootVC.title = @"Receipts";
+            break;
+        case 1:
+                rootVC = [[SortrSettingsViewController alloc] init];
             break;
         case 2:
                 rootVC = [[SecondVC alloc] initWithNibName:@"SecondVC" bundle:nil];
             break;
         case 3:
                 //rootVC = [[ThirdVC alloc] initWithNibName:@"ThirdVC" bundle:nil];
-                rootVC = [[SortrSettingsViewController alloc] init];
             
             break;
         

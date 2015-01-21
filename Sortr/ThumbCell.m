@@ -22,11 +22,15 @@
     }
     return self;
 }
-
+/**
+ *  Set Thumb Image of receipt
+ *
+ *  @param img image of receipt taken
+ */
 - (void) assignThumbImage : ( UIImage*) img
 {
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,100,100)];
-; 
+  
     imgView.clipsToBounds = YES;
     imgView.image = img ; 
     self.thumbImage = img;
@@ -40,6 +44,11 @@
     
 }
 
+/**
+ *  Update status of receipt
+ *
+ *  @param status ThumbStatus
+ */
 - (void) setStatus:(ThumbStatus ) status
 {
     NSString *imageName;

@@ -237,6 +237,28 @@ RLM_ARRAY_TYPE(ReceiptObject)
     [realm commitWriteTransaction];
 }
 
+- (void) deleteCategory: (NSString*) category {
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    
+    RLMResults *results = [CategoryObject objectsInRealm:realm where:[NSString stringWithFormat:@"name contains '%@'", category]];
+    
+    if (results.count == 0) {
+        return;
+    }
+    
+    /**
+     *  Delete receipt under this deleted category
+     */
+    for (ReceiptObject *receipt in [ReceiptObject allObjects]) {
+        if ([receipt.category isEqualToString:category]) {
+            [self deleteReceipt:receipt];
+        }
+    }
+    
+    [realm beginWriteTransaction];
+    [realm deleteObject:[results objectAtIndex:0]];
+    [realm commitWriteTransaction];
+}
 
 // Returns the URL to the application's Documents directory.
 - (NSURL *)applicationDocumentsDirectory

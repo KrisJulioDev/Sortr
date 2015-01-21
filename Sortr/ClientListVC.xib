@@ -26,12 +26,11 @@
                 </tableView>
                 <button opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ESa-3A-52e">
                     <rect key="frame" x="12" y="514" width="297" height="45"/>
-                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="HWA-eK-yG1"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="15"/>
-                    <state key="normal" title="NEW CLIENT">
+                    <state key="normal" title="NEW CLIENT" backgroundImage="blue_button">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -47,6 +46,9 @@
             </constraints>
         </view>
     </objects>
+    <resources>
+        <image name="blue_button" width="190" height="49"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

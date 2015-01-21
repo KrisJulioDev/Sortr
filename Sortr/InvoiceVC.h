@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MCSwipeTableViewCell.h"
 
 @interface InvoiceVC : UIViewController
 
@@ -29,5 +30,5 @@
 @property (strong, nonatomic) IBOutlet UIButton *centerCamera;
 
 @property (strong, nonatomic) IBOutlet UIButton *addCategoryBtn;
-
+@property (nonatomic, strong) MCSwipeTableViewCell *cellToDelete;
 @end

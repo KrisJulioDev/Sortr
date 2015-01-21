@@ -77,9 +77,7 @@
 }
 
 - (IBAction)exportImageData:(id)sender {
-    
-   /// [[SortrDataManager sharedInstance] saveTotalData:@"123" vat:@"123" branch:@"branch" receiptDate:@"21323"];
-   // [self openReceiptOnInvoice];
+     
     
     //SHOW ACTIVITY INDICATOR
     [Utilities showActivityIndicator:self];

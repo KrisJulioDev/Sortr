@@ -19,50 +19,48 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Client name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9Wx-BZ-VkG">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Client name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9Wx-BZ-VkG">
                     <rect key="frame" x="25" y="97" width="550" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KQU-Am-bKI">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KQU-Am-bKI">
                     <rect key="frame" x="25" y="151" width="550" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                 </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="New Client" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FH2-7W-AWY">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="New Client" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FH2-7W-AWY">
                     <rect key="frame" x="227" y="52" width="147" height="28"/>
                     <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="24"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add phone" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lSZ-38-Jcq">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add phone" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lSZ-38-Jcq">
                     <rect key="frame" x="25" y="205" width="550" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eBy-Ag-iqN">
-                    <rect key="frame" x="63" y="256" width="475" height="35"/>
-                    <color key="backgroundColor" red="0.35294117650000001" green="0.80784313730000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xd9-uD-S0l">
+                    <rect key="frame" x="20" y="306" width="560" height="35"/>
                     <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="19"/>
-                    <state key="normal" title="Add Client">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="addContact:" destination="-1" eventType="touchUpInside" id="h4X-FV-SQo"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xd9-uD-S0l">
-                    <rect key="frame" x="63" y="306" width="475" height="35"/>
-                    <color key="backgroundColor" red="0.97254901959999995" green="0.57254901960000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="19"/>
-                    <state key="normal" title="Cancel">
+                    <state key="normal" title="Cancel" backgroundImage="red_button">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="addContact:" destination="-1" eventType="touchUpInside" id="EAu-at-naP"/>
                         <action selector="dismissVC:" destination="-1" eventType="touchUpInside" id="fAD-Lq-fpJ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eBy-Ag-iqN">
+                    <rect key="frame" x="20" y="255" width="560" height="35"/>
+                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="19"/>
+                    <state key="normal" title="Add Client" backgroundImage="blue_button">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="addContact:" destination="-1" eventType="touchUpInside" id="h4X-FV-SQo"/>
                     </connections>
                 </button>
             </subviews>
@@ -72,18 +70,37 @@
                 <constraint firstItem="KQU-Am-bKI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="8Hb-Xa-Bvw"/>
                 <constraint firstItem="lSZ-38-Jcq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="AQt-HL-PvH"/>
                 <constraint firstItem="eBy-Ag-iqN" firstAttribute="top" secondItem="lSZ-38-Jcq" secondAttribute="bottom" constant="21" id="Agt-l5-aJt"/>
+                <constraint firstItem="KQU-Am-bKI" firstAttribute="top" secondItem="9Wx-BZ-VkG" secondAttribute="bottom" constant="24" id="B2H-ML-hnF"/>
                 <constraint firstItem="9Wx-BZ-VkG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="CZ9-mH-cXU"/>
+                <constraint firstItem="Xd9-uD-S0l" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="EzA-6q-gU5"/>
+                <constraint firstItem="lSZ-38-Jcq" firstAttribute="top" secondItem="KQU-Am-bKI" secondAttribute="bottom" constant="24" id="G9A-Wr-RoA"/>
                 <constraint firstItem="Xd9-uD-S0l" firstAttribute="top" secondItem="eBy-Ag-iqN" secondAttribute="bottom" constant="15" id="LOY-CI-Lz3"/>
+                <constraint firstAttribute="trailing" secondItem="Xd9-uD-S0l" secondAttribute="trailing" constant="20" id="QcY-zf-a53"/>
+                <constraint firstItem="eBy-Ag-iqN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="RBV-RN-11E"/>
                 <constraint firstItem="9Wx-BZ-VkG" firstAttribute="top" secondItem="FH2-7W-AWY" secondAttribute="bottom" constant="24" id="U06-1p-y4D"/>
                 <constraint firstAttribute="trailing" secondItem="9Wx-BZ-VkG" secondAttribute="trailing" constant="25" id="YdT-qG-Ozy"/>
                 <constraint firstItem="eBy-Ag-iqN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="63" id="ZiN-7b-cK5"/>
+                <constraint firstItem="FH2-7W-AWY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="52" id="Zx0-YV-AOu"/>
+                <constraint firstAttribute="trailing" secondItem="eBy-Ag-iqN" secondAttribute="trailing" constant="20" id="bZW-R0-h1v"/>
                 <constraint firstAttribute="centerX" secondItem="FH2-7W-AWY" secondAttribute="centerX" id="cVc-n3-uUz"/>
                 <constraint firstItem="Xd9-uD-S0l" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="63" id="jed-UZ-XoN"/>
                 <constraint firstAttribute="trailing" secondItem="KQU-Am-bKI" secondAttribute="trailing" constant="25" id="n3g-nB-iCc"/>
                 <constraint firstAttribute="trailing" secondItem="eBy-Ag-iqN" secondAttribute="trailing" constant="62" id="nln-o2-2cR"/>
                 <constraint firstAttribute="trailing" secondItem="Xd9-uD-S0l" secondAttribute="trailing" constant="62" id="rbj-Jt-hue"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="ZiN-7b-cK5"/>
+                    <exclude reference="nln-o2-2cR"/>
+                    <exclude reference="jed-UZ-XoN"/>
+                    <exclude reference="rbj-Jt-hue"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="192" y="311"/>
         </view>
     </objects>
+    <resources>
+        <image name="blue_button" width="190" height="49"/>
+        <image name="red_button" width="190" height="45"/>
+    </resources>
 </document>

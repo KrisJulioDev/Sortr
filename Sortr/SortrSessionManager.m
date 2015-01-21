@@ -29,6 +29,11 @@
     return sharedInstance;
 }
 
+/**
+ *  Upload photo to process to the server
+ *
+ *  @param filePathUrl file path of image URL
+ */
 -(void) requestPhotoUploadTask : (NSURL*) filePathUrl
 {
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -47,6 +52,7 @@
     }];
     [uploadTask resume];
 }
+
 
 -(void)uploadPhotoToServer : (ThumbCell*) cell
 {

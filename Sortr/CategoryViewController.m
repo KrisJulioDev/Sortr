@@ -19,6 +19,7 @@
 #import "APIClient.h"
 #import "SortrReceipt.h"
 #import "PostPhotoViewController.h"
+#import "OverlayView.h"
 #import <Realm/Realm.h>
 
 @interface CategoryViewController () <UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
@@ -56,6 +57,8 @@
     thumbNailPhotos = [NSMutableArray new];
     thumbNailCells  = [NSMutableArray new];
     receipts        = [sortrDataMgr getAllReceiptData];
+   
+    [self.receiptTutorial setHidden:NO];
     
     refreshControl = [[UIRefreshControl alloc] init];
     [self.receiptTable addSubview:refreshControl];
@@ -63,12 +66,12 @@
    
         /* LATER IMPLEMENTATION
     uploadScheduler = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(scheduledUploadFire:) userInfo:nil repeats:YES];
-    updateScheduler = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(fetchReceiptData) userInfo:nil repeats:YES];
     
     [uploadScheduler fire];
-    [updateScheduler fire];
      */
+
 }
+
 
 - (void) viewWillAppear:(BOOL)animated
 {
@@ -78,10 +81,20 @@
     [self.scanBtn setAlpha:0.5f];
     
     [self refreshData];
+    [self uploadAllPendingReceipts];
+    
+    updateScheduler = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(fetchReceiptData) userInfo:nil repeats:YES];
+    [updateScheduler fire];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [updateScheduler invalidate];
 }
 
 - (void) fetchReceiptData
 {
+    NSLog(@"Fetching ... " );
     [APIClient sharedInstance].delegate = self;
     
     for (ReceiptObject *receipt in receiptItems) {
@@ -132,6 +145,7 @@
     }
     
     isRefreshing = NO;
+    
 }
 
 - (void) proximityChanged : (id) sender
@@ -220,14 +234,26 @@
 {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
+        OverlayView *overlay = [[OverlayView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGTH)];
+        
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        imagePicker.navigationBarHidden = YES;
         imagePicker.delegate = self;
+        
+        // Hide the controls:
+        imagePicker.showsCameraControls = NO;
+        imagePicker.navigationBarHidden = YES;
+        
+        imagePicker.wantsFullScreenLayout = YES;
+        imagePicker.cameraViewTransform = CGAffineTransformScale(imagePicker.cameraViewTransform, CAMERA_TRANSFORM_X, CAMERA_TRANSFORM_Y);
+ 
+        // Insert the overlay:
+        imagePicker.cameraOverlayView = overlay;
+        overlay.delegate = imagePicker;
           
         [self.receiptTutorial setHidden:YES];
         
-        [self presentViewController:imagePicker animated:YES completion:nil];
+        [self presentViewController:imagePicker animated:NO completion:nil];
     }else{
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Camera Unavailable"
                                                        message:@"Unable to find a camera on your device."
@@ -251,6 +277,7 @@
         
         PostPhotoViewController *ppv = [[PostPhotoViewController alloc] init];
         ppv.imageTaken = tmp;
+        ppv.delegate = self;
         [self.navigationController presentViewController:ppv animated:YES completion:nil];
         
     }];
@@ -367,7 +394,7 @@
     
     
     BookCell *cellTapped = (BookCell*)[self.receiptTable cellForRowAtIndexPath:indexPath];
-    selectedCell = cellTapped;
+    //selectedCell = cellTapped;
     
     
     if( (int)cellTapped.receiptObject.receiptStatus < Audit) {
@@ -376,7 +403,7 @@
         cellTapped.selectionStyle = UITableViewCellSelectionStyleNone;
         
         if ((int)cellTapped.receiptObject.receiptStatus == Waiting) {
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle: @"Process receipt"  otherButtonTitles: @"Delete receipt", nil];
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle: @"Delete receipt"  otherButtonTitles: nil];
             
             [actionSheet showInView:self.view];
         }
@@ -396,6 +423,11 @@
     NSLog(@"You have pressed the %@ button", [actionSheet buttonTitleAtIndex:buttonIndex]);
     
     if (buttonIndex == 0) {
+        
+        [sortrDataMgr deleteReceipt:selectedCell.receiptObject];
+        [self refreshData];
+        
+        /*
         APIClient *client = [APIClient sharedInstance];
         client.delegate   = self;
         
@@ -408,13 +440,41 @@
             [client exportImageData:selectedCell withParamter:parameter andBlock:^(ResponseObject *response){
                 
             }];
-        }
+        }*/
     }
+    
+    /*
     else if (buttonIndex == 1) {
         [sortrDataMgr deleteReceipt:selectedCell.receiptObject];
         [self refreshData];
+    }*/
+    
+}
+
+- (void) uploadAllPendingReceipts
+{
+    APIClient *client = [APIClient sharedInstance];
+    client.delegate   = self;
+    
+    for (BookCell *bcell in [self.receiptTable visibleCells]) {
+        
+        ReceiptObject *receipt = bcell.receiptObject;
+        
+        if (receipt.receiptStatus == Waiting) {
+            selectedCell = bcell;
+            
+            NSDictionary *parameter = @{@"country": [SavedSettings settingsCountryCode], @"category": self.title, @"uuid" : bcell.receiptObject.receiptUUID};
+            [client exportImageData:bcell withParamter:parameter andBlock:^(ResponseObject *response){
+                
+            }];
+            
+            NSLog(@"PROCESSING...");
+            
+            break;
+        }
     }
     
+    [self refreshData];
 }
 
 #pragma mark SCHEDULED UPLOAD
@@ -469,6 +529,8 @@
         BookCell *bcell = selectedCell;
         //[bcell updateStatus:Done withPhoto:bcell.receiptImage.image];
         
+        NSLog(@"DONE PROCESSING...");
+        
         NSDictionary *response = (NSDictionary*) responseObject;
         NSDictionary *data = [response objectForKey:@"data"];
         
@@ -493,14 +555,24 @@
             
             [self refreshData];
             
+            
             [[UIApplication sharedApplication] endIgnoringInteractionEvents];
             [Utilities hideActivityIndicator:self];
+            
+            [self uploadAllPendingReceipts];
+ 
         });
-        
     });
-}
+ }
 
+/**
+ *  called after succesfull or fail upload of receipt to server
+ *
+ *  @param sender
+ *  @param error  error description
+ */
 - (void) exportReceiptCallback : (id) sender failed: (NSError *) error {
+    
     [[UIApplication sharedApplication] endIgnoringInteractionEvents];
     [Utilities hideActivityIndicator:self];
 }
@@ -550,14 +622,9 @@
         }
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void) dealloc
-{
-    [uploadScheduler invalidate];
-}
 
 @end

@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CategoryViewController">
             <connections>
                 <outlet property="receiptTable" destination="2Qa-dc-s51" id="g6w-Ca-iOP"/>
+                <outlet property="receiptTutorial" destination="Vfi-Jp-4gU" id="gq8-Iz-0nF"/>
                 <outlet property="scanBtn" destination="nAP-Hl-tva" id="iTg-nu-8BK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -40,16 +41,26 @@
                         <outlet property="delegate" destination="-1" id="cIQ-nS-LHv"/>
                     </connections>
                 </tableView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add_receipt_tut" translatesAutoresizingMaskIntoConstraints="NO" id="Vfi-Jp-4gU">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="Vfi-Jp-4gU" secondAttribute="bottom" id="4yv-gR-qbr"/>
                 <constraint firstAttribute="bottom" secondItem="nAP-Hl-tva" secondAttribute="bottom" id="6TC-Or-sfb"/>
+                <constraint firstItem="Vfi-Jp-4gU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Igl-RZ-sB9"/>
                 <constraint firstAttribute="trailing" secondItem="nAP-Hl-tva" secondAttribute="trailing" id="TF8-Yc-0la"/>
                 <constraint firstItem="2Qa-dc-s51" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="TWN-o4-BhU"/>
+                <constraint firstItem="Vfi-Jp-4gU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fX2-m8-T5e"/>
+                <constraint firstAttribute="trailing" secondItem="Vfi-Jp-4gU" secondAttribute="trailing" id="hoe-fa-uVQ"/>
                 <constraint firstItem="nAP-Hl-tva" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mbF-2x-bJY"/>
                 <constraint firstItem="nAP-Hl-tva" firstAttribute="top" secondItem="2Qa-dc-s51" secondAttribute="bottom" constant="-45" id="rC6-NB-Qdc"/>
             </constraints>
             <point key="canvasLocation" x="527" y="360"/>
         </view>
     </objects>
+    <resources>
+        <image name="add_receipt_tut" width="640" height="1136"/>
+    </resources>
 </document>

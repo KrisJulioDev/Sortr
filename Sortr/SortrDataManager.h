@@ -74,6 +74,7 @@
 - (void) saveCategoryWithName:(NSString*) name;
 
 - (void) deleteReceipt: ( ReceiptObject* ) receipt;
+- (void) deleteCategory: (NSString*) category;
 
 - (NSMutableArray*) getAllReceiptData;
 - (NSMutableArray*) getAllClients;

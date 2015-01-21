@@ -41,6 +41,9 @@
     [self refreshData];
 }
 
+/**
+ *  Refresh client lists saved
+ */
 - (void) refreshData
 {
     clientLists = [NSMutableArray new];

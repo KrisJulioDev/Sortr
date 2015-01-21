@@ -127,6 +127,13 @@
     
 }
 
+/**
+ *  Binarize image to increase the chance of image processing
+ *
+ *  @param sourceImage Image to binarize
+ *
+ *  @return new image binarized
+ */
 + (UIImage *) doBinarize:(UIImage *)sourceImage
 {
     //first off, try to grayscale the image using iOS core Image routine

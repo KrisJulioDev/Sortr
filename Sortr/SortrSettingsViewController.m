@@ -22,6 +22,7 @@
     self.countryCode.text = [SavedSettings settingsCountryCode];
     
     
+    self.navigationController.title = @"Settings";
     
     [self.categoryField setDelegate:self];
     [self.categoryField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
@@ -29,8 +30,7 @@
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    NSLog(@"QWEQ %@", [[NSUserDefaults standardUserDefaults] objectForKey:kSavedCountryCode]);
-    [self.countryPicker setSelectedCountryCode:[[NSUserDefaults standardUserDefaults] objectForKey:kSavedCountryCode] animated:YES];
+     [self.countryPicker setSelectedCountryCode:[[NSUserDefaults standardUserDefaults] objectForKey:kSavedCountryCode] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,6 +38,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+/**
+ *  Country picker used for determining tax of the country
+ *
+ *  @param picker CountryPicker
+ *  @param name   CountryName
+ *  @param code   CountryCode
+ */
 - (void)countryPicker:(__unused CountryPicker *)picker didSelectCountryWithName:(NSString *)name code:(NSString *)code
 {
     self.countryName.text = name;
@@ -51,6 +58,11 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+/**
+ *  Add Category Method
+ *
+ *  @param sender button
+ */
 - (IBAction)addCategory:(id)sender {
     if (_categoryField.text.length > 0) {
         

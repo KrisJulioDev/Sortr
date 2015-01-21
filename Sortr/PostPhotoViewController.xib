@@ -7,12 +7,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PostPhotoViewController">
             <connections>
-                <outlet property="blurinessAmount" destination="1si-SE-Nh6" id="KLe-gd-agh"/>
                 <outlet property="doneBtn" destination="qgN-Zv-oe3" id="z0d-C5-dsf"/>
                 <outlet property="receiptImage" destination="990-QI-bFC" id="Oj5-y2-v4l"/>
                 <outlet property="setCategoryBtn" destination="I2l-t9-n0n" id="10R-Qi-6gk"/>
                 <outlet property="setClientBtn" destination="bSv-yB-Tdn" id="DUa-5E-4VN"/>
-                <outlet property="thresholdSlider" destination="rUX-Kl-VsT" id="Axm-GH-p6P"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,43 +22,42 @@
                 <imageView userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app_bg" translatesAutoresizingMaskIntoConstraints="NO" id="fbY-bX-Pew">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qgN-Zv-oe3">
-                    <rect key="frame" x="0.0" y="564" width="600" height="36"/>
-                    <color key="backgroundColor" red="0.97254901959999995" green="0.57254901960000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qgN-Zv-oe3">
+                    <rect key="frame" x="17" y="547" width="568" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="36" id="doA-xi-Mkt"/>
+                        <constraint firstAttribute="height" constant="45" id="doA-xi-Mkt"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="19"/>
-                    <state key="normal" title="DONE">
+                    <state key="normal" title="DONE" backgroundImage="red_button">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="doA-xi-Mkt"/>
+                        </mask>
+                    </variation>
                     <connections>
                         <action selector="dismissVC:" destination="-1" eventType="touchUpInside" id="BRe-3q-NBy"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I2l-t9-n0n">
-                    <rect key="frame" x="25" y="387" width="550" height="30"/>
-                    <color key="backgroundColor" red="0.97254901959999995" green="0.57254901960000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="18"/>
-                    <state key="normal" title="Set Category">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="setCategory:" destination="-1" eventType="touchUpInside" id="1M7-wq-Uf3"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSv-yB-Tdn">
-                    <rect key="frame" x="25" y="454" width="550" height="30"/>
-                    <color key="backgroundColor" red="0.97254901959999995" green="0.57254901960000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IsK-fI-L4h">
+                    <rect key="frame" x="17" y="509" width="568" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="KZG-Fm-jHr"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="19"/>
-                    <state key="normal" title="Set Client">
+                    <state key="normal" title="CONTINUE TAKING PICTURE" backgroundImage="blue_button">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="KZG-Fm-jHr"/>
+                        </mask>
+                    </variation>
                     <connections>
-                        <action selector="setClient:" destination="-1" eventType="touchUpInside" id="VJw-Td-1ck"/>
+                        <action selector="captureAgain:" destination="-1" eventType="touchUpInside" id="gRQ-X1-iZC"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LYc-Us-Y82">
@@ -72,78 +69,99 @@
                         <action selector="cancelEditing:" destination="-1" eventType="touchUpInside" id="l2S-by-oek"/>
                     </connections>
                 </button>
-                <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="rUX-Kl-VsT">
-                    <rect key="frame" x="23" y="329" width="489" height="31"/>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I2l-t9-n0n">
+                    <rect key="frame" x="14" y="392" width="270" height="30"/>
+                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="14"/>
+                    <state key="normal" title="Set Category" backgroundImage="green_button">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
                     <connections>
-                        <action selector="sliderChanged:" destination="-1" eventType="valueChanged" id="myh-E3-q4r"/>
+                        <action selector="setCategory:" destination="-1" eventType="touchUpInside" id="1M7-wq-Uf3"/>
                     </connections>
-                </slider>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="990-QI-bFC">
-                    <rect key="frame" x="17" y="59" width="567" height="252"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSv-yB-Tdn">
+                    <rect key="frame" x="312" y="392" width="270" height="30"/>
+                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="14"/>
+                    <state key="normal" title="Set Client" backgroundImage="green_button">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="setClient:" destination="-1" eventType="touchUpInside" id="VJw-Td-1ck"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Receipt client" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gE-kN-rPI">
+                    <rect key="frame" x="323" y="367" width="266" height="21"/>
+                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="13"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Receipt category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WZc-KY-cLp">
+                    <rect key="frame" x="22" y="367" width="266" height="21"/>
+                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="13"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w5y-1b-cFY" customClass="UIScrollView">
+                    <rect key="frame" x="20" y="53" width="562" height="252"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="990-QI-bFC" customClass="ReceiptImageview">
+                            <rect key="frame" x="0.0" y="0.0" width="567" height="252"/>
+                            <gestureRecognizers/>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="ofi-4r-eza" appends="YES" id="UKF-Jb-D3B"/>
+                            </connections>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="252" id="wa1-ZR-ht7"/>
+                        <constraint firstAttribute="height" constant="252" id="2WV-Jp-bbm"/>
+                        <constraint firstItem="990-QI-bFC" firstAttribute="leading" secondItem="w5y-1b-cFY" secondAttribute="leading" id="3sB-rW-QOq"/>
+                        <constraint firstAttribute="centerX" secondItem="990-QI-bFC" secondAttribute="centerX" id="3wK-M8-4xS"/>
+                        <constraint firstItem="990-QI-bFC" firstAttribute="top" secondItem="w5y-1b-cFY" secondAttribute="top" id="5MA-9o-cqL"/>
+                        <constraint firstAttribute="trailing" secondItem="990-QI-bFC" secondAttribute="trailing" constant="-5" id="BFZ-5o-YOh"/>
+                        <constraint firstAttribute="centerY" secondItem="990-QI-bFC" secondAttribute="centerY" id="IZu-ag-HIC"/>
+                        <constraint firstAttribute="bottom" secondItem="990-QI-bFC" secondAttribute="bottom" id="rc1-Kk-Jfx"/>
                     </constraints>
-                </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Receipt client" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gE-kN-rPI">
-                    <rect key="frame" x="25" y="430" width="266" height="21"/>
-                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="13"/>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Receipt category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WZc-KY-cLp">
-                    <rect key="frame" x="25" y="361" width="266" height="21"/>
-                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="13"/>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Adjust stroke" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNk-L4-qL5">
-                    <rect key="frame" x="25" y="313" width="266" height="21"/>
-                    <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="13"/>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1si-SE-Nh6">
-                    <rect key="frame" x="518" y="338" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="WZc-KY-cLp" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="2ID-NE-mSX"/>
-                <constraint firstItem="8gE-kN-rPI" firstAttribute="top" secondItem="I2l-t9-n0n" secondAttribute="bottom" constant="13" id="4l5-D3-AhH"/>
-                <constraint firstItem="I2l-t9-n0n" firstAttribute="top" secondItem="WZc-KY-cLp" secondAttribute="bottom" constant="5" id="9bR-qg-5iT"/>
-                <constraint firstAttribute="trailing" secondItem="990-QI-bFC" secondAttribute="trailing" constant="16" id="AxC-G0-aJB"/>
-                <constraint firstItem="bSv-yB-Tdn" firstAttribute="top" secondItem="8gE-kN-rPI" secondAttribute="bottom" constant="3" id="CNO-A3-g4c"/>
-                <constraint firstItem="rUX-Kl-VsT" firstAttribute="top" secondItem="nNk-L4-qL5" secondAttribute="bottom" constant="-8" id="Cx7-p0-SE7"/>
+                <constraint firstItem="qgN-Zv-oe3" firstAttribute="top" secondItem="IsK-fI-L4h" secondAttribute="bottom" constant="8" id="1QL-a9-0Pt"/>
+                <constraint firstItem="I2l-t9-n0n" firstAttribute="top" secondItem="WZc-KY-cLp" secondAttribute="bottom" constant="4" id="1kk-QW-4Qr"/>
+                <constraint firstItem="I2l-t9-n0n" firstAttribute="leading" secondItem="WZc-KY-cLp" secondAttribute="leading" constant="-8" id="2pa-5z-XVR"/>
+                <constraint firstAttribute="trailing" secondItem="w5y-1b-cFY" secondAttribute="trailing" constant="18" id="4dO-Az-Vjs"/>
                 <constraint firstItem="LYc-Us-Y82" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="28" id="EVf-2q-TfM"/>
-                <constraint firstAttribute="trailing" secondItem="1si-SE-Nh6" secondAttribute="trailing" constant="34" id="Oka-mb-U6P"/>
-                <constraint firstItem="I2l-t9-n0n" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="Q9x-Qf-2zS"/>
+                <constraint firstItem="w5y-1b-cFY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="Eqq-Yc-BmZ"/>
+                <constraint firstItem="bSv-yB-Tdn" firstAttribute="trailing" secondItem="w5y-1b-cFY" secondAttribute="trailing" id="FMG-ED-Y6S"/>
+                <constraint firstItem="w5y-1b-cFY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="53" id="Fib-2m-4G5"/>
+                <constraint firstItem="WZc-KY-cLp" firstAttribute="top" secondItem="990-QI-bFC" secondAttribute="bottom" constant="62" id="Rie-Q3-vaT"/>
                 <constraint firstItem="fbY-bX-Pew" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="SVu-W7-EPs"/>
                 <constraint firstAttribute="trailing" secondItem="fbY-bX-Pew" secondAttribute="trailing" id="VRD-GD-mLc"/>
-                <constraint firstAttribute="trailing" secondItem="qgN-Zv-oe3" secondAttribute="trailing" id="XJG-fK-5EY"/>
+                <constraint firstAttribute="trailing" secondItem="qgN-Zv-oe3" secondAttribute="trailing" constant="15" id="Vhm-1z-EPt"/>
                 <constraint firstAttribute="bottom" secondItem="fbY-bX-Pew" secondAttribute="bottom" id="YYW-po-slN"/>
-                <constraint firstItem="rUX-Kl-VsT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="d78-l9-ypF"/>
-                <constraint firstAttribute="bottom" secondItem="qgN-Zv-oe3" secondAttribute="bottom" id="d7L-WU-muQ"/>
-                <constraint firstItem="WZc-KY-cLp" firstAttribute="top" secondItem="rUX-Kl-VsT" secondAttribute="bottom" constant="2" id="gX9-ri-BGP"/>
-                <constraint firstItem="bSv-yB-Tdn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="gzk-qo-Byb"/>
-                <constraint firstItem="990-QI-bFC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="iT9-aD-gDB"/>
-                <constraint firstItem="rUX-Kl-VsT" firstAttribute="top" secondItem="nNk-L4-qL5" secondAttribute="bottom" constant="-5" id="ijE-bj-1oS"/>
-                <constraint firstAttribute="trailing" secondItem="bSv-yB-Tdn" secondAttribute="trailing" constant="10" id="klp-fG-XS2"/>
+                <constraint firstItem="qgN-Zv-oe3" firstAttribute="trailing" secondItem="IsK-fI-L4h" secondAttribute="trailing" id="aJC-q4-vQQ"/>
+                <constraint firstItem="8gE-kN-rPI" firstAttribute="leading" secondItem="bSv-yB-Tdn" secondAttribute="leading" constant="11" id="aRM-Fg-VKi"/>
+                <constraint firstItem="bSv-yB-Tdn" firstAttribute="top" secondItem="8gE-kN-rPI" secondAttribute="bottom" constant="4" id="gUq-cz-4ss"/>
+                <constraint firstItem="qgN-Zv-oe3" firstAttribute="leading" secondItem="IsK-fI-L4h" secondAttribute="leading" id="i4t-r0-T9U"/>
+                <constraint firstItem="I2l-t9-n0n" firstAttribute="leading" secondItem="w5y-1b-cFY" secondAttribute="leading" constant="-6" id="nAC-Wh-NSI"/>
                 <constraint firstAttribute="trailing" secondItem="LYc-Us-Y82" secondAttribute="trailing" constant="15" id="nHg-c9-FUU"/>
-                <constraint firstItem="qgN-Zv-oe3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="nuG-Se-107"/>
-                <constraint firstAttribute="trailing" secondItem="I2l-t9-n0n" secondAttribute="trailing" constant="10" id="o5r-16-b0Z"/>
                 <constraint firstItem="fbY-bX-Pew" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="oXb-rT-dlA"/>
-                <constraint firstItem="8gE-kN-rPI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="t4n-0N-5US"/>
-                <constraint firstItem="990-QI-bFC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="59" id="ts6-Lp-ax4"/>
-                <constraint firstAttribute="centerX" secondItem="nNk-L4-qL5" secondAttribute="centerX" id="uLs-5N-0Qb"/>
-                <constraint firstItem="1si-SE-Nh6" firstAttribute="leading" secondItem="rUX-Kl-VsT" secondAttribute="trailing" constant="14" id="yzi-HJ-yx1"/>
+                <constraint firstItem="8gE-kN-rPI" firstAttribute="top" secondItem="990-QI-bFC" secondAttribute="bottom" constant="62" id="qdU-2y-LJN"/>
+                <constraint firstItem="qgN-Zv-oe3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="rrR-Ic-OaU"/>
+                <constraint firstItem="bSv-yB-Tdn" firstAttribute="leading" secondItem="I2l-t9-n0n" secondAttribute="trailing" constant="28" id="ssN-Aa-178"/>
+                <constraint firstAttribute="bottom" secondItem="qgN-Zv-oe3" secondAttribute="bottom" constant="13" id="xxM-uk-yDB"/>
+                <constraint firstItem="bSv-yB-Tdn" firstAttribute="width" secondItem="I2l-t9-n0n" secondAttribute="width" id="ydZ-IA-g3W"/>
             </constraints>
-            <point key="canvasLocation" x="73" y="314"/>
+            <point key="canvasLocation" x="62" y="287"/>
         </view>
+        <tapGestureRecognizer id="ofi-4r-eza"/>
     </objects>
     <resources>
         <image name="app_bg" width="730" height="1071"/>
+        <image name="blue_button" width="190" height="49"/>
+        <image name="green_button" width="190" height="49"/>
+        <image name="red_button" width="190" height="45"/>
     </resources>
 </document>

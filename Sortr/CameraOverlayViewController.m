@@ -86,13 +86,8 @@
     {
         currentMaxAccelZ = acceleration.z;
     }
-    
-    //self.maxAccX.text = [NSString stringWithFormat:@" %.2fg",currentMaxAccelX];
-    //self.maxAccY.text = [NSString stringWithFormat:@" %.2fg",currentMaxAccelY];
-    //self.maxAccZ.text = [NSString stringWithFormat:@" %.2fg",currentMaxAccelZ];
-    
-//    NSLog(@"X: %.2f Y: %.2f Z: %.2f", currentMaxAccelX, currentMaxAccelY, currentMaxAccelZ);
 }
+
 -(void)outputRotationData:(CMRotationRate)rotation
 {
     
@@ -111,12 +106,7 @@
     {
         currentMaxRotZ = rotation.z;
     }
-    
-    //self.maxRotX.text = [NSString stringWithFormat:@" %.2f",currentMaxRotX];
-    //self.maxRotY.text = [NSString stringWithFormat:@" %.2f",currentMaxRotY];
-    //self.maxRotZ.text = [NSString stringWithFormat:@" %.2f",currentMaxRotZ];
-    
-    // NSLog(@"X: %.2f Y: %.2f Z: %.2f", currentMaxRotX, currentMaxRotY, currentMaxRotZ);
+     
 }
 
 /*

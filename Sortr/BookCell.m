@@ -10,16 +10,19 @@
 #import "ThumbCell.h"
 
 @implementation BookCell
-{
-   
-    
-}
+
 - (void)awakeFromNib
 {
     // Initialization code
     
 }
 
+/**
+ *  Update status of cell under categoryViewController
+ *
+ *  @param status status such as Waiting, Scan, Queue, Done and Audit
+ *  @param img    Image to use on update
+ */
 - (void) updateStatus:(int)status withPhoto : (UIImage*) img {
     
     NSString *statusName = @"";
@@ -27,13 +30,7 @@
     UIImage *iconImage;
     
     switch (status) {
-        case (int)Waiting:
-            
-            statusName = @"TAP TO UPLOAD";
-            iconImage = [UIImage imageNamed:@"upload_icon"];
-            
-              break;
-        case (int)Scan:  case (int)Queue:
+        case (int)Waiting: case (int)Scan:  case (int)Queue:
             
             statusName = @"PROCESSING...";
             iconImage = [UIImage imageNamed:@"magnifying_icon"];

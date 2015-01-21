@@ -108,4 +108,13 @@
     return ( URLString != NULL ) ? YES : NO;
 }
 
+
+#pragma mark UIALERTVIEW
++ (void) showAlertViewWithTitle:(NSString*) title andMessage:(NSString*) message
+{
+    UIAlertView *alv = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+    
+    [alv show];
+} 
+
 @end
