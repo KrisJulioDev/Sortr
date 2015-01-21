@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "SortrDataManager.h"
+#import "MCSwipeTableViewCell.h"
 
-@interface BookCell : UITableViewCell
+@interface BookCell : MCSwipeTableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *receiptName;
 @property (strong, nonatomic) IBOutlet UILabel *receiptPrice;

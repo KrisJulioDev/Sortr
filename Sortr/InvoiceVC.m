@@ -284,7 +284,6 @@
     cell.Title.text = title;
     
     return cell;
-
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

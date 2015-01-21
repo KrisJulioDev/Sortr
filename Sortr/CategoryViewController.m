@@ -20,9 +20,10 @@
 #import "SortrReceipt.h"
 #import "PostPhotoViewController.h"
 #import "OverlayView.h"
+#import "MCSwipeTableViewCell.h"
 #import <Realm/Realm.h>
 
-@interface CategoryViewController () <UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
+@interface CategoryViewController () <UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, MCSwipeTableViewCellDelegate>
 {
     NSMutableArray *thumbNailPhotos;
     NSMutableArray *thumbNailCells;
@@ -360,24 +361,55 @@
     if (cell_ == nil) {
         // Load the top-level objects from the custom cell XIB.
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"BookCell" owner:self options:nil];
-        cell_.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        [cell_ setSelectionStyle:UITableViewCellSelectionStyleGray];
         // Grab a pointer to the first object (presumably the custom cell, as that's all the XIB should contain).
         cell_ = [topLevelObjects objectAtIndex:0];
     }
     
-     
-    int index = (receiptItems.count - 1 ) - indexPath.row;
-    ReceiptObject *rdata = [receiptItems objectAtIndex:index];
+    int index               = (receiptItems.count - 1 ) - indexPath.row;
+    ReceiptObject *rdata    = [receiptItems objectAtIndex:index];
     cell_.receiptName.text  = rdata.branch;
     cell_.receiptPrice.text = [NSString stringWithFormat:@"%@", rdata.total];
-    cell_.receiptObject = rdata;
-    
-    UIImage *photoImg = [UIImage imageWithData:rdata.image];
+    cell_.receiptObject     = rdata;
+
+    UIImage *photoImg       = [UIImage imageWithData:rdata.image];
     
     [cell_.receiptImageDone setImage:photoImg];
     [cell_ updateStatus:(int)cell_.receiptObject.receiptStatus withPhoto:photoImg];
+  
+    [self configureCell:cell_ forRowAtIndexPath:indexPath];
     
     return cell_;
+}
+
+- (void)configureCell:(BookCell *)pcell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIView *crossView = [self viewWithImageName:@"cross"];
+    UIColor *redColor = [UIColor colorWithRed:232.0 / 255.0 green:61.0 / 255.0 blue:14.0 / 255.0 alpha:1.0];
+    
+    // Setting the default inactive state color to the tableView background color
+    [pcell setDefaultColor:redColor];
+    [pcell setDelegate:self];
+    
+    [pcell setSwipeGestureWithView:crossView color:redColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *pcell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+        
+        _cellToDelete = (BookCell*)pcell ;
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Delete?"
+                                                            message:@"Are you sure your want to delete this and all of it's contents?"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"No"
+                                                  otherButtonTitles:@"Yes", nil];
+        [alertView show];
+        
+    }];
+}
+
+- (UIView *)viewWithImageName:(NSString *)imageName {
+    UIImage *image = [UIImage imageNamed:imageName];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.contentMode = UIViewContentModeCenter;
+    return imageView;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -411,11 +443,40 @@
         return;
     }
     
-    
     ReceiptInfoViewController *rivc = [[ReceiptInfoViewController alloc] init];
     rivc.receiptData = cellTapped.receiptObject;
     [self.navigationController pushViewController:rivc animated:YES];
     
+}
+
+- (void)deleteCell:(BookCell *)pcell {
+    NSParameterAssert(pcell);
+    
+    NSIndexPath *indexPath = [self.receiptTable indexPathForCell:pcell];
+    
+    [receiptItems removeObjectAtIndex:indexPath.row];
+    [self.receiptTable deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
+    [sortrDataMgr deleteReceipt:_cellToDelete.receiptObject];
+    
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    // No
+    if (buttonIndex == 0) {
+        [_cellToDelete swipeToOriginWithCompletion:^{
+            NSLog(@"Swiped back");
+        }];
+        _cellToDelete = nil;
+    }
+    
+    // Yes
+    else {
+        [self deleteCell:_cellToDelete];
+    }
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex

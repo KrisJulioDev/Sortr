@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ResponseObject.h"
 #import "CameraOverlayViewController.h"
+#import "MCSwipeTableViewCell.h"
+#import "BookCell.h"
 
 @interface CategoryViewController : UIViewController
 {
@@ -25,6 +27,8 @@
 //LABELS
 @property (strong, nonatomic) IBOutlet UILabel *totalLabel;
 @property (strong, nonatomic) IBOutlet UIButton *scanBtn;
+
+@property (nonatomic, strong) BookCell *cellToDelete;
 
 - (void) actionLaunchAppCamera : (id)sender;
 - (void) receiptHTTPClient : (int) r_id didUpdateWithStatus : ( NSDictionary *) dic;

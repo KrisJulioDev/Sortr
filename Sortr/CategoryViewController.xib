@@ -33,7 +33,7 @@
                         <action selector="scanReceipt:" destination="-1" eventType="touchUpInside" id="nnD-zP-OgN"/>
                     </connections>
                 </button>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2Qa-dc-s51">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2Qa-dc-s51">
                     <rect key="frame" x="0.0" y="70" width="600" height="530"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -50,11 +50,13 @@
                 <constraint firstAttribute="bottom" secondItem="Vfi-Jp-4gU" secondAttribute="bottom" id="4yv-gR-qbr"/>
                 <constraint firstAttribute="bottom" secondItem="nAP-Hl-tva" secondAttribute="bottom" id="6TC-Or-sfb"/>
                 <constraint firstItem="Vfi-Jp-4gU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Igl-RZ-sB9"/>
+                <constraint firstAttribute="trailing" secondItem="2Qa-dc-s51" secondAttribute="trailing" id="Prk-m7-LpM"/>
                 <constraint firstAttribute="trailing" secondItem="nAP-Hl-tva" secondAttribute="trailing" id="TF8-Yc-0la"/>
                 <constraint firstItem="2Qa-dc-s51" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="TWN-o4-BhU"/>
                 <constraint firstItem="Vfi-Jp-4gU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fX2-m8-T5e"/>
                 <constraint firstAttribute="trailing" secondItem="Vfi-Jp-4gU" secondAttribute="trailing" id="hoe-fa-uVQ"/>
                 <constraint firstItem="nAP-Hl-tva" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mbF-2x-bJY"/>
+                <constraint firstItem="2Qa-dc-s51" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="op9-mI-BZo"/>
                 <constraint firstItem="nAP-Hl-tva" firstAttribute="top" secondItem="2Qa-dc-s51" secondAttribute="bottom" constant="-45" id="rC6-NB-Qdc"/>
             </constraints>
             <point key="canvasLocation" x="527" y="360"/>
